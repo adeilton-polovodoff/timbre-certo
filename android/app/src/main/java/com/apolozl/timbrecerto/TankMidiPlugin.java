@@ -75,7 +75,6 @@ public class TankMidiPlugin extends Plugin {
     private UsbDeviceConnection conn;
     private UsbInterface usbIntf;
     private final List<UsbInterface> audioIntfs = new ArrayList<>();
-    private boolean keepAudio = false;
     private UsbEndpoint epOut;
     private UsbEndpoint epIn;
     private Thread reader;
@@ -214,7 +213,6 @@ public class TankMidiPlugin extends Plugin {
     @PluginMethod
     public void connectUsbDirect(PluginCall call) {
         if (usb == null) { call.reject("Este aparelho não tem modo USB host (OTG)."); return; }
-        keepAudio = Boolean.TRUE.equals(call.getBoolean("keepAudio", false));
         final UsbDevice dev = findTankUsb();
         if (dev == null) {
             call.reject("Nenhuma pedaleira encontrada no cabo USB. Confira se o cabo passa dados e se o OTG está ligado.");
@@ -254,29 +252,38 @@ public class TankMidiPlugin extends Plugin {
         }
         UsbDeviceConnection c = usb.openDevice(dev);
         if (c == null) { call.reject("Não deu para abrir o USB da pedaleira."); return; }
+        // A Tank-G também é placa de som USB. Prender a interface MIDI tira o driver de áudio do Android
+        // e o envio de áudio pode ficar parado no meio: o motor de áudio da pedaleira fica esperando dados
+        // que não chegam (som picotando, mudo ou pedaleira travada). Então o app prende também as interfaces
+        // de áudio e coloca as de streaming no modo parado (alternate setting 0), como um computador ocioso.
+        audioIntfs.clear();
+        int audioHeld = 0, audioIdle = 0;
+        for (int i = 0; i < dev.getInterfaceCount(); i++) {
+            UsbInterface ai = dev.getInterface(i);
+            if (ai.getInterfaceClass() != UsbConstants.USB_CLASS_AUDIO || ai.getInterfaceSubclass() == 3) continue;
+            boolean dup = false;
+            for (UsbInterface h : audioIntfs) if (h.getId() == ai.getId()) { dup = true; break; }
+            if (dup) continue;
+            try { if (c.claimInterface(ai, true)) { audioIntfs.add(ai); audioHeld++; } } catch (Exception ignored) { }
+        }
+        for (int i = 0; i < dev.getInterfaceCount(); i++) {
+            UsbInterface ai = dev.getInterface(i);
+            if (ai.getInterfaceClass() == UsbConstants.USB_CLASS_AUDIO && ai.getInterfaceSubclass() == 2 && ai.getAlternateSetting() == 0) {
+                boolean held = false;
+                for (UsbInterface h : audioIntfs) if (h.getId() == ai.getId()) { held = true; break; }
+                if (!held) continue;
+                try { if (c.setInterface(ai)) audioIdle++; } catch (Exception ignored) { }
+            }
+        }
         if (!c.claimInterface(it, true)) {
+            for (UsbInterface ai : audioIntfs) { try { c.releaseInterface(ai); } catch (Exception ignored) { } }
+            audioIntfs.clear();
             c.close();
             call.reject("A conexão MIDI da pedaleira está ocupada. Feche o M-EFCS e outros apps de música e tente de novo.");
             return;
         }
         conn = c;
         usbIntf = it;
-        // A Tank-G também é placa de som USB. Se o Android ficar mandando áudio para ela,
-        // o relógio de áudio dela acompanha o celular e o som pode picotar. Enquanto o app
-        // estiver conectado, as interfaces de áudio ficam presas aqui (a não ser que o usuário peça o contrário).
-        audioIntfs.clear();
-        int audioHeld = 0;
-        if (!keepAudio) {
-            for (int i = 0; i < dev.getInterfaceCount(); i++) {
-                UsbInterface ai = dev.getInterface(i);
-                if (ai.getInterfaceClass() == UsbConstants.USB_CLASS_AUDIO && ai.getInterfaceSubclass() != 3) {
-                    boolean dup = false;
-                    for (UsbInterface h : audioIntfs) if (h.getId() == ai.getId()) { dup = true; break; }
-                    if (dup) continue;
-                    try { if (c.claimInterface(ai, true)) { audioIntfs.add(ai); audioHeld++; } } catch (Exception ignored) { }
-                }
-            }
-        }
         epOut = o;
         epIn = in;
         mode = "usb-direct";
@@ -286,6 +293,7 @@ public class TankMidiPlugin extends Plugin {
         r.put("name", connectedName);
         r.put("mode", mode);
         r.put("audioHeld", audioHeld);
+        r.put("audioIdle", audioIdle);
         call.resolve(r);
     }
 
@@ -469,7 +477,7 @@ public class TankMidiPlugin extends Plugin {
                 for (int off = 0; off < pk.length; off += max) {
                     int len = Math.min(max, pk.length - off);
                     int w = conn.bulkTransfer(epOut, pk, off, len, 1000);
-                    if (w < 0) { call.reject("Falha ao enviar pelo USB. Confira o cabo e conecte de novo."); return; }
+                    if (w < 0) { call.reject("A Tank-G parou de receber. Desligue e ligue a pedaleira, tire e recoloque o cabo e conecte de novo."); return; }
                 }
                 addLog("out", buf);
                 call.resolve();

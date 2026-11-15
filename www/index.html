@@ -358,7 +358,7 @@ footer{margin-top:48px;color:#6c7a75;font-size:13px;max-width:75ch}
     <textarea id="cfgGuitar" rows="3"></textarea>
     <label for="cfgBank">Banco onde gravar os timbres (1 a 9)</label>
     <input id="cfgBank" type="number" min="1" max="9" step="1">
-    <label style="display:flex;gap:8px;align-items:flex-start;margin-top:12px"><input id="cfgUsbAudio" type="checkbox" style="width:auto;margin-top:3px"><span>Deixar o som do celular sair pela Tank-G pelo cabo (para tocar junto com música do celular). Desligado evita o som picotar.</span></label>
+    <label style="display:flex;gap:8px;align-items:flex-start;margin-top:12px"><input id="cfgUsbAudio" type="checkbox" style="width:auto;margin-top:3px"><span>Deixar o som do celular sair pela Tank-G pelo cabo (para tocar junto com música do celular). Usa a conexão MIDI do Android, que pode não levar o timbre; deixe desligado se o som picotar.</span></label>
     <p class="muted" style="font-size:13px;margin:10px 0 0">A 1ª parte vai no A, a 2ª no B e a 3ª no C desse banco. O que estiver gravado lá é substituído.</p>
     <p class="muted" style="font-size:13px;margin:14px 0 0">Versão instalada: <span id="appVer">—</span> <button class="btn" type="button" data-act="checkupd" style="margin-left:6px">Procurar atualização</button></p>
     <div class="dlg-actions">
@@ -591,12 +591,14 @@ async function connectUSB(){
   if(!TankMidi) throw {pt:"A conexão com a pedaleira funciona no app Timbre Certo instalado no Android."};
   let first;
   try{
-    const r = await TankMidi.connectUsbDirect({keepAudio: !!state.cfg.usbAudio});
-    if(r.audioHeld) Diag.add("in", "som do celular pela Tank-G desligado enquanto conectado (evita picotar)");
+    // Com o som do celular saindo pela Tank-G, usa a conexão MIDI do Android (não mexe no áudio USB)
+    if(state.cfg.usbAudio) throw {pt:"usar MIDI do Android"};
+    const r = await TankMidi.connectUsbDirect();
+    if(r.audioHeld) Diag.add("in", `áudio USB parado enquanto conectado (${r.audioIdle || 0} de saída/entrada em repouso)`);
     Object.assign(Tank, {kind:"usb", name:r.name || "Tank-G", mode:r.mode || "usb-direct"}); setConn(); return;
   }catch(e){
-    first = e;
-    if(/negada/i.test(errText(e, ""))) throw {pt: errText(e, "")};
+    first = state.cfg.usbAudio ? null : e;
+    if(first && /negada/i.test(errText(e, ""))) throw {pt: errText(e, "")};
   }
   try{
     const r = await TankMidi.connectUsb();
@@ -647,7 +649,9 @@ async function tryTone(s){
 }
 // Grava como o app oficial: vai para o preset, deixa o timbre nele, grava, confirma e confere lendo de volta.
 async function goPreset(pid){
+  const a0 = Diag.acks;
   await sendAll(Diag.heard() ? [sxSelect(pid)] : [sxSelect(pid), [0xC0, pid & 0x7F]]);
+  if(Diag.heard() && Diag.acks === a0) Diag.add("in", "a Tank-G não confirmou a troca de preset");
   if(!Diag.heard()) return true;
   await TankMidi.send({data:SX_POLL});
   return Diag.waitFor(() => Diag.status && Diag.status.pid === pid, 1500);
