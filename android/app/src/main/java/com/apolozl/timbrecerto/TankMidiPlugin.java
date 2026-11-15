@@ -37,6 +37,8 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 /**
@@ -72,6 +74,8 @@ public class TankMidiPlugin extends Plugin {
     private UsbManager usb;
     private UsbDeviceConnection conn;
     private UsbInterface usbIntf;
+    private final List<UsbInterface> audioIntfs = new ArrayList<>();
+    private boolean keepAudio = false;
     private UsbEndpoint epOut;
     private UsbEndpoint epIn;
     private Thread reader;
@@ -210,6 +214,7 @@ public class TankMidiPlugin extends Plugin {
     @PluginMethod
     public void connectUsbDirect(PluginCall call) {
         if (usb == null) { call.reject("Este aparelho não tem modo USB host (OTG)."); return; }
+        keepAudio = Boolean.TRUE.equals(call.getBoolean("keepAudio", false));
         final UsbDevice dev = findTankUsb();
         if (dev == null) {
             call.reject("Nenhuma pedaleira encontrada no cabo USB. Confira se o cabo passa dados e se o OTG está ligado.");
@@ -256,6 +261,22 @@ public class TankMidiPlugin extends Plugin {
         }
         conn = c;
         usbIntf = it;
+        // A Tank-G também é placa de som USB. Se o Android ficar mandando áudio para ela,
+        // o relógio de áudio dela acompanha o celular e o som pode picotar. Enquanto o app
+        // estiver conectado, as interfaces de áudio ficam presas aqui (a não ser que o usuário peça o contrário).
+        audioIntfs.clear();
+        int audioHeld = 0;
+        if (!keepAudio) {
+            for (int i = 0; i < dev.getInterfaceCount(); i++) {
+                UsbInterface ai = dev.getInterface(i);
+                if (ai.getInterfaceClass() == UsbConstants.USB_CLASS_AUDIO && ai.getInterfaceSubclass() != 3) {
+                    boolean dup = false;
+                    for (UsbInterface h : audioIntfs) if (h.getId() == ai.getId()) { dup = true; break; }
+                    if (dup) continue;
+                    try { if (c.claimInterface(ai, true)) { audioIntfs.add(ai); audioHeld++; } } catch (Exception ignored) { }
+                }
+            }
+        }
         epOut = o;
         epIn = in;
         mode = "usb-direct";
@@ -264,6 +285,7 @@ public class TankMidiPlugin extends Plugin {
         JSObject r = new JSObject();
         r.put("name", connectedName);
         r.put("mode", mode);
+        r.put("audioHeld", audioHeld);
         call.resolve(r);
     }
 
@@ -478,10 +500,12 @@ public class TankMidiPlugin extends Plugin {
         }
         if (conn != null) {
             try { if (usbIntf != null) conn.releaseInterface(usbIntf); } catch (Exception ignored) { }
+            for (UsbInterface ai : audioIntfs) { try { conn.releaseInterface(ai); } catch (Exception ignored) { } }
             try { conn.close(); } catch (Exception ignored) { }
         }
         conn = null;
         usbIntf = null;
+        audioIntfs.clear();
         epOut = null;
         epIn = null;
         try { if (outPort != null) outPort.close(); } catch (Exception ignored) { }

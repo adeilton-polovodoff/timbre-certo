@@ -358,6 +358,7 @@ footer{margin-top:48px;color:#6c7a75;font-size:13px;max-width:75ch}
     <textarea id="cfgGuitar" rows="3"></textarea>
     <label for="cfgBank">Banco onde gravar os timbres (1 a 9)</label>
     <input id="cfgBank" type="number" min="1" max="9" step="1">
+    <label style="display:flex;gap:8px;align-items:flex-start;margin-top:12px"><input id="cfgUsbAudio" type="checkbox" style="width:auto;margin-top:3px"><span>Deixar o som do celular sair pela Tank-G pelo cabo (para tocar junto com música do celular). Desligado evita o som picotar.</span></label>
     <p class="muted" style="font-size:13px;margin:10px 0 0">A 1ª parte vai no A, a 2ª no B e a 3ª no C desse banco. O que estiver gravado lá é substituído.</p>
     <p class="muted" style="font-size:13px;margin:14px 0 0">Versão instalada: <span id="appVer">—</span> <button class="btn" type="button" data-act="checkupd" style="margin-left:6px">Procurar atualização</button></p>
     <div class="dlg-actions">
@@ -560,7 +561,7 @@ const Diag = {
   start(){
     if(this.timer) return;
     this.timer = setInterval(() => this.drain(), 250);
-    this.pollT = setInterval(() => { if(Tank.kind && !Tank.busy) TankMidi.send({data:SX_POLL}).catch(() => {}); }, 1000);
+    // Pergunta o estado só ao conectar e depois de cada ação (nada fica rodando em segundo plano na pedaleira).
     if(TankMidi) TankMidi.send({data:SX_POLL}).catch(() => {});
   },
   stop(){ clearInterval(this.timer); clearInterval(this.pollT); this.timer = this.pollT = null; this.status = null; this.lastIn = 0; updateLive(); }
@@ -569,8 +570,8 @@ const hexs = b => b.map(x => x.toString(16).toUpperCase().padStart(2, "0")).join
 function updateLive(){
   const el = $("#tankLive"); if(!el) return;
   if(!Tank.kind){ el.textContent = ""; return; }
-  el.className = "send-msg " + (Diag.alive() ? "okay" : "");
-  el.textContent = Diag.alive() ? `A Tank-G está respondendo${Diag.status ? ` · preset atual ${presetName(Diag.status.pid)}` : ""}.` : (Diag.heard() ? "A Tank-G parou de responder. Confira o cabo." : "Esperando resposta da Tank-G…");
+  el.className = "send-msg " + (Diag.heard() ? "okay" : "");
+  el.textContent = Diag.heard() ? `A Tank-G está respondendo${Diag.status ? ` · preset atual ${presetName(Diag.status.pid)}` : ""}.` : "Esperando resposta da Tank-G…";
 }
 function renderDiag(){
   const el = $("#diagLog"); if(el) el.textContent = Diag.lines.slice(-40).join("\n") || "Nada ainda.";
@@ -590,7 +591,8 @@ async function connectUSB(){
   if(!TankMidi) throw {pt:"A conexão com a pedaleira funciona no app Timbre Certo instalado no Android."};
   let first;
   try{
-    const r = await TankMidi.connectUsbDirect();
+    const r = await TankMidi.connectUsbDirect({keepAudio: !!state.cfg.usbAudio});
+    if(r.audioHeld) Diag.add("in", "som do celular pela Tank-G desligado enquanto conectado (evita picotar)");
     Object.assign(Tank, {kind:"usb", name:r.name || "Tank-G", mode:r.mode || "usb-direct"}); setConn(); return;
   }catch(e){
     first = e;
@@ -640,6 +642,7 @@ async function tryTone(s){
   await sendAll(msgs);
   await sleep(120);
   const after = await readPreset();
+  TankMidi.send({data:SX_POLL}).catch(() => {});
   return {acked: Diag.acks - a0, total: msgs.length, after, applied: sameTone(after, s), heard: Diag.heard()};
 }
 // Grava como o app oficial: vai para o preset, deixa o timbre nele, grava, confirma e confere lendo de volta.
@@ -1197,6 +1200,7 @@ function applyCfg(c){
   if(c.bank) state.cfg.bank = int(c.bank,1,9,9);
   if(typeof c.key === "string") state.cfg.key = c.key.trim();
   if(c.model) state.cfg.model = str(c.model);
+  state.cfg.usbAudio = c.usbAudio === true;
   if(c.mode === "amp" || c.mode === "fone") state.mode = c.mode;
 }
 function saveCfg(){ lsSet(LS_CFG, {...state.cfg, mode: state.mode}); }
@@ -1321,6 +1325,7 @@ const dlg = $("#cfg");
 function openCfg(){
   $("#cfgKey").value = state.cfg.key || ""; $("#cfgModel").value = state.cfg.model || "gemini-2.5-flash";
   $("#cfgGuitar").value = state.cfg.guitar; $("#cfgBank").value = state.cfg.bank;
+  $("#cfgUsbAudio").checked = !!state.cfg.usbAudio;
   if(dlg.showModal) dlg.showModal(); else dlg.setAttribute("open","");
 }
 $("#openCfg").addEventListener("click", openCfg);
@@ -1331,6 +1336,7 @@ $("#cfgForm").addEventListener("submit", ev => {
   state.cfg.model = $("#cfgModel").value.trim() || "gemini-2.5-flash";
   state.cfg.guitar = $("#cfgGuitar").value.trim() || DEFAULT_GUITAR;
   state.cfg.bank = int($("#cfgBank").value,1,9,9);
+  state.cfg.usbAudio = $("#cfgUsbAudio").checked;
   dlg.close ? dlg.close() : dlg.removeAttribute("open");
   saveCfg(); hideStatus(); render();
 });
