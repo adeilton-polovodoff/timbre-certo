@@ -432,6 +432,7 @@ function normResult(raw){
 }
 
 /* ========= Protocolo SysEx da Tank-G ========= */
+const SAFE_MODE = true; // gravação e troca de preset pausadas até confirmar na pedaleira
 const HDR = [0xF0,0x00,0x32,0x09];
 const mod256 = n => ((n % 256) + 256) % 256;
 function ck14(v){ const c = mod256(v); return [c & 0x7F, (c >> 7) & 0x7F]; }
@@ -796,10 +797,11 @@ function sendHTML(){
       <button class="btn" type="button" data-act="ble">Conectar pelo Bluetooth</button>
     </div>
     <p class="send-msg" id="tankLive"></p>
+    ${SAFE_MODE ? `<p class="send-msg">Gravar e trocar de preset pelo app estão pausados por segurança. Para gravar o que o Testar mandou: na Tank-G em modo LIVE, escolha o banco com BANK- / BANK+ e segure A, B, C ou D até piscar rápido.</p>` : ""}
     <div class="send-row" ${conn ? "" : 'style="display:none"'}>
       <button class="btn primary" type="button" data-act="try">Testar "${esc(p.nome)}"</button>
-      <button class="btn" type="button" data-act="save">${n > 1 ? `Gravar as ${n} partes` : `Gravar no preset`}</button>
-      <button class="btn" type="button" data-act="ctest">Testar conexão</button>
+      ${SAFE_MODE ? "" : `<button class="btn" type="button" data-act="save">${n > 1 ? `Gravar as ${n} partes` : `Gravar no preset`}</button>
+      <button class="btn" type="button" data-act="ctest">Testar conexão</button>`}
       <button class="btn" type="button" data-act="disc">Desconectar</button>
     </div>
     ${ct === "ask" ? `<div class="confirm"><span>A tela da Tank-G mudou para <b>${bank}A</b>?</span><button class="btn primary" type="button" data-act="ctYes">Mudou</button><button class="btn" type="button" data-act="ctNo">Não mudou</button></div>` : ""}
