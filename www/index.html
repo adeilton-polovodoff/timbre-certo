@@ -176,6 +176,7 @@ select{background:var(--surface);border:1px solid var(--line);border-radius:10px
 .steps b{color:var(--ink)}
 .steps li.done{opacity:.55}
 .steps li.done b::after{content:" ✓";color:var(--ok)}
+.diag pre{white-space:pre-wrap;word-break:break-all;font-size:12px;line-height:1.45;background:rgba(0,0,0,.25);border:1px solid var(--line, rgba(255,255,255,.12));border-radius:8px;padding:8px 10px;max-height:260px;overflow:auto;margin:8px 0}
 .confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:rgba(255,178,62,.08);border:1px solid rgba(255,178,62,.4);border-radius:10px;padding:10px 12px;font-size:14px}
 
 /* cartões */
@@ -481,8 +482,20 @@ function sxState(s){
   const sum = s.type+s.gain+s.treble+s.middle+s.bass+s.volume+s.mod_fx+s.mod_speed+s.dly_mix+s.dly_time+s.rev_decay+s.rev_mix;
   return [...HDR,0x31,0x01,0x00,0x00,0x02,0x04,0x00,0x00,0x00,0x61,0x01,0x00,0x00, s.gate & 0x7F, ...pack7(f,15), ...ck14(218 - sum - s.gate - s.cab), 0xF7];
 }
-function liveMessages(s){ return [sxState(s), sxBypass(0,s.amp_on), sxBypass(1,s.mod_on), sxBypass(2,s.dly_on), sxBypass(3,s.rev_on)]; }
 function saveMessages(pid, s){ return [sxSave(pid,s), sxFlush(), sxSelect(pid)]; }
+// Perguntas que o app oficial faz: estado (preset atual) a cada 1 s e leitura do preset depois de trocar.
+const SX_POLL = [0xF0,0x00,0x32,0x0D,0x41,0x00,0x00,0x00,0x02,0x00,0x00,0x00,0x00,0x42,0x00,0x00,0x00,0x57,0x01,0xF7];
+const SX_READ = [0xF0,0x00,0x32,0x0D,0x41,0x00,0x00,0x00,0x02,0x00,0x00,0x00,0x00,0x51,0x02,0x00,0x00,0x56,0x01,0xF7];
+function unpack7(bytes, n){
+  let big = 0n;
+  bytes.forEach((v,i) => { big |= (BigInt(v & 0x7F) << BigInt(7*i)); });
+  const out = [];
+  for(let i=0;i<n;i++) out.push(Number((big >> BigInt(8*i)) & 0xFFn));
+  return out;
+}
+const stateFields = s => [s.amp_on,s.mod_on,s.dly_on,s.rev_on,s.gate,s.type,s.gain,s.treble,s.middle,s.bass,s.volume,s.mod_fx,s.mod_speed,s.dly_mix,s.dly_time,s.rev_decay,s.rev_mix,s.cab];
+const FIELD_NAMES = ["AMP liga","MOD liga","DLY liga","RVB liga","gate","amp","gain","treble","middle","bass","volume","mod","mod speed","dly mix","dly time","rvb decay","rvb mix","cab"];
+const presetName = pid => `${Math.floor(pid/4)+1}${LETTERS[pid%4]}`;
 
 /* ========= Conexão com a pedaleira (nativo Android) ========= */
 const Cap = window.Capacitor;
@@ -490,19 +503,103 @@ const IS_APP = !!(Cap && Cap.isNativePlatform && Cap.isNativePlatform() && Cap.n
 // Chama o plugin nativo direto pela ponte do Capacitor (sem depender do pacote JS @capacitor/core)
 const plug = name => IS_APP ? new Proxy({}, {get: (_, method) => (opts = {}) => Cap.nativePromise(name, String(method), opts)}) : null;
 const TankMidi = plug("TankMidi"), BLE = plug("BluetoothLe"), Speech = plug("SpeechRecognition"), AppUpdater = plug("AppUpdater");
-const Tank = {kind:null, name:""};
+const Tank = {kind:null, name:"", mode:"", busy:0};
 const errText = (e, d) => (e && (e.pt || e.message)) || d;
 function setConn(){
   $("#connDot").classList.toggle("on", !!Tank.kind);
   $("#connText").textContent = Tank.kind ? `Tank-G conectada (${Tank.kind === "usb" ? "cabo" : "Bluetooth"})` : "Tank-G desconectada";
+  if(Tank.kind) Diag.start(); else Diag.stop();
 }
+
+/* Respostas da pedaleira: confirmações (ACK), preset atual e leitura do preset */
+const Diag = {
+  lines: [], acks: 0, lastIn: 0, status: null, preset: null, presetAt: 0, waiters: [], timer: null, pollT: null,
+  alive(){ return Date.now() - this.lastIn < 4000; },
+  heard(){ return this.lastIn > 0; },
+  add(dir, text){ const t = new Date(); this.lines.push(`${t.toTimeString().slice(0,8)} ${dir === "out" ? "→" : "←"} ${text}`); if(this.lines.length > 80) this.lines.shift(); },
+  describeOut(b){
+    if(b[0] === 0xC0) return `troca de programa ${b[1]}`;
+    const c = b[4], reg = b[13];
+    if(b[3] === 0x0D && reg === 0x42) return null; // pergunta de estado (não polui o log)
+    if(b[3] === 0x0D && reg === 0x51) return "lê o preset atual";
+    if(c === 0x31) return "timbre ao vivo (0x31)";
+    if(c === 0x69) return `grava preset ${presetName(((b[9] | (b[10] << 7)) - 2) / 21)}`;
+    if(c === 0x41) return "confirma gravação";
+    if(c === 0x49 && reg === 0x1E) return `seleciona preset ${presetName(b[9])}`;
+    if(c === 0x49 && reg === 0x11) return `${["AMP","MOD","DLY","RVB"][b[9]] || "módulo"} ${b[17] ? "liga" : "desliga"}`;
+    return hexs(b);
+  },
+  feed(item){
+    const b = item.h.split(" ").map(x => parseInt(x, 16));
+    if(item.d === "out"){ const d = this.describeOut(b); if(d) this.add("out", d); return; }
+    this.lastIn = Date.now();
+    if(b[1] === 0x00 && b[2] === 0x32 && b[3] === 0x01 && b[4] === 0x08){ this.acks++; this.add("in", b[9] === 0x7F ? "OK" : `resposta ${hexs(b)}`); }
+    else if(b[3] === 0x0D && b[4] === 0x61 && b[13] === 0x42 && b.length >= 23){
+      const f = unpack7(b.slice(17, 22), 4); const st = {pid: f[0]*4 + f[2], raw: f};
+      if(!this.status || this.status.pid !== st.pid) this.add("in", `está no preset ${presetName(st.pid)}`);
+      this.status = st; updateLive();
+    }
+    else if(b[3] === 0x0D && b[4] === 0x69 && b.length >= 43){
+      this.preset = unpack7(b.slice(17, 41), 21); this.presetAt = Date.now();
+      this.add("in", `preset lido: amp ${this.preset[5]}, gain ${this.preset[6]}, volume ${this.preset[10]}`);
+    }
+    else this.add("in", hexs(b));
+    this.waiters = this.waiters.filter(w => { if(w.test()){ w.ok(true); return false; } return true; });
+  },
+  async drain(){
+    if(!TankMidi || !Tank.kind) return;
+    try{ const r = await TankMidi.drain(); (r.items || []).forEach(i => this.feed(i)); if(r.items && r.items.length) renderDiag(); }catch(e){}
+  },
+  waitFor(test, ms){
+    if(test()) return Promise.resolve(true);
+    return new Promise(res => { const w = {test, ok:res}; this.waiters.push(w); setTimeout(() => { this.waiters = this.waiters.filter(x => x !== w); res(test()); }, ms); });
+  },
+  start(){
+    if(this.timer) return;
+    this.timer = setInterval(() => this.drain(), 250);
+    this.pollT = setInterval(() => { if(Tank.kind && !Tank.busy) TankMidi.send({data:SX_POLL}).catch(() => {}); }, 1000);
+    if(TankMidi) TankMidi.send({data:SX_POLL}).catch(() => {});
+  },
+  stop(){ clearInterval(this.timer); clearInterval(this.pollT); this.timer = this.pollT = null; this.status = null; this.lastIn = 0; updateLive(); }
+};
+const hexs = b => b.map(x => x.toString(16).toUpperCase().padStart(2, "0")).join(" ");
+function updateLive(){
+  const el = $("#tankLive"); if(!el) return;
+  if(!Tank.kind){ el.textContent = ""; return; }
+  el.className = "send-msg " + (Diag.alive() ? "okay" : "");
+  el.textContent = Diag.alive() ? `A Tank-G está respondendo${Diag.status ? ` · preset atual ${presetName(Diag.status.pid)}` : ""}.` : (Diag.heard() ? "A Tank-G parou de responder. Confira o cabo." : "Esperando resposta da Tank-G…");
+}
+function renderDiag(){
+  const el = $("#diagLog"); if(el) el.textContent = Diag.lines.slice(-40).join("\n") || "Nada ainda.";
+  updateLive();
+}
+async function readPreset(ms = 900){
+  if(!Diag.heard()) return null;
+  const t0 = Date.now();
+  await TankMidi.send({data:SX_READ});
+  const ok = await Diag.waitFor(() => Diag.presetAt >= t0, ms);
+  return ok ? Diag.preset.slice() : null;
+}
+const sameTone = (got, s) => !!got && stateFields(s).every((v, i) => got[i] === v);
+const diffTone = (got, s) => stateFields(s).map((v, i) => got[i] === v ? null : `${FIELD_NAMES[i]} ${got[i]}≠${v}`).filter(Boolean);
+
 async function connectUSB(){
   if(!TankMidi) throw {pt:"A conexão com a pedaleira funciona no app Timbre Certo instalado no Android."};
-  try{ const r = await TankMidi.connectUsb(); Object.assign(Tank, {kind:"usb", name:r.name || "Tank-G"}); setConn(); }
-  catch(e){
+  let first;
+  try{
+    const r = await TankMidi.connectUsbDirect();
+    Object.assign(Tank, {kind:"usb", name:r.name || "Tank-G", mode:r.mode || "usb-direct"}); setConn(); return;
+  }catch(e){
+    first = e;
+    if(/negada/i.test(errText(e, ""))) throw {pt: errText(e, "")};
+  }
+  try{
+    const r = await TankMidi.connectUsb();
+    Object.assign(Tank, {kind:"usb", name:r.name || "Tank-G", mode:r.mode || "usb-midi"}); setConn();
+  }catch(e){
     let extra = "";
-    try{ const l = await TankMidi.listDevices(); const n = (l.devices || []).map(d => `${d.name} (${d.type})`); extra = n.length ? ` Aparelhos MIDI vistos: ${n.join(", ")}.` : " O Android não viu nenhum aparelho MIDI."; }catch(_){}
-    throw {pt: errText(e, "Não achei a Tank-G no cabo. Confira o cabo USB-C (OTG).") + extra};
+    try{ const l = await TankMidi.listDevices(); const n = (l.devices || []).map(d => `${d.name} (${d.type})`); extra = n.length ? ` Aparelhos vistos: ${n.join(", ")}.` : " O Android não viu nenhum aparelho no USB."; }catch(_){}
+    throw {pt: errText(first, errText(e, "Não achei a Tank-G no cabo. Confira o cabo USB-C (OTG).")) + extra};
   }
 }
 async function connectBLE(){
@@ -512,13 +609,42 @@ async function connectBLE(){
   let dev;
   try{ dev = await BLE.requestDevice({}); }
   catch(e){ throw {pt:"Nenhum aparelho escolhido. Ligue o Bluetooth da Tank-G (segure B+C por 3 s) e tente de novo."}; }
-  try{ const r = await TankMidi.connectBluetooth({address: dev.deviceId, name: dev.name || "Tank-G"}); Object.assign(Tank, {kind:"ble", name:r.name || "Tank-G"}); setConn(); }
+  try{ const r = await TankMidi.connectBluetooth({address: dev.deviceId, name: dev.name || "Tank-G"}); Object.assign(Tank, {kind:"ble", name:r.name || "Tank-G", mode:"ble"}); setConn(); }
   catch(e){ throw {pt: errText(e, "Não deu para abrir o MIDI por Bluetooth. Tente pelo cabo.")}; }
 }
 async function disconnectTank(){ try{ if(TankMidi) await TankMidi.disconnect(); }catch(e){} Tank.kind = null; setConn(); }
 async function sendAll(msgs){
   if(!Tank.kind) throw {pt:"Conecte a Tank-G primeiro."};
-  for(const m of msgs){ await TankMidi.send({data:m}); await sleep(Tank.kind === "usb" ? 45 : 140); }
+  Tank.busy++;
+  try{
+    for(const m of msgs){
+      const a0 = Diag.acks;
+      await TankMidi.send({data:m});
+      // espera a confirmação da pedaleira (como o app oficial), ou um intervalo curto se ela não responde por aqui
+      if(Diag.heard() && m[0] === 0xF0 && m[3] === 0x09) await Diag.waitFor(() => Diag.acks > a0, 400);
+      else await sleep(Tank.kind === "usb" ? 60 : 160);
+    }
+  }finally{ Tank.busy--; }
+}
+// Manda o timbre ao vivo: liga/desliga só os módulos que precisam mudar e depois o timbre (0x31), como o app oficial.
+async function tryTone(s){
+  const before = await readPreset();
+  const want = [s.amp_on, s.mod_on, s.dly_on, s.rev_on];
+  const msgs = [];
+  want.forEach((v, i) => { if(!before || before[i] !== v) msgs.push(sxBypass(i, v)); });
+  msgs.push(sxState(s));
+  const a0 = Diag.acks;
+  await sendAll(msgs);
+  await sleep(120);
+  const after = await readPreset();
+  return {acked: Diag.acks - a0, total: msgs.length, after, applied: sameTone(after, s), heard: Diag.heard()};
+}
+// Grava no slot, recarrega e confere lendo o preset de volta.
+async function saveTone(pid, s){
+  await sendAll([...saveMessages(pid, s), [0xC0, pid & 0x7F]]);
+  await sleep(150);
+  const got = await readPreset(1200);
+  return {got, ok: sameTone(got, s), heard: Diag.heard()};
 }
 
 /* ========= Exemplo inicial ========= */
@@ -623,22 +749,23 @@ function sendHTML(){
   const slots = r.partes.map((_,i) => `${bank}${LETTERS[i]}`).join(", ");
   const conn = Tank.kind;
   const ps = state.pendingSave, ct = state.connTest;
+  const note = state.sendNote && state.sendNote.r === r && state.sendNote.part === state.part ? state.sendNote : null;
   return `<div class="send" id="sendBox">
     <h3><i class="dot${conn ? " on" : ""}"></i>Mandar para a Tank-G</h3>
     <ol class="steps">
-      <li class="${conn ? "done" : ""}"><b>Conecte.</b> Cabo USB-C ligando a Tank-G ao celular (o jeito garantido) ou Bluetooth. Feche o app M-EFCS antes. A pedaleira pode ficar no modo normal (PRESET); não precisa do modo LIVE.</li>
-      <li class="${ct === "ok" ? "done" : ""}"><b>Teste a conexão.</b> O app manda a pedaleira pular para o preset ${bank}A. Se a tela dela mudar, está tudo certo.</li>
-      <li><b>Teste o timbre.</b> "Testar" troca o som na hora, sem gravar. Toque uma nota para ouvir.</li>
-      <li><b>Grave.</b> "Gravar" salva ${n > 1 ? `as partes em ${esc(slots)}` : `no preset ${esc(slots)}`}. Depois, no modo PRESET, é só pisar ${r.partes.map((_,i) => LETTERS[i]).join(", ")} para trocar de parte.</li>
+      <li class="${conn ? "done" : ""}"><b>Conecte.</b> Cabo USB-C ligando a Tank-G ao celular (o jeito garantido; o Android pede permissão na primeira vez, toque em OK). Feche o app M-EFCS antes. A pedaleira pode ficar no modo normal (PRESET).</li>
+      <li><b>Teste.</b> "Testar" troca o som na hora, sem gravar, e o app confere com a pedaleira se o timbre entrou.</li>
+      <li><b>Grave.</b> "Gravar" salva ${n > 1 ? `as partes em ${esc(slots)}` : `no preset ${esc(slots)}`} e confere lendo de volta. Depois, no modo PRESET, é só pisar ${r.partes.map((_,i) => LETTERS[i]).join(", ")} para trocar de parte.</li>
     </ol>
     <div class="send-row" ${conn ? 'style="display:none"' : ""}>
       <button class="btn primary" type="button" data-act="usb">Conectar pelo cabo USB</button>
       <button class="btn" type="button" data-act="ble">Conectar pelo Bluetooth</button>
     </div>
+    <p class="send-msg" id="tankLive"></p>
     <div class="send-row" ${conn ? "" : 'style="display:none"'}>
-      <button class="btn ${ct === "ok" ? "" : "primary"}" type="button" data-act="ctest">Testar conexão</button>
-      <button class="btn ${ct === "ok" ? "primary" : ""}" type="button" data-act="try">Testar "${esc(p.nome)}"</button>
+      <button class="btn primary" type="button" data-act="try">Testar "${esc(p.nome)}"</button>
       <button class="btn" type="button" data-act="save">${n > 1 ? `Gravar as ${n} partes` : `Gravar no preset`}</button>
+      <button class="btn" type="button" data-act="ctest">Testar conexão</button>
       <button class="btn" type="button" data-act="disc">Desconectar</button>
     </div>
     ${ct === "ask" ? `<div class="confirm"><span>A tela da Tank-G mudou para <b>${bank}A</b>?</span><button class="btn primary" type="button" data-act="ctYes">Mudou</button><button class="btn" type="button" data-act="ctNo">Não mudou</button></div>` : ""}
@@ -650,7 +777,10 @@ function sendHTML(){
       <li>Ligue a Tank-G antes de plugar o cabo.</li></ul></div>` : ""}
     ${Tank.kind === "ble" ? `<p class="send-msg err">Conectada pelo Bluetooth: a troca de preset funciona, mas a Tank-G pode não aceitar timbres por aqui. Se "Testar" não mudar o som, use o cabo.</p>` : ""}
     ${ps ? `<div class="confirm"><span>Isso substitui o que está gravado em <b>${esc(slots)}</b>. Confirma?</span><button class="btn primary" type="button" data-act="saveYes">Gravar</button><button class="btn" type="button" data-act="saveNo">Cancelar</button></div>` : ""}
-    <p class="send-msg" id="sendMsg">${conn ? `Conectada: ${esc(Tank.name)}.` : "Ainda não conectada."}</p>
+    <p class="send-msg${note && note.kind ? " " + note.kind : ""}" id="sendMsg">${note ? esc(note.text) : (conn ? `Conectada: ${esc(Tank.name)}${Tank.mode === "usb-direct" ? " (USB direto)" : ""}.` : "Ainda não conectada.")}</p>
+    ${conn ? `<details class="diag" id="diagBox" ${state.diagOpen ? "open" : ""}><summary>Diagnóstico (o que o app mandou e o que a Tank-G respondeu)</summary>
+      <pre id="diagLog">${esc(Diag.lines.slice(-40).join("\n") || "Nada ainda.")}</pre>
+      <button class="btn" type="button" data-act="copylog">Copiar diagnóstico</button></details>` : ""}
   </div>`;
 }
 
@@ -724,6 +854,8 @@ function render(){
   requestAnimationFrame(() => requestAnimationFrame(() => {
     el.querySelectorAll(".ptr").forEach(g => { g.style.transform = `rotate(${g.dataset.a}deg)`; });
   }));
+  updateLive();
+  const db = $("#diagBox"); if(db) db.addEventListener("toggle", () => { state.diagOpen = db.open; });
 }
 
 /* ========= Status ========= */
@@ -1087,7 +1219,7 @@ document.addEventListener("click", async ev => {
   if(t.dataset.open){ const s = state.saved.find(x => x.id === t.dataset.open); if(s){ Object.assign(state, {result:normResult(s.result), isExample:false, part:0, savedId:s.id, query:s.query || ""}); switchTab("timbre"); render(); window.scrollTo({top:0}); } return; }
   if(t.dataset.del){ const id = t.dataset.del; if(armed === id){ armed = null; dropTone(id); } else { armed = id; renderSaved(); setTimeout(() => { if(armed === id){ armed = null; renderSaved(); } }, 3500); } return; }
   const act = t.dataset.act;
-  const msg = (text, kind) => { const m = $("#sendMsg"); if(m){ m.className = "send-msg" + (kind ? " " + kind : ""); m.textContent = text; } };
+  const msg = (text, kind) => { state.sendNote = {text, kind, r: state.result, part: state.part}; const m = $("#sendMsg"); if(m){ m.className = "send-msg" + (kind ? " " + kind : ""); m.textContent = text; } };
   try{
     if(act === "regen"){ const r = state.result; $("#q").value = `${r.musica} — ${r.artista}`; generate(true, {titulo:r.musica, artista:r.artista, capa:r.capa}); }
     else if(act === "copy"){ try{ await navigator.clipboard.writeText(toneText()); t.textContent = "Copiado"; setTimeout(() => t.textContent = "Copiar timbre", 1800); }catch(e){ t.textContent = "Não deu para copiar"; } }
@@ -1100,31 +1232,56 @@ document.addEventListener("click", async ev => {
     else if(act === "doupd"){ doUpdate(); }
     else if(act === "hideupd"){ $("#upd").classList.add("hidden"); }
     else if(act === "try"){
-      t.disabled = true; msg("Mandando…");
-      await sendAll(liveMessages(partToState(state.result.partes[state.part], state.mode)));
-      msg(`Enviado: "${state.result.partes[state.part].nome}". Toque uma nota para ouvir. Se o som não mudou, use "Testar conexão".`, "okay");
-      t.disabled = false;
+      const part = state.result.partes[state.part];
+      t.disabled = true; msg("Mandando o timbre…");
+      try{
+        const r = await tryTone(partToState(part, state.mode));
+        if(r.applied) msg(`Pronto: a Tank-G está com o timbre de "${part.nome}" (conferido com a pedaleira). Toque uma nota.`, "okay");
+        else if(r.heard && r.acked >= r.total) msg(`A Tank-G recebeu e confirmou o timbre de "${part.nome}". Toque uma nota. Se o som não mudou, toque em Gravar: ele grava, já deixa o preset tocando e confere.`, "okay");
+        else if(r.heard) msg(`A Tank-G respondeu, mas confirmou só ${r.acked} de ${r.total} mensagens. Abra o Diagnóstico abaixo, toque em Copiar diagnóstico e me mande.`, "err");
+        else msg(`Enviado: "${part.nome}". Por esta conexão a Tank-G não manda resposta, então não dá para conferir. Toque uma nota; se não mudou, use o cabo USB.`, "okay");
+      }finally{ t.disabled = false; renderDiag(); }
     }
     else if(act === "save"){ state.pendingSave = true; render(); }
     else if(act === "ctest"){
       const pid = (state.cfg.bank - 1) * 4;
       t.disabled = true; msg("Mandando a pedaleira para o preset " + state.cfg.bank + "A…");
-      await sendAll([sxSelect(pid), [0xC0, pid & 0x7F]]);
-      state.connTest = "ask"; render();
+      try{
+        await sendAll([sxSelect(pid), [0xC0, pid & 0x7F]]);
+        if(Diag.heard()){
+          await TankMidi.send({data:SX_POLL});
+          const ok = await Diag.waitFor(() => Diag.status && Diag.status.pid === pid, 2500);
+          state.connTest = ok ? "ok" : "fail"; render();
+          msg(ok ? `Conexão confirmada: a Tank-G foi para o preset ${presetName(pid)}. Agora toque em Testar.` : "A Tank-G responde, mas não trocou de preset. Veja o Diagnóstico.", ok ? "okay" : "err");
+        }else{ state.connTest = "ask"; render(); }
+      }finally{ t.disabled = false; }
     }
     else if(act === "ctYes"){ state.connTest = "ok"; render(); msg("Conexão confirmada. Agora toque em Testar para ouvir o timbre.", "okay"); }
     else if(act === "ctNo"){ state.connTest = "fail"; render(); }
+    else if(act === "copylog"){
+      const txt = [`Timbre Certo ${($("#appVer") && $("#appVer").textContent) || ""} · conexão ${Tank.mode || Tank.kind}`, ...Diag.lines].join("\n");
+      try{ await navigator.clipboard.writeText(txt); t.textContent = "Copiado"; }catch(e){ t.textContent = "Não deu para copiar"; }
+      setTimeout(() => { t.textContent = "Copiar diagnóstico"; }, 1800);
+    }
     else if(act === "saveNo"){ state.pendingSave = null; render(); }
     else if(act === "saveYes"){
       state.pendingSave = null; render();
       const parts = state.result.partes, bank = state.cfg.bank;
       msg("Gravando…");
+      const okList = [], badList = [], unk = [];
       for(let i=0;i<parts.length;i++){
-        const pid = (bank-1)*4 + i;
-        await sendAll([...saveMessages(pid, partToState(parts[i], state.mode)), [0xC0, pid & 0x7F]]);
-        await sleep(150);
+        const pid = (bank-1)*4 + i, s = partToState(parts[i], state.mode);
+        const r = await saveTone(pid, s);
+        if(r.ok) okList.push(presetName(pid));
+        else if(r.got) badList.push(`${presetName(pid)} (${diffTone(r.got, s).slice(0,3).join(", ")})`);
+        else unk.push(presetName(pid));
+        await sleep(120);
       }
-      msg(`Enviado para ${parts.map((_,i) => bank + LETTERS[i]).join(", ")}. A tela deve mostrar ${bank}${LETTERS[parts.length-1]}. No modo PRESET, troque de parte com os pedais ${parts.map((_,i) => LETTERS[i]).join(", ")}. Se a tela não mudou, use "Testar conexão".`, "okay");
+      const keys = parts.map((_,i) => LETTERS[i]).join(", ");
+      if(badList.length) msg(`A Tank-G gravou diferente em ${badList.join("; ")}. Abra o Diagnóstico, copie e me mande.`, "err");
+      else if(unk.length && !okList.length) msg(`Enviado para ${unk.join(", ")}. Por esta conexão não dá para conferir; a tela deve mostrar ${presetName((bank-1)*4 + parts.length - 1)}. No modo PRESET, troque de parte com os pedais ${keys}.`, "okay");
+      else msg(`Gravado e conferido: ${okList.join(", ")}${unk.length ? ` (sem conferência: ${unk.join(", ")})` : ""}. A Tank-G está tocando ${presetName((bank-1)*4 + parts.length - 1)}. No modo PRESET, troque de parte com os pedais ${keys}.`, "okay");
+      renderDiag();
     }
   }catch(e){ msg((e && e.pt) || "Não deu certo. Confira a conexão com a Tank-G e tente de novo.", "err"); }
 });

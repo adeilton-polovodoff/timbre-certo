@@ -15,11 +15,13 @@ App Android que pesquisa na internet o timbre de guitarra de uma música e devol
 - **Conectar pelo cabo USB**: cabo USB-C (OTG) ligando a Tank-G ao celular. Feche o app M-EFCS antes.
 - **Conectar pelo Bluetooth** (experimental): segure B+C por 3 s na Tank-G e escolha ela na lista.
 - **Testar** muda o som na hora sem gravar. **Gravar** salva as partes nos presets A, B e C do banco escolhido em Ajustes.
+- O app confere tudo com a pedaleira: lê o preset de volta depois de testar e de gravar e mostra "conferido" quando os valores batem.
+- **Diagnóstico** (no fim do quadro "Mandar para a Tank-G") mostra cada mensagem enviada e cada resposta da Tank-G. "Copiar diagnóstico" copia o registro para mandar quando algo não funcionar.
 
 ## Como funciona
 
 - `www/index.html`: toda a interface e a lógica (Gemini com Google Search, painel da Tank-G, codec SysEx).
-- `android/app/src/main/java/com/apolozl/timbrecerto/TankMidiPlugin.java`: ponte MIDI nativa (android.media.midi) para USB e Bluetooth LE MIDI.
+- `android/app/src/main/java/com/apolozl/timbrecerto/TankMidiPlugin.java`: ponte com a Tank-G. Pelo cabo fala direto com a interface USB-MIDI da pedaleira (USB host, um pacote por mensagem, como o app oficial) e lê as respostas; o serviço MIDI do Android fica de reserva e cuida do Bluetooth LE MIDI.
 - O APK é compilado pelo GitHub Actions (`.github/workflows/build-apk.yml`) a cada push na branch `main`.
 
 O protocolo SysEx da Tank-G vem do projeto aberto [tank-g-controller](https://github.com/AlexandreTonin/tank-g-controller) (MIT).
