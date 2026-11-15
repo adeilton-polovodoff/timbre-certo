@@ -1,0 +1,9 @@
+{
+  "appId": "com.apolozl.timbrecerto",
+  "appName": "Timbre Certo",
+  "webDir": "www",
+  "android": { "backgroundColor": "#0f1312" },
+  "plugins": {
+    "CapacitorHttp": { "enabled": true }
+  }
+}

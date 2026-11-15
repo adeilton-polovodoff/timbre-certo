@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Timbre Certo para Tank-G</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout: coluna de palco. Busca no topo, o painel da Tank-G como peça central, cartões de apoio embaixo. */
+  --bg:#0f1312;
+  --surface:#161c1b;
+  --surface-2:#1d2524;
+  --line:#2a3533;
+  --ink:#e9efeb;
+  --muted:#94a29d;
+  --teal:#22a395;
+  --teal-deep:#126a62;
+  --led:#ffb23e;
+  --warn:#ff7a5c;
+  --ok:#5fd39b;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"Share Tech Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:14px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:
+    radial-gradient(1200px 500px at 70% -200px, rgba(34,163,149,.16), transparent 70%),
+    var(--bg);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:env(safe-area-inset-top) max(20px, env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left))}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--led);outline-offset:2px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;margin:0}
+.muted{color:var(--muted)}
+.hidden{display:none !important}
+
+/* topo */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0 8px}
+.mark{display:flex;align-items:baseline;gap:10px}
+.mark b{font-family:var(--f-display);font-weight:900;font-size:22px;letter-spacing:.06em}
+.mark span{font-family:var(--f-mono);font-size:12px;color:var(--teal);letter-spacing:.08em;text-transform:uppercase}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+.ghost{background:transparent;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px;color:var(--ink)}
+.ghost:hover{border-color:var(--teal)}
+.conn-pill{display:inline-flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:#3a4543;display:inline-block}
+.dot.on{background:var(--ok);box-shadow:0 0 8px var(--ok)}
+
+/* hero */
+.hero{padding:28px 0 18px;display:grid;gap:18px}
+.hero h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(2.6rem,7.4vw,5.4rem);line-height:.88;letter-spacing:.005em}
+.hero h1 em{font-style:normal;color:var(--teal)}
+.hero p{margin:0;color:var(--muted);max-width:60ch;font-size:17px}
+.search{display:flex;gap:10px;flex-wrap:wrap}
+.field{flex:1 1 420px;display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:4px 6px 4px 16px;min-height:60px}
+.field:focus-within{border-color:var(--teal)}
+.field input{flex:1;background:transparent;border:0;outline:none;font-size:19px;padding:10px 0;min-width:0}
+.field input::placeholder{color:#62706b}
+.mic{width:48px;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);display:grid;place-items:center;flex:none}
+.mic svg{width:22px;height:22px}
+.mic.on{background:var(--warn);border-color:var(--warn);color:#1a0e0a;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(255,122,92,.18)}}
+.go{flex:0 0 auto;min-height:60px;padding:0 26px;border-radius:var(--r);border:0;background:var(--teal);color:#06211e;font-family:var(--f-display);font-weight:800;font-size:22px;letter-spacing:.04em;text-transform:uppercase}
+.go:hover{background:#2bb8a9}
+.go:disabled{opacity:.5;cursor:wait}
+.opts{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.opt-label{font-size:13px;color:var(--muted);margin-right:6px}
+select{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{padding:8px 12px;font-size:14px;cursor:pointer;color:var(--muted)}
+.seg input:checked + label{background:var(--surface-2);color:var(--ink);box-shadow:inset 0 -2px 0 var(--teal)}
+.seg input:focus-visible + label{outline:2px solid var(--led)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:transparent;border:1px dashed var(--line);border-radius:999px;padding:6px 12px;font-size:14px;color:var(--muted)}
+.chip:hover{color:var(--ink);border-color:var(--teal)}
+
+/* status */
+.status{margin:6px 0 0;padding:14px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.status.err{border-color:rgba(255,122,92,.5)}
+.status.okay{border-color:rgba(95,211,155,.45)}
+.spinner{width:22px;height:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--teal);animation:spin .9s linear infinite;flex:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* resultado */
+.result{margin-top:28px;display:grid;gap:18px}
+.example-tag{display:inline-block;font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#1b1206;background:var(--led);padding:3px 8px;border-radius:6px}
+.song{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.song h2{font-family:var(--f-display);font-weight:900;font-size:clamp(2rem,5vw,3.4rem);line-height:.95;text-transform:uppercase}
+.song .artist{font-size:18px;color:var(--muted);margin-top:4px}
+.song-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 14px;font-size:14px}
+.btn:hover{border-color:var(--teal)}
+.btn.primary{background:var(--led);color:#1b1206;border-color:var(--led);font-weight:700}
+.btn.primary:hover{background:#ffc161}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:14px}
+.fact b{font-weight:700}
+.fact.alert{border-color:var(--warn);background:rgba(255,122,92,.1)}
+.gear{color:var(--muted);max-width:75ch;margin:0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 14px 8px 8px;text-align:left}
+.tab .fs{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-weight:900;background:#252d2c;border:2px solid #3a4543}
+.tab small{display:block;color:var(--muted);font-size:12px;line-height:1.2}
+.tab[aria-selected="true"]{border-color:var(--teal);background:var(--surface-2)}
+.tab[aria-selected="true"] .fs{border-color:var(--led);color:var(--led)}
+
+/* painel da pedaleira */
+.pedal{
+  position:relative;border-radius:18px;padding:16px 16px 18px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0) 40%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 2px, rgba(0,0,0,.025) 2px 4px),
+    linear-gradient(160deg, #26ad9f, var(--teal-deep));
+  box-shadow:0 1px 0 rgba(255,255,255,.25) inset, 0 -2px 0 rgba(0,0,0,.25) inset, 0 20px 50px rgba(0,0,0,.45);
+  color:#04201d;
+}
+.pedal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px;flex-wrap:wrap}
+.pedal-head .brand{font-family:var(--f-display);font-weight:900;letter-spacing:.14em;font-size:15px}
+.pedal-head .model{font-family:var(--f-display);font-weight:900;font-size:26px;letter-spacing:.06em}
+.lcd{font-family:var(--f-mono);background:#071312;color:#ff5a4a;border-radius:6px;padding:4px 10px;font-size:18px;letter-spacing:.08em;box-shadow:0 0 0 2px rgba(0,0,0,.25) inset;text-shadow:0 0 6px rgba(255,90,74,.6)}
+.knobs{display:flex;flex-wrap:wrap;gap:12px}
+.group{background:rgba(3,30,27,.16);border:1px solid rgba(3,30,27,.22);border-radius:12px;padding:8px 8px 6px}
+.g-head{display:flex;align-items:center;gap:6px;font-family:var(--f-display);font-weight:900;font-size:13px;letter-spacing:.14em;margin:0 0 4px 4px}
+.led{width:9px;height:9px;border-radius:50%;background:#173f3a;box-shadow:0 0 0 1px rgba(0,0,0,.3) inset}
+.led.lit{background:var(--led);box-shadow:0 0 10px var(--led),0 0 0 1px rgba(0,0,0,.2) inset}
+.row{display:flex;flex-wrap:wrap;gap:4px}
+.knob{width:76px;text-align:center;display:grid;justify-items:center}
+.knob svg{width:64px;height:64px;overflow:visible}
+.knob .tick{stroke:#04201d;stroke-width:1.6;stroke-linecap:round;opacity:.7}
+.knob .dotk{fill:#04201d;opacity:.45}
+.knob .dotk.on{fill:var(--led);opacity:1}
+.knob .zone{fill:none;stroke:#04201d;stroke-width:3;opacity:.3;stroke-linecap:round}
+.knob .zone.on{stroke:var(--led);opacity:1}
+.knob .cap{fill:#151a19}
+.knob .cap2{fill:url(#capg)}
+.knob .ptr line{stroke:#f4f7f5;stroke-width:3;stroke-linecap:round}
+.knob .ptr{transform-box:view-box;transform-origin:32px 32px;transition:transform 900ms cubic-bezier(.2,.9,.25,1.05)}
+.knob.off .ptr line{stroke:#7f8b88}
+.knob.off .cap2{opacity:.6}
+.k-label{font-family:var(--f-display);font-weight:800;font-size:12px;letter-spacing:.12em;margin-top:2px}
+.k-val{font-family:var(--f-mono);font-size:16px;line-height:1.1;background:rgba(3,30,27,.85);color:#e9fff9;border-radius:5px;padding:1px 6px;margin-top:2px;min-width:40px}
+.knob.off .k-val{color:#9fb3ae}
+.k-sub{font-size:11px;line-height:1.2;margin-top:2px;color:#04201d;max-width:76px;font-weight:700}
+.switches{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.fsw{flex:1 1 120px;display:flex;align-items:center;gap:10px;background:rgba(3,30,27,.22);border-radius:12px;padding:8px 10px}
+.fsw .cap{width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#d9dfdd,#7d8786 60%,#4a5352);display:grid;place-items:center;flex:none;box-shadow:0 0 0 3px #173f3a}
+.fsw.lit .cap{box-shadow:0 0 0 3px var(--led),0 0 14px var(--led)}
+.fsw .cap b{font-family:var(--f-display);font-weight:900;color:#1b2322}
+.fsw div{font-size:12px;line-height:1.2;font-weight:700}
+.fsw div span{display:block;font-family:var(--f-display);font-size:15px;letter-spacing:.08em}
+.pedal-note{margin:12px 2px 0;font-size:13px;color:#06302b;font-weight:700}
+
+/* enviar */
+.send{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px}
+.send h3{font-family:var(--f-display);font-weight:800;font-size:22px;letter-spacing:.03em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.send-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.send-msg{font-size:14px;color:var(--muted);margin:0}
+.send-msg.err{color:var(--warn)}
+.send-msg.okay{color:var(--ok)}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:rgba(255,178,62,.08);border:1px solid rgba(255,178,62,.4);border-radius:10px;padding:10px 12px;font-size:14px}
+
+/* cartões */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.card h3{font-family:var(--f-display);font-weight:800;font-size:20px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px}
+.card p{margin:0 0 8px}
+.card ul,.card ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.selector{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:6px 0 12px}
+.selector div{text-align:center;font-size:12px;line-height:1.2;color:var(--muted);padding:8px 2px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line)}
+.selector div.on{color:#1b1206;background:var(--led);border-color:var(--led);font-weight:700}
+.bar{display:grid;grid-template-columns:70px 1fr 34px;align-items:center;gap:10px;font-size:14px;margin-top:6px}
+.bar i{display:block;height:8px;border-radius:4px;background:var(--surface-2);position:relative;overflow:hidden}
+.bar i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:var(--teal)}
+.bar span{font-family:var(--f-mono);text-align:right}
+table.vals{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+table.vals td{padding:5px 0;border-bottom:1px solid var(--line)}
+table.vals td:last-child{text-align:right;font-family:var(--f-mono)}
+details summary{cursor:pointer;color:var(--muted);font-size:14px}
+
+/* salvos */
+.saved{margin-top:36px}
+.saved h2{font-family:var(--f-display);font-weight:900;font-size:30px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:10px}
+.saved-list{display:grid;gap:8px}
+.saved-item{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;flex-wrap:wrap}
+.saved-item b{display:block}
+.saved-item small{color:var(--muted)}
+
+dialog{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;max-width:560px;width:calc(100% - 32px);padding:20px}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog h2{font-family:var(--f-display);font-weight:900;font-size:26px;text-transform:uppercase;margin-bottom:12px}
+dialog label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+dialog textarea,dialog input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 11px}
+.dlg-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+
+footer{margin-top:48px;color:#6c7a75;font-size:13px;max-width:75ch}
+
+@media (max-width:520px){
+  .wrap{padding-left:max(16px, env(safe-area-inset-left));padding-right:max(16px, env(safe-area-inset-right))}
+  .knob{width:70px}
+  .go{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .knob .ptr{transition:none}
+  .mic.on,.spinner{animation:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="capg" cx="40%" cy="32%" r="70%">
+      <stop offset="0" stop-color="#4a5352"/>
+      <stop offset=".6" stop-color="#232a29"/>
+      <stop offset="1" stop-color="#121716"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <div class="mark"><b>TIMBRE CERTO</b><span>para M-VAVE Tank-G</span></div>
+    <div class="top-actions">
+      <button class="ghost conn-pill" id="connPill" type="button"><i class="dot" id="connDot"></i><span id="connText">Tank-G desconectada</span></button>
+      <a class="ghost" href="#salvos" id="savedLink">Meus timbres</a>
+      <button class="ghost" id="openCfg" type="button">Ajustes</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Qual música<br>você vai <em>tocar?</em></h1>
+    <p>Fale ou digite o nome da música. O app pesquisa o timbre na internet, monta para a sua Tank-G e a sua guitarra, mostra onde cada botão fica e manda direto para a pedaleira.</p>
+    <form class="search" id="searchForm" autocomplete="off">
+      <div class="field">
+        <input id="q" name="q" type="text" placeholder="Ex.: Come As You Are, Nirvana" aria-label="Nome da música">
+        <button class="mic hidden" id="mic" type="button" aria-label="Falar o nome da música">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        </button>
+      </div>
+      <button class="go" id="go" type="submit">Gerar timbre</button>
+    </form>
+    <div class="opts">
+      <div><label class="opt-label" for="parte">Parte</label>
+        <select id="parte">
+          <option value="toda">Música toda (até 3 timbres)</option>
+          <option value="base">Só a base / riff</option>
+          <option value="solo">Só o solo</option>
+          <option value="limpa">Só a parte limpa</option>
+        </select>
+      </div>
+      <div><span class="opt-label">Ouvindo em</span>
+        <span class="seg" role="radiogroup" aria-label="Onde você ouve a guitarra">
+          <input type="radio" name="mode" id="modeFone" value="fone" checked><label for="modeFone">Fone / celular / PC</label>
+          <input type="radio" name="mode" id="modeAmp" value="amp"><label for="modeAmp">Mini amp</label>
+        </span>
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div id="status" class="status hidden" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="result" id="result" aria-live="polite"></section>
+
+  <section class="saved" id="salvos">
+    <h2>Meus timbres</h2>
+    <p class="muted" id="savedNote">Os timbres que você salvar aparecem aqui.</p>
+    <div class="saved-list" id="savedList"></div>
+  </section>
+
+  <footer>
+    O app pesquisa na internet o equipamento e as configurações da gravação e traduz para a Tank-G com o Gemini. Ajuste no ouvido. O envio para a pedaleira usa o protocolo SysEx da Tank-G mapeado pelo projeto aberto tank-g-controller; pelo cabo USB ele foi testado, pelo Bluetooth é experimental.
+  </footer>
+</div>
+
+<dialog id="cfg">
+  <form id="cfgForm">
+    <h2>Ajustes</h2>
+    <label for="cfgKey">Chave do Gemini (grátis)</label>
+    <input id="cfgKey" type="password" autocomplete="off" placeholder="Cole aqui a chave">
+    <p class="muted" style="font-size:13px;margin:6px 0 0">Crie em <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="color:var(--teal)">aistudio.google.com/apikey</a>, toque em "Create API key" e copie. Fica salva só neste aparelho.</p>
+    <label for="cfgModel">Modelo do Gemini</label>
+    <input id="cfgModel" type="text" autocomplete="off" placeholder="gemini-2.5-flash">
+    <label for="cfgGuitar">Sua guitarra</label>
+    <textarea id="cfgGuitar" rows="3"></textarea>
+    <label for="cfgBank">Banco onde gravar os timbres (1 a 9)</label>
+    <input id="cfgBank" type="number" min="1" max="9" step="1">
+    <p class="muted" style="font-size:13px;margin:10px 0 0">A 1ª parte vai no A, a 2ª no B e a 3ª no C desse banco. O que estiver gravado lá é substituído.</p>
+    <div class="dlg-actions">
+      <button class="btn" type="button" id="cfgCancel">Cancelar</button>
+      <button class="btn primary" type="submit">Salvar ajustes</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+"use strict";
+/* ========= Dados da Tank-G ========= */
+const AMPS = [null,
+  {n:"VOX AC30HW Normal", s:"AC30", cat:"clean"},
+  {n:"Fender '65 Twin Reverb", s:"TWIN", cat:"clean"},
+  {n:"Bogner Shiva", s:"SHIVA", cat:"overdrive"},
+  {n:"Marshall JTM45", s:"JTM45", cat:"overdrive"},
+  {n:"Plexi 100", s:"PLEXI", cat:"overdrive"},
+  {n:"Marshall JCM800", s:"JCM800", cat:"distorção"},
+  {n:"EVH 5150 Lead", s:"5150", cat:"distorção"},
+  {n:"ENGL Powerball", s:"ENGL", cat:"distorção"},
+  {n:"Mesa Boogie Dual Rectifier", s:"RECTI", cat:"distorção"}
+];
+const CABS = ["Desligado","VHT Deliverance 4x12","Sperimental 4x12","Electro-Voice 2x10","Mesa Boogie 4x12","Fender Champ 1x8","Fender Pro Junior 1x10","Marshall 1960 V30 4x12","Diezel V30 4x12"];
+const MODS = ["chorus","phaser","tremolo"], DLYS = ["analog","tape","dual"], RVBS = ["room","spring","cloud"];
+const LABEL = {chorus:"Chorus",phaser:"Phaser",tremolo:"Tremolo",analog:"Analog",tape:"Tape",dual:"Dual",room:"Room",spring:"Spring",cloud:"Cloud"};
+const PICK = ["","Ponte (humbucker)","Ponte + meio","Meio","Meio + braço","Braço"];
+const PICK_SHORT = ["","Ponte","Ponte+meio","Meio","Meio+braço","Braço"];
+const LETTERS = ["A","B","C","D"];
+const DEFAULT_GUITAR = "Seizi Fun Katana Musashi HSS (canhota): humbucker cerâmico na ponte, 2 singles cerâmicos Seizi Chidori (meio e braço), chave de 5 posições, 1 volume e 2 tones, cordas .009";
+
+/* ========= Utilidades ========= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const str = v => (typeof v === "string" ? v.trim() : (v == null ? "" : String(v)));
+const arr = v => Array.isArray(v) ? v.map(str).filter(Boolean).slice(0, 6) : [];
+function int(v, lo, hi, d){ let n = Math.round(Number(v)); if(!Number.isFinite(n)) n = d; return Math.min(hi, Math.max(lo, n)); }
+function pickType(v, list){ v = str(v).toLowerCase(); return list.find(t => v.includes(t)) || list[0]; }
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+/* ========= Normalização da resposta ========= */
+function normPart(p, i){
+  p = p || {};
+  const a = p.amp || {}, m = p.mod || {}, d = p.delay || {}, r = p.reverb || {}, ir = p.ir || {};
+  return {
+    nome: str(p.nome) || `Parte ${i+1}`, quando: str(p.quando), descricao: str(p.descricao),
+    captador: int(p.captador,1,5,1), volume_guitarra: int(p.volume_guitarra,0,10,10), tone_guitarra: int(p.tone_guitarra,0,10,10),
+    gate: int(p.gate,0,100,10),
+    amp: {ligado: a.ligado !== false, slot:int(a.slot,1,9,2), gain:int(a.gain,0,100,40), treble:int(a.treble,0,100,50), middle:int(a.middle,0,100,50), bass:int(a.bass,0,100,50), volume:int(a.volume,0,100,55)},
+    mod: {ligado: m.ligado === true, tipo: pickType(m.tipo,MODS), nivel:int(m.nivel,1,40,20), speed:int(m.speed,0,100,40)},
+    delay: {ligado: d.ligado === true, tipo: pickType(d.tipo,DLYS), nivel:int(d.nivel,1,40,12), time:int(d.time,0,100,40), tempo_ms: (d.tempo_ms == null || d.tempo_ms === "") ? null : int(d.tempo_ms,20,2000,null)},
+    reverb: {ligado: r.ligado === true, tipo: pickType(r.tipo,RVBS), nivel:int(r.nivel,1,40,10), mix:int(r.mix,0,100,20)},
+    ir: {ligado: ir.ligado !== false, slot: int(ir.slot,1,8,4), motivo: str(ir.motivo)},
+    dicas: arr(p.dicas)
+  };
+}
+function normResult(raw){
+  raw = raw || {};
+  const partes = Array.isArray(raw.partes) ? raw.partes.slice(0,3).map(normPart) : [];
+  return {
+    reconhecida: raw.reconhecida !== false && partes.length > 0,
+    musica: str(raw.musica), artista: str(raw.artista), ano: raw.ano ? int(raw.ano,1900,2100,null) : null,
+    confianca: ["alta","media","baixa"].includes(str(raw.confianca).toLowerCase().replace("é","e")) ? str(raw.confianca).toLowerCase().replace("é","e") : "media",
+    afinacao: str(raw.afinacao) || "Padrão (E A D G B E)", afinacao_padrao: raw.afinacao_padrao !== false,
+    capotraste: str(raw.capotraste), bpm: raw.bpm ? int(raw.bpm,30,300,null) : null,
+    equipamento_original: str(raw.equipamento_original), observacao: str(raw.observacao),
+    partes, limitacoes: arr(raw.limitacoes), dicas_gerais: arr(raw.dicas_gerais), sugestoes: arr(raw.sugestoes),
+    fontes: Array.isArray(raw.fontes) ? raw.fontes.filter(f => f && f.u).slice(0,8).map(f => ({t:str(f.t), u:str(f.u)})) : [], pesquisou: !!raw.pesquisou
+  };
+}
+
+/* ========= Protocolo SysEx da Tank-G ========= */
+const HDR = [0xF0,0x00,0x32,0x09];
+const mod256 = n => ((n % 256) + 256) % 256;
+function ck14(v){ const c = mod256(v); return [c & 0x7F, (c >> 7) & 0x7F]; }
+function pack7(fields, n){
+  let big = 0n;
+  fields.forEach((v,i) => { big |= (BigInt(v & 0xFF) << BigInt(8*i)); });
+  const out = [];
+  for(let i=0;i<n;i++) out.push(Number((big >> BigInt(7*i)) & 0x7Fn));
+  return out;
+}
+function rawSector(list, tipo, nivel){ const k = Math.max(0, list.indexOf(tipo)); return [-1,43,87][k] + int(nivel,1,40,20); }
+function partToState(p, mode){
+  return {
+    type:p.amp.slot, gain:p.amp.gain, treble:p.amp.treble, middle:p.amp.middle, bass:p.amp.bass, volume:p.amp.volume,
+    mod_fx: rawSector(MODS,p.mod.tipo,p.mod.nivel), mod_speed:p.mod.speed,
+    dly_mix: rawSector(DLYS,p.delay.tipo,p.delay.nivel), dly_time:p.delay.time,
+    rev_decay: rawSector(RVBS,p.reverb.tipo,p.reverb.nivel), rev_mix:p.reverb.mix,
+    amp_on:p.amp.ligado?1:0, mod_on:p.mod.ligado?1:0, dly_on:p.delay.ligado?1:0, rev_on:p.reverb.ligado?1:0,
+    gate:p.gate, cab: (mode === "amp" || !p.ir.ligado) ? 0 : p.ir.slot
+  };
+}
+function sxParams(s){
+  const f = [(s.type-1)*2, s.gain*2, s.treble*2, s.middle*2, s.bass*2, s.volume*2, s.mod_fx*2, s.mod_speed*2, s.dly_mix*2, s.dly_time*2, s.rev_decay*2, s.rev_mix*2, 0x0E];
+  const sum = s.type+s.gain+s.treble+s.middle+s.bass+s.volume+s.mod_fx+s.mod_speed+s.dly_mix+s.dly_time+s.rev_decay+s.rev_mix;
+  return [...HDR,0x31,0x01,0x00,0x00,0x02,0x04,0x00,0x00,0x00,0x61,0x01,0x00,0x00,0x00, ...pack7(f,15), ...ck14(211-sum), 0xF7];
+}
+function sxGate(v){
+  const [a,b] = ck14(95 - v);
+  return [...HDR,0x31,0x01,0x00,0x00,0x02,0x04,0x00,0x00,0x00,0x61,0x01,0x00,0x00,v,0x06,0x3C,0x31,0x35,0x68,0x4B,0x25,0x03,0x00,0x18,0x18,0x52,0x20,0x40,0x01,a,b,0xF7];
+}
+function sxCab(c){
+  const v14 = c << 6;
+  return [...HDR,0x31,0x01,0x00,0x00,0x02,0x04,0x00,0x00,0x00,0x61,0x01,0x00,0x00,0x00,0x06,0x3C,0x31,0x35,0x68,0x4B,0x25,0x03,0x00,0x18,0x18,0x52,0x20,v14 & 0x7F,(v14>>7) & 0x7F,(98-c) & 0x7F,0x00,0xF7];
+}
+function sxBypass(id, on){ const st = on?1:0; return [...HDR,0x49,0x00,0x00,0x00,0x02,id,0x00,0x00,0x00,0x11,0x00,0x00,0x00,st,0x54-2*id-2*st,0x03,0xF7]; }
+function sxSelect(pid){ const [a,b] = ck14(50 - 2*pid); return [...HDR,0x49,0x00,0x00,0x00,0x02,pid,0x00,0x00,0x00,0x1E,0x00,0x00,0x00,0x01,a,b,0xF7]; }
+function sxSave(pid, s){
+  const f = [s.amp_on,s.mod_on,s.dly_on,s.rev_on,s.gate,s.type,s.gain,s.treble,s.middle,s.bass,s.volume,s.mod_fx,s.mod_speed,s.dly_mix,s.dly_time,s.rev_decay,s.rev_mix,s.cab,255,0,0];
+  const off = pid*21 + 2;
+  const sum = f.reduce((x,y) => x+y, 0);
+  return [...HDR,0x69,0x01,0x00,0x00,0x02,off & 0x7F,(off>>7) & 0x7F,0x00,0x00,0x50,0x02,0x00,0x00, ...pack7(f,24), ...ck14(230-sum-off), 0xF7];
+}
+const sxFlush = () => [...HDR,0x41,0x00,0x00,0x00,0x02,0x00,0x00,0x00,0x00,0x0F,0x00,0x00,0x00,0x0B,0x00,0xF7];
+function liveMessages(s){ return [sxParams(s), sxGate(s.gate), sxCab(s.cab), sxBypass(0,s.amp_on), sxBypass(1,s.mod_on), sxBypass(2,s.dly_on), sxBypass(3,s.rev_on)]; }
+function saveMessages(pid, s){ return [sxSave(pid,s), sxFlush(), sxSelect(pid)]; }
+
+/* ========= Conexão com a pedaleira (nativo Android) ========= */
+const Cap = window.Capacitor;
+const plug = name => (Cap && Cap.registerPlugin) ? Cap.registerPlugin(name) : null;
+const IS_APP = !!(Cap && Cap.isNativePlatform && Cap.isNativePlatform());
+const TankMidi = IS_APP ? plug("TankMidi") : null, BLE = IS_APP ? plug("BluetoothLe") : null, Speech = IS_APP ? plug("SpeechRecognition") : null;
+const Tank = {kind:null, name:""};
+const errText = (e, d) => (e && (e.pt || e.message)) || d;
+function setConn(){
+  $("#connDot").classList.toggle("on", !!Tank.kind);
+  $("#connText").textContent = Tank.kind ? `Tank-G conectada (${Tank.kind === "usb" ? "cabo" : "Bluetooth"})` : "Tank-G desconectada";
+}
+async function connectUSB(){
+  if(!TankMidi) throw {pt:"A conexão com a pedaleira funciona no app Timbre Certo instalado no Android."};
+  try{ const r = await TankMidi.connectUsb(); Object.assign(Tank, {kind:"usb", name:r.name || "Tank-G"}); setConn(); }
+  catch(e){ throw {pt: errText(e, "Não achei a Tank-G no cabo. Confira o cabo USB-C (OTG).")}; }
+}
+async function connectBLE(){
+  if(!TankMidi || !BLE) throw {pt:"A conexão com a pedaleira funciona no app Timbre Certo instalado no Android."};
+  try{ await BLE.initialize({androidNeverForLocation:true}); }
+  catch(e){ throw {pt:"Libere o Bluetooth (dispositivos próximos) para o Timbre Certo e ligue o Bluetooth do aparelho."}; }
+  let dev;
+  try{ dev = await BLE.requestDevice({}); }
+  catch(e){ throw {pt:"Nenhum aparelho escolhido. Ligue o Bluetooth da Tank-G (segure B+C por 3 s) e tente de novo."}; }
+  try{ const r = await TankMidi.connectBluetooth({address: dev.deviceId, name: dev.name || "Tank-G"}); Object.assign(Tank, {kind:"ble", name:r.name || "Tank-G"}); setConn(); }
+  catch(e){ throw {pt: errText(e, "Não deu para abrir o MIDI por Bluetooth. Tente pelo cabo.")}; }
+}
+async function disconnectTank(){ try{ if(TankMidi) await TankMidi.disconnect(); }catch(e){} Tank.kind = null; setConn(); }
+async function sendAll(msgs){
+  if(!Tank.kind) throw {pt:"Conecte a Tank-G primeiro."};
+  for(const m of msgs){ await TankMidi.send({data:m}); await sleep(Tank.kind === "usb" ? 45 : 140); }
+}
+
+/* ========= Exemplo inicial ========= */
+const EXAMPLE = normResult({
+  reconhecida:true, musica:"Come As You Are", artista:"Nirvana", ano:1991, confianca:"alta",
+  afinacao:"Um tom abaixo (D G C F A D)", afinacao_padrao:false, bpm:120,
+  equipamento_original:"Guitarra com humbucker na ponte, chorus Electro-Harmonix Small Clone e distorção Boss DS-1 num amp valvulado limpo.",
+  partes:[
+    {nome:"Riff com chorus", quando:"Intro e versos", descricao:"Limpo e encorpado, com chorus fundo que deixa o riff com som de debaixo d'água.",
+     captador:1, volume_guitarra:10, tone_guitarra:7, gate:8,
+     amp:{ligado:true,slot:2,gain:28,treble:48,middle:60,bass:52,volume:62},
+     mod:{ligado:true,tipo:"chorus",nivel:32,speed:30}, delay:{ligado:false,tipo:"analog",nivel:8,time:30},
+     reverb:{ligado:true,tipo:"room",nivel:8,mix:14}, ir:{ligado:true,slot:7,motivo:"4x12 clássico com médio quente"},
+     dicas:["Palhetada firme e perto da ponte, para o chorus marcar cada nota.","Abafe de leve as cordas graves com a mão direita para o riff ficar definido."]},
+    {nome:"Refrão distorcido", quando:"Refrão e pontes", descricao:"Distorção crua e cheia, sem chorus, com médio presente.",
+     captador:1, volume_guitarra:10, tone_guitarra:10, gate:35,
+     amp:{ligado:true,slot:6,gain:76,treble:56,middle:58,bass:58,volume:48},
+     mod:{ligado:false,tipo:"chorus",nivel:20,speed:30}, delay:{ligado:false,tipo:"analog",nivel:8,time:30},
+     reverb:{ligado:true,tipo:"room",nivel:8,mix:12}, ir:{ligado:true,slot:7,motivo:"4x12 com V30 segura a distorção"},
+     dicas:["O VOLUME do amp fica mais baixo que na parte limpa para as duas soarem no mesmo nível."]},
+    {nome:"Solo", quando:"Solo, que segue a melodia do riff", descricao:"A distorção do refrão com o chorus de volta, mais discreto.",
+     captador:1, volume_guitarra:10, tone_guitarra:9, gate:30,
+     amp:{ligado:true,slot:6,gain:70,treble:58,middle:62,bass:55,volume:52},
+     mod:{ligado:true,tipo:"chorus",nivel:22,speed:30}, delay:{ligado:false,tipo:"analog",nivel:8,time:30},
+     reverb:{ligado:true,tipo:"room",nivel:10,mix:16}, ir:{ligado:true,slot:7,motivo:"mesmo gabinete do refrão"},
+     dicas:["Toque o solo como o riff, só que com mais ataque. Não precisa de mais gain."]}
+  ],
+  limitacoes:["A distorção do original vinha de um pedal (DS-1). Aqui ela sai do GAIN do amp JCM800, que chega bem perto."],
+  dicas_gerais:["Afine um tom abaixo antes de tudo. No afinador da Tank-G (segure B+C por 2 s) as cordas soltas devem marcar D G C F A D."]
+});
+
+/* ========= Estado ========= */
+const state = { result: EXAMPLE, isExample: true, part: 0, mode: "fone", query: "", parte: "toda", savedId: null, saved: [], cfg: {guitar: DEFAULT_GUITAR, bank: 9, key: "", model: "gemini-2.5-flash"}, pendingSave: null };
+
+/* ========= Ângulos dos botões ========= */
+const angCont = v => -150 + 3*v;
+const angDisc = i => -150 + i*37.5;
+const angZone = (k, lvl) => -150 + 100*k + 10 + (lvl-1)/39*80;
+function clock(a){
+  let h = 12 + a/30; h = Math.round(h*2)/2; if(h > 12) h -= 12; if(h <= 0) h += 12;
+  return (h % 1) ? `${Math.floor(h)}h30` : `${h}h`;
+}
+function pt(r, deg){ const t = deg*Math.PI/180; return [32 + r*Math.sin(t), 32 - r*Math.cos(t)]; }
+function arcPath(r, a0, a1){ const [x0,y0] = pt(r,a0), [x1,y1] = pt(r,a1); return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${r} ${r} 0 ${(a1-a0) > 180 ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`; }
+function knob({label, angle, val, sub, on = true, mode = "cont", zone = -1, slot = -1}){
+  let deco = "";
+  if(mode === "cont"){ for(let i=0;i<=10;i++){ const a = -150 + 30*i, [x0,y0] = pt(30,a), [x1,y1] = pt(26.5,a); deco += `<line class="tick" x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}"/>`; } }
+  if(mode === "zones"){ for(let k=0;k<3;k++) deco += `<path class="zone${k === zone && on ? " on" : ""}" d="${arcPath(29,-150+100*k+6,-150+100*k+94)}"/>`; }
+  if(mode === "disc"){ for(let i=0;i<9;i++){ const [x,y] = pt(29, angDisc(i)); deco += `<circle class="dotk${i === slot ? " on" : ""}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.1"/>`; } }
+  return `<div class="knob${on ? "" : " off"}">
+    <svg viewBox="0 0 64 64">${deco}<circle class="cap" cx="32" cy="32" r="22"/><circle class="cap2" cx="32" cy="32" r="18.5"/>
+    <g class="ptr" style="transform:rotate(-150deg)" data-a="${angle.toFixed(1)}"><line x1="32" y1="31" x2="32" y2="16"/></g></svg>
+    <div class="k-label">${esc(label)}</div><div class="k-val">${esc(val)}</div><div class="k-sub">${esc(sub)}</div></div>`;
+}
+function zoneKnob(label, list, eff, lvlName, on){
+  const k = list.indexOf(eff.tipo), a = angZone(k, eff.nivel);
+  return knob({label, angle:a, mode:"zones", zone:k, on, val: LABEL[eff.tipo].toUpperCase(), sub: on ? `${lvlName} ${eff.nivel}/40 · ${clock(a)}` : "desligado"});
+}
+
+/* ========= Renderização ========= */
+function pedalHTML(p){
+  const cab = (state.mode === "amp" || !p.ir.ligado) ? 0 : p.ir.slot;
+  const am = p.amp, mo = p.mod, dl = p.delay, rv = p.reverb;
+  const lvlMod = mo.tipo === "phaser" ? "depth" : "mix";
+  const bankLabel = `${state.cfg.bank}${LETTERS[state.part] || "A"}`;
+  return `<div class="pedal">
+    <div class="pedal-head"><div><div class="brand">M-VAVE</div><div class="model">TANK-G</div></div><div class="lcd" title="Banco e preset sugeridos">${esc(bankLabel)}</div></div>
+    <div class="knobs">
+      <div class="group"><div class="g-head"><i class="led${p.gate > 0 ? " lit" : ""}"></i>GATE</div><div class="row">
+        ${knob({label:"NOISE GATE", angle:angCont(p.gate), val:p.gate, sub: p.gate ? clock(angCont(p.gate)) : "desligado", on:p.gate > 0})}
+      </div></div>
+      <div class="group"><div class="g-head"><i class="led${am.ligado ? " lit" : ""}"></i>AMP</div><div class="row">
+        ${knob({label:"TYPE", angle:angDisc(am.slot-1), mode:"disc", slot:am.slot-1, val:am.slot, sub:AMPS[am.slot].s, on:am.ligado})}
+        ${["gain","treble","middle","bass","volume"].map(k => knob({label:k.toUpperCase(), angle:angCont(am[k]), val:am[k], sub:clock(angCont(am[k])), on:am.ligado})).join("")}
+      </div></div>
+      <div class="group"><div class="g-head"><i class="led${mo.ligado ? " lit" : ""}"></i>MOD</div><div class="row">
+        ${zoneKnob("MOD FX", MODS, mo, lvlMod, mo.ligado)}
+        ${knob({label:"MOD SPEED", angle:angCont(mo.speed), val:mo.speed, sub: mo.ligado ? clock(angCont(mo.speed)) : "—", on:mo.ligado})}
+      </div></div>
+      <div class="group"><div class="g-head"><i class="led${dl.ligado ? " lit" : ""}"></i>DELAY</div><div class="row">
+        ${zoneKnob("DLY MIX", DLYS, dl, "mix", dl.ligado)}
+        ${knob({label:"DLY TIME", angle:angCont(dl.time), val:dl.time, sub: dl.ligado ? (dl.tempo_ms ? `≈ ${dl.tempo_ms} ms` : clock(angCont(dl.time))) : "—", on:dl.ligado})}
+      </div></div>
+      <div class="group"><div class="g-head"><i class="led${rv.ligado ? " lit" : ""}"></i>REVERB</div><div class="row">
+        ${zoneKnob("RVB DECAY", RVBS, rv, "decay", rv.ligado)}
+        ${knob({label:"RVB MIX", angle:angCont(rv.mix), val:rv.mix, sub: rv.ligado ? clock(angCont(rv.mix)) : "—", on:rv.ligado})}
+      </div></div>
+      <div class="group"><div class="g-head"><i class="led${cab ? " lit" : ""}"></i>CAB</div><div class="row">
+        ${knob({label:"IR CAB", angle:angDisc(cab), mode:"disc", slot:cab, val: cab ? cab : "OFF", sub: cab ? CABS[cab] : (state.mode === "amp" ? "off no mini amp" : "desligado"), on:cab > 0})}
+      </div></div>
+    </div>
+    <div class="switches">
+      ${[["A","REVERB",rv.ligado],["B","DELAY",dl.ligado],["C","MOD",mo.ligado],["D","AMP",am.ligado]].map(([l,n,on]) => `<div class="fsw${on ? " lit" : ""}"><span class="cap"><b>${l}</b></span><div><span>${n}</span>${on ? "ligado" : "desligado"}</div></div>`).join("")}
+    </div>
+    <p class="pedal-note">Pedais no modo LIVE (toque B+C): a luz de cada pedal mostra se o efeito fica ligado. As posições em "h" são o ponteiro do botão como num relógio.</p>
+  </div>`;
+}
+
+function sendHTML(){
+  const r = state.result, p = r.partes[state.part];
+  const n = r.partes.length;
+  const slots = r.partes.map((_,i) => `${state.cfg.bank}${LETTERS[i]}`).join(", ");
+  const conn = Tank.kind;
+  const ps = state.pendingSave;
+  return `<div class="send" id="sendBox">
+    <h3><i class="dot${conn ? " on" : ""}"></i>Mandar para a Tank-G</h3>
+    <div class="send-row" ${conn ? 'style="display:none"' : ""}>
+      <button class="btn primary" type="button" data-act="usb">Conectar pelo cabo USB</button>
+      <button class="btn" type="button" data-act="ble">Conectar pelo Bluetooth (experimental)</button>
+    </div>
+    <div class="send-row" ${conn ? "" : 'style="display:none"'}>
+      <button class="btn primary" type="button" data-act="try">Testar "${esc(p.nome)}" agora</button>
+      <button class="btn" type="button" data-act="save">${n > 1 ? `Gravar as ${n} partes em ${esc(slots)}` : `Gravar no preset ${esc(slots)}`}</button>
+      <button class="btn" type="button" data-act="disc">Desconectar</button>
+    </div>
+    ${ps ? `<div class="confirm"><span>Isso substitui o que está gravado em <b>${esc(slots)}</b>. Confirma?</span><button class="btn primary" type="button" data-act="saveYes">Gravar</button><button class="btn" type="button" data-act="saveNo">Cancelar</button></div>` : ""}
+    <p class="send-msg" id="sendMsg">${conn ? `Conectada: ${esc(Tank.name)}. "Testar" muda o som na hora sem gravar; "Gravar" salva na memória da pedaleira.` : "Cabo: ligue a Tank-G no celular ou tablet com um cabo USB-C (OTG) e feche o app M-EFCS. Bluetooth: segure B+C por 3 s na Tank-G e escolha ela na lista."}</p>
+  </div>`;
+}
+
+function render(){
+  const r = state.result, el = $("#result");
+  if(!r){ el.innerHTML = ""; return; }
+  if(!r.reconhecida){
+    el.innerHTML = `<div class="card"><h3>Não achei essa música</h3><p>${esc(r.observacao || "Tente escrever o nome da música e do artista.")}</p>
+      ${r.sugestoes.length ? `<p class="muted">Você quis dizer:</p><div class="chips">${r.sugestoes.map(s => `<button class="chip" type="button" data-q="${esc(s)}">${esc(s)}</button>`).join("")}</div>` : ""}</div>`;
+    return;
+  }
+  if(state.part >= r.partes.length) state.part = 0;
+  const p = r.partes[state.part];
+  const conf = {alta:"Confiança alta", media:"Confiança média", baixa:"Confiança baixa"}[r.confianca];
+  el.innerHTML = `
+    ${state.isExample ? `<div><span class="example-tag">Exemplo</span> <span class="muted">Busque qualquer música para gerar o seu.</span></div>` : ""}
+    <div class="song">
+      <div><h2>${esc(r.musica)}</h2><div class="artist">${esc(r.artista)}${r.ano ? ` · ${r.ano}` : ""}</div></div>
+      <div class="song-actions">
+        ${state.isExample ? "" : `<button class="btn" type="button" data-act="regen">Gerar outra versão</button>`}
+        <button class="btn" type="button" data-act="copy">Copiar timbre</button>
+        <button class="btn primary" type="button" data-act="keep" ${state.savedId ? "disabled" : ""}>${state.savedId ? "Salvo" : "Salvar em Meus timbres"}</button>
+      </div>
+    </div>
+    <div class="facts">
+      <span class="fact${r.afinacao_padrao ? "" : " alert"}"><b>Afinação:</b> ${esc(r.afinacao)}</span>
+      ${r.capotraste ? `<span class="fact alert"><b>Capotraste:</b> ${esc(r.capotraste)}</span>` : ""}
+      ${r.bpm ? `<span class="fact"><b>${r.bpm}</b> BPM</span>` : ""}
+      <span class="fact">${esc(conf)}</span>
+    </div>
+    ${r.equipamento_original ? `<p class="gear"><b>Na gravação:</b> ${esc(r.equipamento_original)}</p>` : ""}
+    ${r.partes.length > 1 ? `<div class="tabs" role="tablist">${r.partes.map((x,i) => `<button class="tab" role="tab" type="button" data-part="${i}" aria-selected="${i === state.part}"><span class="fs">${LETTERS[i]}</span><span>${esc(x.nome)}<small>${esc(x.quando)}</small></span></button>`).join("")}</div>` : ""}
+    <div><p style="margin:0 0 10px"><b>${esc(p.nome)}</b>${p.quando ? ` <span class="muted">· ${esc(p.quando)}</span>` : ""}<br><span class="muted">${esc(p.descricao)}</span></p>
+    ${pedalHTML(p)}</div>
+    ${sendHTML()}
+    <div class="grid">
+      <div class="card"><h3>Na guitarra</h3>
+        <p class="muted" style="font-size:14px">Chave de 5 posições</p>
+        <div class="selector">${[1,2,3,4,5].map(i => `<div class="${i === p.captador ? "on" : ""}">${PICK_SHORT[i]}</div>`).join("")}</div>
+        <div class="bar"><b>Volume</b><i style="--w:${p.volume_guitarra*10}%"></i><span>${p.volume_guitarra}</span></div>
+        <div class="bar"><b>Tone</b><i style="--w:${p.tone_guitarra*10}%"></i><span>${p.tone_guitarra}</span></div>
+      </div>
+      <div class="card"><h3>Dicas</h3>
+        <ul>${[...p.dicas, ...r.dicas_gerais].map(d => `<li>${esc(d)}</li>`).join("") || "<li>Ajuste o GAIN no ouvido até bater com a gravação.</li>"}</ul>
+        ${r.limitacoes.length ? `<p class="muted" style="margin-top:12px;font-size:14px"><b>O que a Tank-G não tem:</b> ${r.limitacoes.map(esc).join(" ")}</p>` : ""}
+        ${r.observacao ? `<p class="muted" style="margin-top:8px;font-size:14px">${esc(r.observacao)}</p>` : ""}
+        ${r.fontes.length ? `<p class="muted" style="margin:12px 0 4px;font-size:14px"><b>Pesquisado em:</b></p><ul style="font-size:14px">${r.fontes.map(f => `<li><a href="${esc(f.u)}" target="_blank" rel="noopener" style="color:var(--teal)">${esc(f.t)}</a></li>`).join("")}</ul>` : (state.isExample ? "" : `<p class="muted" style="margin-top:12px;font-size:13px">${r.pesquisou ? "A pesquisa não trouxe links." : "Sem pesquisa na internet desta vez: valores estimados pela IA."}</p>`)}
+      </div>
+      <div class="card"><h3>Gravar à mão</h3>
+        <ol>
+          <li>Toque B+C juntos para entrar no modo LIVE.</li>
+          <li>Gire os botões como no painel e deixe as luzes de A, B, C e D iguais ao desenho.</li>
+          <li>Escolha o banco com BANK+ ou BANK− (sugestão: banco ${state.cfg.bank}).</li>
+          <li>Segure o pedal ${LETTERS[state.part]} até a luz piscar rápido.</li>
+          <li>Toque B+C de novo para voltar ao modo PRESET.</li>
+        </ol>
+        <details style="margin-top:10px"><summary>Valores para o app M-EFCS</summary>
+          <table class="vals"><tbody>
+            <tr><td>Noise gate</td><td>${p.gate}</td></tr>
+            <tr><td>Amp</td><td>${p.amp.slot} · ${esc(AMPS[p.amp.slot].n)}</td></tr>
+            <tr><td>Gain / Treble / Middle</td><td>${p.amp.gain} / ${p.amp.treble} / ${p.amp.middle}</td></tr>
+            <tr><td>Bass / Volume</td><td>${p.amp.bass} / ${p.amp.volume}</td></tr>
+            <tr><td>Mod</td><td>${p.mod.ligado ? `${LABEL[p.mod.tipo]} ${p.mod.nivel}/40 · speed ${p.mod.speed}` : "off"}</td></tr>
+            <tr><td>Delay</td><td>${p.delay.ligado ? `${LABEL[p.delay.tipo]} ${p.delay.nivel}/40 · time ${p.delay.time}` : "off"}</td></tr>
+            <tr><td>Reverb</td><td>${p.reverb.ligado ? `${LABEL[p.reverb.tipo]} ${p.reverb.nivel}/40 · mix ${p.reverb.mix}` : "off"}</td></tr>
+            <tr><td>IR Cab</td><td>${(state.mode === "amp" || !p.ir.ligado) ? "off" : `${p.ir.slot} · ${esc(CABS[p.ir.slot])}`}</td></tr>
+          </tbody></table>
+        </details>
+      </div>
+    </div>`;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    el.querySelectorAll(".ptr").forEach(g => { g.style.transform = `rotate(${g.dataset.a}deg)`; });
+  }));
+}
+
+/* ========= Status ========= */
+let tipTimer = null;
+function showStatus(html, kind = ""){
+  const s = $("#status"); clearInterval(tipTimer);
+  s.className = "status" + (kind ? " " + kind : ""); s.innerHTML = html;
+}
+function hideStatus(){ clearInterval(tipTimer); $("#status").className = "status hidden"; }
+const TIPS = ["Lembrando o equipamento da gravação…","Escolhendo o amp certo entre os 9…","Dosando o gain…","Acertando chorus, delay e reverb…","Conferindo afinação e captador…"];
+
+/* ========= IA: Gemini com pesquisa no Google ========= */
+let ctl = null;
+const GEMINI = "https://generativelanguage.googleapis.com/v1beta/models/";
+async function gemini(body, signal){
+  const key = state.cfg.key;
+  const models = [...new Set([state.cfg.model || "gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-flash"])];
+  let res, j;
+  for(const model of models){
+    res = await fetch(`${GEMINI}${encodeURIComponent(model)}:generateContent`, {method:"POST", headers:{"Content-Type":"application/json","x-goog-api-key":key}, body:JSON.stringify(body), signal});
+    j = await res.json().catch(() => ({}));
+    if(res.status !== 404) break;
+  }
+  if(!res.ok) throw {status:res.status, message:(j.error && j.error.message) || ""};
+  const c = (j.candidates || [])[0] || {};
+  if(c.finishReason === "SAFETY") throw {status:"refused"};
+  const text = ((c.content && c.content.parts) || []).map(x => x.text || "").join("");
+  return {text, grounding: c.groundingMetadata || null};
+}
+function researchPrompt(q, parte){
+  return `Pesquise na internet como reproduzir o timbre de guitarra da música "${q}"${parte === "solo" ? " (principalmente o solo)" : ""}.
+Procure em tutoriais, entrevistas, sites de equipamento (Premier Guitar, Guitar World, Equipboard, Ground Guitar e similares), fóruns e vídeos:
+- guitarra e captador usados na gravação, amplificador e configurações citadas (gain, grave, médio, agudo, presença)
+- pedais usados e ajustes (drive, chorus, delay com tempo em ms, reverb, wah, fuzz)
+- afinação, capotraste e BPM
+- quais partes da música têm timbres diferentes (limpo, base, solo)
+Responda em português do Brasil, em tópicos curtos e objetivos, sempre com os números que encontrar (ex.: "gain 7/10"). Separe o que as fontes confirmam do que é estimativa. Se não encontrar a música, diga claramente.`;
+}
+function fontesDe(g){
+  const out = [], seen = new Set();
+  ((g && g.groundingChunks) || []).forEach(ch => { const w = ch.web; if(w && w.uri && !seen.has(w.uri)){ seen.add(w.uri); out.push({t: str(w.title) || "Fonte", u: w.uri}); } });
+  return out.slice(0, 8);
+}
+function parseJSON(t){
+  t = str(t).replace(/^```(?:json)?/i, "").replace(/```$/, "").trim();
+  try{ return JSON.parse(t); }catch(e){}
+  const a = t.indexOf("{"), b = t.lastIndexOf("}");
+  if(a >= 0 && b > a){ try{ return JSON.parse(t.slice(a, b+1)); }catch(e){} }
+  throw {status:"json"};
+}
+function aiError(e){
+  const m = str(e && e.message).toLowerCase();
+  if(e && e.status === "refused") return "A IA não respondeu esse pedido. Escreva só o nome da música e do artista.";
+  if(e && e.status === "json") return "A resposta veio fora do formato. Toque em Gerar timbre de novo.";
+  if(m.includes("api key") || m.includes("api_key") || e.status === 401 || e.status === 403) return "A chave do Gemini não foi aceita. Confira em Ajustes.";
+  if(e.status === 429) return "Limite grátis do Gemini atingido por agora. Espere um minuto e tente de novo.";
+  if(e.status === 404) return "Esse modelo do Gemini não existe mais. Troque o modelo em Ajustes (ex.: gemini-2.5-flash).";
+  if(e && e.name === "AbortError") return "Cancelado.";
+  return "Falha de conexão com o Gemini. Confira a internet e tente de novo.";
+}
+async function generate(regen){
+  const q = $("#q").value.trim();
+  if(!q){ $("#q").focus(); showStatus("Digite ou fale o nome de uma música.", "err"); return; }
+  if(!state.cfg.key){ showStatus(`Para gerar timbres, cole sua chave grátis do Gemini em Ajustes. <button class="btn" type="button" data-act="cfg">Abrir Ajustes</button>`, "err"); return; }
+  if(ctl) ctl.abort();
+  ctl = new AbortController();
+  const go = $("#go"); go.disabled = true;
+  showStatus(`<span class="spinner"></span><span id="tip">Pesquisando o timbre na internet…</span><button class="btn" type="button" id="stop" style="margin-left:auto">Parar</button>`);
+  $("#stop").onclick = () => ctl && ctl.abort();
+  const tip = t => { const el = $("#tip"); if(el) el.textContent = t; };
+  try{
+    let research = "", fontes = [];
+    try{
+      const r1 = await gemini({contents:[{role:"user", parts:[{text: researchPrompt(q, state.parte)}]}], tools:[{google_search:{}}], generationConfig:{temperature:0.3}}, ctl.signal);
+      research = str(r1.text).slice(0, 12000); fontes = fontesDe(r1.grounding);
+    }catch(e){
+      const m = str(e && e.message).toLowerCase(); if(e && (e.name === "AbortError" || e.status === 401 || m.includes("api key") || m.includes("api_key"))) throw e;
+    }
+    tip(fontes.length ? `Achei ${fontes.length} fonte(s). Traduzindo para a Tank-G…` : "Montando o timbre para a Tank-G…");
+    const r2 = await gemini({contents:[{role:"user", parts:[{text: buildPrompt(q, state.parte, state.mode, state.cfg.guitar, research)}]}], generationConfig:{responseMimeType:"application/json", temperature: regen ? 0.9 : 0.4}}, ctl.signal);
+    const r = normResult(parseJSON(r2.text));
+    r.fontes = fontes; r.pesquisou = !!research;
+    Object.assign(state, {result:r, isExample:false, part:0, query:q, savedId:null, pendingSave:null});
+    hideStatus(); render();
+    $("#result").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
+  }catch(e){
+    showStatus(esc(aiError(e)), (e && e.name === "AbortError") ? "" : "err");
+  }finally{ go.disabled = false; }
+}
+
+function buildPrompt(q, parte, mode, guitar, research){
+  const parteTxt = {toda:"a música toda: crie de 1 a 3 partes com timbres realmente diferentes (ex.: parte limpa, base, solo), na ordem em que aparecem", base:"só a base/riff principal: 1 parte", solo:"só o solo: 1 parte", limpa:"só a parte limpa: 1 parte"}[parte];
+  return `Você é um técnico de timbres de guitarra. O usuário quer tocar uma música e precisa do timbre pronto para a pedaleira M-VAVE Tank-G e para a guitarra dele. Responda APENAS com um objeto JSON válido no formato do final, sem texto fora dele.
+
+MÚSICA PEDIDA: "${q}"
+O QUE ELE QUER: ${parteTxt}
+ONDE ELE OUVE: ${mode === "amp" ? "Tank-G ligada na entrada de um mini amplificador de guitarra (o IR CAB fica desligado)" : "fone de ouvido, celular ou PC direto da Tank-G (IR CAB ligado)"}
+GUITARRA DELE: ${guitar}
+${research ? `\nPESQUISA FEITA NA INTERNET SOBRE ESSE TIMBRE (use como base principal; quando as fontes citarem configurações de amp e pedais, traduza esses valores para a Tank-G, convertendo escalas de 0-10 para 0-100):\n${research}\n` : ""}
+A TANK-G (não invente recursos que ela não tem):
+Cadeia fixa: NOISE GATE > AMP > MOD > DELAY > REVERB > IR CAB. Não tem pedal de drive/fuzz separado, wah, compressor, flanger, oitavador nem EQ além das 3 bandas do amp.
+- NOISE GATE: 0 a 100 (0 = desligado).
+- AMP, slot 1 a 9: 1 VOX AC30HW Normal (clean), 2 Fender '65 Twin Reverb (clean), 3 Bogner Shiva (overdrive), 4 Marshall JTM45 (overdrive), 5 Plexi 100 (overdrive), 6 Marshall JCM800 (distorção), 7 EVH 5150 Lead (alto ganho), 8 ENGL Powerball (alto ganho), 9 Mesa Boogie Dual Rectifier (alto ganho pesado). GAIN, TREBLE, MIDDLE, BASS, VOLUME de 0 a 100.
+- MOD: chorus (nivel = mix), phaser (nivel = profundidade) ou tremolo (nivel = mix). nivel 1 a 40, speed 0 a 100.
+- DELAY: analog, tape ou dual. nivel 1 a 40 (mix), time 0 a 100 (0 curto, 100 longo; cerca de 700 ms no máximo).
+- REVERB: room, spring ou cloud (ambiente grande e etéreo). nivel 1 a 40 (decay), mix 0 a 100.
+- IR CAB, slot 1 a 8: 1 VHT Deliverance 4x12, 2 Sperimental 4x12, 3 Electro-Voice 2x10, 4 Mesa Boogie 4x12, 5 Fender Champ 1x8, 6 Fender Pro Junior 1x10, 7 Marshall 1960 V30 4x12, 8 Diezel V30 4x12.
+- GUITARRA: captador 1 = ponte (humbucker), 2 = ponte + meio, 3 = meio, 4 = meio + braço, 5 = braço. volume_guitarra e tone_guitarra de 0 a 10.
+
+REGRAS:
+- Use o que você sabe do equipamento usado na gravação original e traduza para a Tank-G. Se a gravação usa algo que a Tank-G não tem (fuzz, wah, flanger, oitavador, whammy, slide, violão), escolha a aproximação mais próxima e explique em "limitacoes".
+- A distorção vem só do GAIN do amp: escolha o slot pelo tipo de saturação.
+- Compense o volume: com mais gain, o VOLUME do amp costuma ficar mais baixo para as partes soarem no mesmo nível.
+- Gate de 25 a 45 com gain alto; de 0 a 15 no clean.
+- No mini amp, deixe o grave um pouco mais contido.
+- Se o efeito estiver desligado, ainda preencha tipo e valores com algo sensato.
+- Afinação: diga a afinação real da gravação (ex.: "Meio tom abaixo (Eb Ab Db Gb Bb Eb)", "Drop D"). afinacao_padrao = true só se for E A D G B E sem capotraste.
+- Se não reconhecer a música, responda {"reconhecida": false, "observacao": "...", "sugestoes": ["Música — Artista", ...], "partes": []}. Se houver várias músicas com esse nome, use a mais famosa e avise em "observacao".
+- Valores inteiros. Textos curtos em português do Brasil, sem markdown. "confianca": "alta" só se você conhece bem o timbre dessa gravação.
+
+FORMATO:
+{"reconhecida": true, "musica": "nome oficial", "artista": "", "ano": 1991, "confianca": "alta|media|baixa", "afinacao": "", "afinacao_padrao": true, "capotraste": "", "bpm": 120, "equipamento_original": "1 frase com guitarra, pedais e amp da gravação", "observacao": "", "partes": [{"nome": "Base", "quando": "Intro e refrão", "descricao": "1 frase sobre o caráter do timbre", "captador": 1, "volume_guitarra": 10, "tone_guitarra": 10, "gate": 30, "amp": {"ligado": true, "slot": 6, "gain": 70, "treble": 55, "middle": 60, "bass": 55, "volume": 50}, "mod": {"ligado": false, "tipo": "chorus", "nivel": 20, "speed": 40}, "delay": {"ligado": false, "tipo": "analog", "nivel": 10, "time": 40, "tempo_ms": null}, "reverb": {"ligado": true, "tipo": "room", "nivel": 10, "mix": 15}, "ir": {"ligado": true, "slot": 7, "motivo": "por que esse gabinete"}, "dicas": ["1 ou 2 dicas de como tocar"]}], "limitacoes": [], "dicas_gerais": []}`;
+}
+/* ========= Copiar ========= */
+function toneText(){
+  const r = state.result;
+  const lines = [`Timbre Certo · ${r.musica} (${r.artista})`, `Afinação: ${r.afinacao}`];
+  r.partes.forEach((p,i) => {
+    const cab = (state.mode === "amp" || !p.ir.ligado) ? "off" : `${p.ir.slot} ${CABS[p.ir.slot]}`;
+    lines.push("", `[${LETTERS[i]}] ${p.nome}`,
+      `Guitarra: ${PICK[p.captador]} · vol ${p.volume_guitarra} · tone ${p.tone_guitarra}`,
+      `Gate ${p.gate} | Amp ${p.amp.slot} ${AMPS[p.amp.slot].s}: gain ${p.amp.gain}, treble ${p.amp.treble}, mid ${p.amp.middle}, bass ${p.amp.bass}, vol ${p.amp.volume}`,
+      `Mod ${p.mod.ligado ? `${LABEL[p.mod.tipo]} ${p.mod.nivel}/40 speed ${p.mod.speed}` : "off"} | Delay ${p.delay.ligado ? `${LABEL[p.delay.tipo]} ${p.delay.nivel}/40 time ${p.delay.time}` : "off"} | Reverb ${p.reverb.ligado ? `${LABEL[p.reverb.tipo]} ${p.reverb.nivel}/40 mix ${p.reverb.mix}` : "off"} | IR ${cab}`);
+  });
+  return lines.join("\n");
+}
+
+/* ========= Salvos (neste aparelho) ========= */
+const LS_KEY = "timbre-certo:salvos", LS_CFG = "timbre-certo:cfg";
+function lsGet(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ return false; } }
+function applyCfg(c){
+  if(c.guitar) state.cfg.guitar = str(c.guitar);
+  if(c.bank) state.cfg.bank = int(c.bank,1,9,9);
+  if(typeof c.key === "string") state.cfg.key = c.key.trim();
+  if(c.model) state.cfg.model = str(c.model);
+  if(c.mode === "amp" || c.mode === "fone") state.mode = c.mode;
+}
+function saveCfg(){ lsSet(LS_CFG, {...state.cfg, mode: state.mode}); }
+function keepTone(){
+  const r = state.result;
+  const item = {id:"t" + Date.now(), kind:"tone", createdAt:Date.now(), query:state.query || r.musica, parte:state.parte, mode:state.mode, result:r};
+  const list = lsGet(LS_KEY, []); list.unshift(item);
+  if(lsSet(LS_KEY, list.slice(0, 200))){ state.saved = list.slice(0, 200); state.savedId = item.id; renderSaved(); render(); }
+  else showStatus("Não deu para salvar. Apague alguns timbres e tente de novo.", "err");
+}
+function dropTone(id){ state.saved = state.saved.filter(x => x.id !== id); lsSet(LS_KEY, state.saved); renderSaved(); }
+let armed = null;
+function renderSaved(){
+  const L = $("#savedList");
+  $("#savedNote").textContent = state.saved.length ? "Salvos neste aparelho." : "Os timbres que você salvar aparecem aqui.";
+  L.innerHTML = state.saved.map(s => {
+    const r = s.result || {};
+    const d = new Date(s.createdAt || 0).toLocaleDateString("pt-BR");
+    return `<div class="saved-item"><div><b>${esc(r.musica || s.query)}</b><small>${esc(r.artista || "")} · ${(r.partes || []).length} parte(s) · ${d}</small></div>
+      <div class="send-row"><button class="btn" type="button" data-open="${esc(s.id)}">Abrir</button><button class="btn" type="button" data-del="${esc(s.id)}">${armed === s.id ? "Confirmar" : "Apagar"}</button></div></div>`;
+  }).join("");
+  $("#savedLink").textContent = state.saved.length ? `Meus timbres (${state.saved.length})` : "Meus timbres";
+}
+
+/* ========= Eventos ========= */
+const CHIPS = ["Come As You Are — Nirvana","Enter Sandman — Metallica","Sweet Child O' Mine — Guns N' Roses","Zóio de Lula — Charlie Brown Jr.","Smoke on the Water — Deep Purple","Pais e Filhos — Legião Urbana"];
+$("#chips").innerHTML = CHIPS.map(c => `<button class="chip" type="button" data-q="${esc(c)}">${esc(c)}</button>`).join("");
+document.addEventListener("click", async ev => {
+  const t = ev.target.closest("[data-q],[data-part],[data-act],[data-open],[data-del]");
+  if(!t) return;
+  if(t.dataset.q){ $("#q").value = t.dataset.q; generate(false); return; }
+  if(t.dataset.part){ state.part = +t.dataset.part; state.pendingSave = null; render(); return; }
+  if(t.dataset.open){ const s = state.saved.find(x => x.id === t.dataset.open); if(s){ Object.assign(state, {result:normResult(s.result), isExample:false, part:0, savedId:s.id, query:s.query || ""}); render(); $("#result").scrollIntoView({block:"start"}); } return; }
+  if(t.dataset.del){ const id = t.dataset.del; if(armed === id){ armed = null; dropTone(id); } else { armed = id; renderSaved(); setTimeout(() => { if(armed === id){ armed = null; renderSaved(); } }, 3500); } return; }
+  const act = t.dataset.act;
+  const msg = (text, kind) => { const m = $("#sendMsg"); if(m){ m.className = "send-msg" + (kind ? " " + kind : ""); m.textContent = text; } };
+  try{
+    if(act === "regen") generate(true);
+    else if(act === "copy"){ try{ await navigator.clipboard.writeText(toneText()); t.textContent = "Copiado"; setTimeout(() => t.textContent = "Copiar timbre", 1800); }catch(e){ t.textContent = "Não deu para copiar"; } }
+    else if(act === "keep") keepTone();
+    else if(act === "usb"){ msg("Procurando a Tank-G no cabo…"); await connectUSB(); render(); }
+    else if(act === "ble"){ msg("Escolha a Tank-G na lista do Bluetooth…"); await connectBLE(); render(); }
+    else if(act === "disc"){ await disconnectTank(); render(); }
+    else if(act === "cfg"){ openCfg(); }
+    else if(act === "try"){
+      t.disabled = true; msg("Mandando…");
+      await sendAll(liveMessages(partToState(state.result.partes[state.part], state.mode)));
+      msg(`Pronto: "${state.result.partes[state.part].nome}" está tocando na Tank-G (sem gravar).`, "okay");
+      t.disabled = false;
+    }
+    else if(act === "save"){ state.pendingSave = true; render(); }
+    else if(act === "saveNo"){ state.pendingSave = null; render(); }
+    else if(act === "saveYes"){
+      state.pendingSave = null; render();
+      const parts = state.result.partes, bank = state.cfg.bank;
+      msg("Gravando…");
+      for(let i=0;i<parts.length;i++){
+        const pid = (bank-1)*4 + i;
+        await sendAll(saveMessages(pid, partToState(parts[i], state.mode)));
+        await sleep(150);
+      }
+      msg(`Gravado em ${parts.map((_,i) => bank + LETTERS[i]).join(", ")}. No modo PRESET, troque de parte com os pedais ${parts.map((_,i) => LETTERS[i]).join(", ")}.`, "okay");
+    }
+  }catch(e){ msg((e && e.pt) || "Não deu certo. Confira a conexão com a Tank-G e tente de novo.", "err"); }
+});
+$("#searchForm").addEventListener("submit", ev => { ev.preventDefault(); generate(false); });
+$("#parte").addEventListener("change", e => { state.parte = e.target.value; });
+document.querySelectorAll('input[name="mode"]').forEach(r => r.addEventListener("change", e => { state.mode = e.target.value; saveCfg(); render(); }));
+$("#connPill").addEventListener("click", () => { const b = $("#sendBox"); if(b) b.scrollIntoView({block:"center"}); });
+
+/* Ajustes */
+const dlg = $("#cfg");
+function openCfg(){
+  $("#cfgKey").value = state.cfg.key || ""; $("#cfgModel").value = state.cfg.model || "gemini-2.5-flash";
+  $("#cfgGuitar").value = state.cfg.guitar; $("#cfgBank").value = state.cfg.bank;
+  if(dlg.showModal) dlg.showModal(); else dlg.setAttribute("open","");
+}
+$("#openCfg").addEventListener("click", openCfg);
+$("#cfgCancel").addEventListener("click", () => dlg.close ? dlg.close() : dlg.removeAttribute("open"));
+$("#cfgForm").addEventListener("submit", ev => {
+  ev.preventDefault();
+  state.cfg.key = $("#cfgKey").value.trim();
+  state.cfg.model = $("#cfgModel").value.trim() || "gemini-2.5-flash";
+  state.cfg.guitar = $("#cfgGuitar").value.trim() || DEFAULT_GUITAR;
+  state.cfg.bank = int($("#cfgBank").value,1,9,9);
+  dlg.close ? dlg.close() : dlg.removeAttribute("open");
+  saveCfg(); hideStatus(); render();
+});
+
+/* Voz (reconhecimento nativo do Android) */
+if(Speech){
+  Speech.available().then(r => { if(r && r.available) $("#mic").classList.remove("hidden"); }).catch(() => {});
+}
+$("#mic").addEventListener("click", async () => {
+  if(!Speech) return;
+  try{
+    const perm = await Speech.requestPermissions();
+    if(perm && perm.speechRecognition && perm.speechRecognition !== "granted"){ showStatus("O microfone não foi liberado. Digite o nome da música.", "err"); return; }
+    $("#mic").classList.add("on");
+    const r = await Speech.start({language:"pt-BR", maxResults:1, prompt:"Fale o nome da música", partialResults:false, popup:true});
+    const said = r && r.matches && r.matches[0];
+    if(said){ $("#q").value = said; generate(false); }
+  }catch(e){ showStatus("Não entendi. Toque no microfone e fale de novo, ou digite.", "err"); }
+  finally{ $("#mic").classList.remove("on"); }
+});
+
+/* Início */
+applyCfg(lsGet(LS_CFG, {}));
+state.saved = lsGet(LS_KEY, []);
+if(state.mode === "amp") $("#modeAmp").checked = true;
+render(); renderSaved(); setConn();
+if(!state.cfg.key) showStatus(`Primeiro passo: cole sua chave grátis do Gemini em Ajustes. <button class="btn" type="button" data-act="cfg">Abrir Ajustes</button>`);
+if(!IS_APP) showStatus("Esta tela foi feita para rodar dentro do app Android Timbre Certo.", "err");
+</script>
+</body>
+</html>
