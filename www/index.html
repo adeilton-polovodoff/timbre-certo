@@ -473,7 +473,15 @@ function sxSave(pid, s){
   return [...HDR,0x69,0x01,0x00,0x00,0x02,off & 0x7F,(off>>7) & 0x7F,0x00,0x00,0x50,0x02,0x00,0x00, ...pack7(f,24), ...ck14(230-sum-off), 0xF7];
 }
 const sxFlush = () => [...HDR,0x41,0x00,0x00,0x00,0x02,0x00,0x00,0x00,0x00,0x0F,0x00,0x00,0x00,0x0B,0x00,0xF7];
-function liveMessages(s){ return [sxParams(s), sxGate(s.gate), sxCab(s.cab), sxBypass(0,s.amp_on), sxBypass(1,s.mod_on), sxBypass(2,s.dly_on), sxBypass(3,s.rev_on)]; }
+// Mensagem 0x31 completa: o byte 17 é o noise gate e o último campo é o gabinete (cab*2).
+// As mensagens "de gate" e "de cab" capturadas são esta mesma mensagem com um timbre fixo dentro;
+// mandá-las separadas desfazia o timbre. Checksum geral: 218 - soma(parâmetros) - gate - cab.
+function sxState(s){
+  const f = [(s.type-1)*2, s.gain*2, s.treble*2, s.middle*2, s.bass*2, s.volume*2, s.mod_fx*2, s.mod_speed*2, s.dly_mix*2, s.dly_time*2, s.rev_decay*2, s.rev_mix*2, s.cab*2];
+  const sum = s.type+s.gain+s.treble+s.middle+s.bass+s.volume+s.mod_fx+s.mod_speed+s.dly_mix+s.dly_time+s.rev_decay+s.rev_mix;
+  return [...HDR,0x31,0x01,0x00,0x00,0x02,0x04,0x00,0x00,0x00,0x61,0x01,0x00,0x00, s.gate & 0x7F, ...pack7(f,15), ...ck14(218 - sum - s.gate - s.cab), 0xF7];
+}
+function liveMessages(s){ return [sxState(s), sxBypass(0,s.amp_on), sxBypass(1,s.mod_on), sxBypass(2,s.dly_on), sxBypass(3,s.rev_on)]; }
 function saveMessages(pid, s){ return [sxSave(pid,s), sxFlush(), sxSelect(pid)]; }
 
 /* ========= Conexão com a pedaleira (nativo Android) ========= */
