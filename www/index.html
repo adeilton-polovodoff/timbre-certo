@@ -470,7 +470,18 @@ function sxCab(c){
   return [...HDR,0x31,0x01,0x00,0x00,0x02,0x04,0x00,0x00,0x00,0x61,0x01,0x00,0x00,0x00,0x06,0x3C,0x31,0x35,0x68,0x4B,0x25,0x03,0x00,0x18,0x18,0x52,0x20,v14 & 0x7F,(v14>>7) & 0x7F,(98-c) & 0x7F,0x00,0xF7];
 }
 function sxBypass(id, on){ const st = on?1:0; return [...HDR,0x49,0x00,0x00,0x00,0x02,id,0x00,0x00,0x00,0x11,0x00,0x00,0x00,st,0x54-2*id-2*st,0x03,0xF7]; }
-function sxSelect(pid){ const [a,b] = ck14(50 - 2*pid); return [...HDR,0x49,0x00,0x00,0x00,0x02,pid,0x00,0x00,0x00,0x1E,0x00,0x00,0x00,0x01,a,b,0xF7]; }
+// Nos comandos 0x49/0x41 a Tank-G confere a soma em complemento de um dos bytes de 8 bits do conteúdo (tem que dar 0xFF).
+// Por isso, quando a conta fica negativa (presets 7C em diante), o valor é módulo 255, não 256.
+function fold255(m){
+  const d = m.slice(5, -1); let big = 0n;
+  d.forEach((v,i) => { big |= BigInt(v & 0x7F) << BigInt(7*i); });
+  let sum = 0; const n = Math.floor(7*d.length/8);
+  for(let i=0;i<n;i++) sum += Number((big >> BigInt(8*i)) & 0xFFn);
+  while(sum > 255) sum = (sum & 255) + (sum >> 8);
+  return sum;
+}
+const needsFold = m => m[0] === 0xF0 && m[3] === 0x09 && (m[4] === 0x49 || m[4] === 0x41);
+function sxSelect(pid){ const c = (((50 - 2*pid) % 255) + 255) % 255; const a = c & 0x7F, b = c >> 7; return [...HDR,0x49,0x00,0x00,0x00,0x02,pid,0x00,0x00,0x00,0x1E,0x00,0x00,0x00,0x01,a,b,0xF7]; }
 function sxSave(pid, s){
   const f = [s.amp_on,s.mod_on,s.dly_on,s.rev_on,s.gate,s.type-1,s.gain,s.treble,s.middle,s.bass,s.volume,s.mod_fx,s.mod_speed,s.dly_mix,s.dly_time,s.rev_decay,s.rev_mix,s.cab,255,0,0];
   const off = pid*21 + 2;
@@ -625,6 +636,7 @@ async function sendAll(msgs){
   Tank.busy++;
   try{
     for(const m of msgs){
+      if(needsFold(m) && fold255(m) !== 255){ Diag.add("out", "mensagem com conferência errada, não enviada"); throw {pt:"O app montou uma mensagem errada e não mandou nada para a Tank-G. Copie o diagnóstico e me mande."}; }
       const a0 = Diag.acks;
       await TankMidi.send({data:m});
       // espera a confirmação da pedaleira (como o app oficial), ou um intervalo curto se ela não responde por aqui
