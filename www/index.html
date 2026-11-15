@@ -39,7 +39,7 @@ body{
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:1120px;margin:0 auto;padding:env(safe-area-inset-top) max(20px, env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left))}
+.wrap{max-width:1120px;margin:0 auto;padding:env(safe-area-inset-top) max(20px, env(safe-area-inset-right)) calc(110px + env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left))}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--led);outline-offset:2px;border-radius:6px}
@@ -61,7 +61,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
 
 /* hero */
 .hero{padding:28px 0 18px;display:grid;gap:18px}
-.hero h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(2.6rem,7.4vw,5.4rem);line-height:.88;letter-spacing:.005em}
+.hero h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(2.3rem,6.4vw,4.6rem);line-height:.88;letter-spacing:.005em}
 .hero h1 em{font-style:normal;color:var(--teal)}
 .hero p{margin:0;color:var(--muted);max-width:60ch;font-size:17px}
 .search{display:flex;gap:10px;flex-wrap:wrap}
@@ -209,6 +209,42 @@ dialog textarea,dialog input{width:100%;background:var(--bg);border:1px solid va
 
 .upd{position:sticky;top:env(safe-area-inset-top);z-index:20;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--led);color:#1b1206;border-radius:12px;padding:10px 14px;margin-top:10px;font-weight:700}
 .upd .btn{background:#1b1206;color:var(--led);border-color:#1b1206}
+/* abas */
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(15,19,18,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+.tabbar button{background:none;border:0;color:var(--muted);display:grid;justify-items:center;gap:2px;padding:6px 0;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.tabbar button svg{width:24px;height:24px}
+.tabbar button[aria-current="page"]{color:var(--led)}
+.tabbar .badge{display:inline-block;min-width:8px;height:8px;border-radius:50%;background:var(--led);margin-left:4px;vertical-align:middle}
+/* busca */
+.results{display:grid;gap:8px;margin-top:6px}
+.res{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px 8px 8px;text-align:left;width:100%}
+.res:hover,.res:focus-visible{border-color:var(--teal)}
+.cover{width:56px;height:56px;border-radius:8px;object-fit:cover;background:var(--surface-2);display:grid;place-items:center;font-family:var(--f-display);font-weight:900;color:var(--teal);font-size:20px;overflow:hidden}
+.res b{display:block;font-size:16px;line-height:1.2}
+.res small{color:var(--muted);font-size:13px}
+.pill{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:4px 8px;white-space:nowrap}
+.pill.ready{background:var(--led);color:#1b1206}
+.pill.ai{border:1px solid var(--line);color:var(--muted)}
+.section-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:26px 0 10px}
+.section-h h2{font-family:var(--f-display);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+.genres{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.genres button{flex:none;background:transparent;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px;color:var(--muted)}
+.genres button[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#06211e;font-weight:700}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px}
+.scard{background:none;border:0;padding:0;text-align:left;color:var(--ink)}
+.scard .art{aspect-ratio:1;border-radius:12px;overflow:hidden;background:linear-gradient(145deg,var(--teal-deep),#0b1817);position:relative;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.scard .art img{width:100%;height:100%;object-fit:cover;display:block}
+.scard .art .ph{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-display);font-weight:900;font-size:40px;color:rgba(255,255,255,.85);letter-spacing:.04em}
+.scard .art .tag{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.6);color:var(--led);font-size:11px;font-weight:700;border-radius:6px;padding:3px 6px;text-transform:uppercase;letter-spacing:.04em}
+.scard b{display:block;margin-top:8px;font-size:15px;line-height:1.2}
+.scard small{color:var(--muted);font-size:13px}
+.scard:hover .art,.scard:focus-visible .art{outline:2px solid var(--teal)}
+.song-cover{width:96px;height:96px;border-radius:12px;object-fit:cover;flex:none;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.song-head{display:flex;gap:16px;align-items:flex-end}
+.src-tag{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:3px 8px;background:var(--surface-2);border:1px solid var(--line);color:var(--muted);margin-left:8px;vertical-align:middle}
+.skel{display:flex;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
 footer{margin-top:48px;color:#6c7a75;font-size:13px;max-width:75ch}
 
 @media (max-width:520px){
@@ -238,56 +274,72 @@ footer{margin-top:48px;color:#6c7a75;font-size:13px;max-width:75ch}
     <div class="mark"><b>TIMBRE CERTO</b><span>para M-VAVE Tank-G</span></div>
     <div class="top-actions">
       <button class="ghost conn-pill" id="connPill" type="button"><i class="dot" id="connDot"></i><span id="connText">Tank-G desconectada</span></button>
-      <a class="ghost" href="#salvos" id="savedLink">Meus timbres</a>
+      <button class="ghost" type="button" id="savedLink">Meus timbres</button>
       <button class="ghost" id="openCfg" type="button">Ajustes</button>
     </div>
   </header>
 
   <div class="upd hidden" id="upd" role="status"></div>
-  <section class="hero">
-    <h1>Qual música<br>você vai <em>tocar?</em></h1>
-    <p>Fale ou digite o nome da música. O app pesquisa o timbre na internet, monta para a sua Tank-G e a sua guitarra, mostra onde cada botão fica e manda direto para a pedaleira.</p>
-    <form class="search" id="searchForm" autocomplete="off">
-      <div class="field">
-        <input id="q" name="q" type="text" placeholder="Ex.: Come As You Are, Nirvana" aria-label="Nome da música">
-        <button class="mic hidden" id="mic" type="button" aria-label="Falar o nome da música">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
-        </button>
-      </div>
-      <button class="go" id="go" type="submit">Gerar timbre</button>
-    </form>
-    <div class="opts">
-      <div><label class="opt-label" for="parte">Parte</label>
-        <select id="parte">
-          <option value="toda">Música toda (até 3 timbres)</option>
-          <option value="base">Só a base / riff</option>
-          <option value="solo">Só o solo</option>
-          <option value="limpa">Só a parte limpa</option>
-        </select>
-      </div>
-      <div><span class="opt-label">Ouvindo em</span>
-        <span class="seg" role="radiogroup" aria-label="Onde você ouve a guitarra">
-          <input type="radio" name="mode" id="modeFone" value="fone" checked><label for="modeFone">Fone / celular / PC</label>
-          <input type="radio" name="mode" id="modeAmp" value="amp"><label for="modeAmp">Mini amp</label>
-        </span>
+  <div id="status" class="status hidden" role="status" aria-live="polite"></div>
+  <section class="tab-panel active" id="tab-buscar">
+    <div class="hero">
+      <h1>Qual música<br>você vai <em>tocar?</em></h1>
+      <form class="search" id="searchForm" autocomplete="off">
+        <div class="field">
+          <input id="q" name="q" type="search" placeholder="Busque música ou artista" aria-label="Buscar música">
+          <button class="mic hidden" id="mic" type="button" aria-label="Falar o nome da música">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          </button>
+        </div>
+        <button class="go" id="go" type="submit">Gerar timbre</button>
+      </form>
+      <div class="opts">
+        <div><label class="opt-label" for="parte">Parte</label>
+          <select id="parte">
+            <option value="toda">Música toda (até 3 timbres)</option>
+            <option value="base">Só a base / riff</option>
+            <option value="solo">Só o solo</option>
+            <option value="limpa">Só a parte limpa</option>
+          </select>
+        </div>
+        <div><span class="opt-label">Ouvindo em</span>
+          <span class="seg" role="radiogroup" aria-label="Onde você ouve a guitarra">
+            <input type="radio" name="mode" id="modeFone" value="fone" checked><label for="modeFone">Fone / celular / PC</label>
+            <input type="radio" name="mode" id="modeAmp" value="amp"><label for="modeAmp">Mini amp</label>
+          </span>
+        </div>
       </div>
     </div>
-    <div class="chips" id="chips"></div>
-    <div id="status" class="status hidden" role="status" aria-live="polite"></div>
+    <div id="searchArea">
+      <div class="section-h hidden" id="resHead"><h2>Resultados</h2><span class="muted" id="resNote"></span></div>
+      <div class="results" id="results"></div>
+    </div>
+    <div id="suggestArea">
+      <div class="section-h"><h2>Sugestões</h2><span class="muted" id="dbNote">Timbres prontos, abrem na hora</span></div>
+      <div class="genres" id="genres" role="group" aria-label="Filtrar por estilo"></div>
+      <div class="sgrid" id="sgrid"></div>
+    </div>
+    <footer>
+    O app pesquisa na internet o equipamento e as configurações da gravação e traduz para a Tank-G com o Gemini. Ajuste no ouvido. O envio para a pedaleira usa o protocolo SysEx da Tank-G mapeado pelo projeto aberto tank-g-controller; pelo cabo USB ele foi testado, pelo Bluetooth é experimental. Capas: Apple iTunes.
+    </footer>
   </section>
 
-  <section class="result" id="result" aria-live="polite"></section>
+  <section class="tab-panel" id="tab-timbre">
+    <section class="result" id="result" aria-live="polite"></section>
+  </section>
 
-  <section class="saved" id="salvos">
+  <section class="tab-panel saved" id="tab-salvos">
     <h2>Meus timbres</h2>
     <p class="muted" id="savedNote">Os timbres que você salvar aparecem aqui.</p>
     <div class="saved-list" id="savedList"></div>
   </section>
-
-  <footer>
-    O app pesquisa na internet o equipamento e as configurações da gravação e traduz para a Tank-G com o Gemini. Ajuste no ouvido. O envio para a pedaleira usa o protocolo SysEx da Tank-G mapeado pelo projeto aberto tank-g-controller; pelo cabo USB ele foi testado, pelo Bluetooth é experimental.
-  </footer>
 </div>
+
+<nav class="tabbar" aria-label="Abas do app">
+  <button type="button" data-tab="buscar" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Buscar</button>
+  <button type="button" data-tab="timbre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="12" r="3"/><circle cx="17" cy="12" r="3"/><path d="M7 3v6M17 15v6M7 15v6M17 3v6"/></svg>Timbre</button>
+  <button type="button" data-tab="salvos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>Salvos</button>
+</nav>
 
 <dialog id="cfg">
   <form id="cfgForm">
@@ -368,6 +420,7 @@ function normResult(raw){
     capotraste: str(raw.capotraste), bpm: raw.bpm ? int(raw.bpm,30,300,null) : null,
     equipamento_original: str(raw.equipamento_original), observacao: str(raw.observacao),
     partes, limitacoes: arr(raw.limitacoes), dicas_gerais: arr(raw.dicas_gerais), sugestoes: arr(raw.sugestoes),
+    capa: str(raw.capa), origem: str(raw.origem), id: str(raw.id), genero: str(raw.genero),
     fontes: Array.isArray(raw.fontes) ? raw.fontes.filter(f => f && f.u).slice(0,8).map(f => ({t:str(f.t), u:str(f.u)})) : [], pesquisou: !!raw.pesquisou
   };
 }
@@ -586,11 +639,11 @@ function render(){
   const p = r.partes[state.part];
   const conf = {alta:"Confiança alta", media:"Confiança média", baixa:"Confiança baixa"}[r.confianca];
   el.innerHTML = `
-    ${state.isExample ? `<div><span class="example-tag">Exemplo</span> <span class="muted">Busque qualquer música para gerar o seu.</span></div>` : ""}
+    ${state.isExample ? `<div><span class="example-tag">Exemplo</span> <span class="muted">Escolha uma música na aba Buscar.</span></div>` : ""}
     <div class="song">
-      <div><h2>${esc(r.musica)}</h2><div class="artist">${esc(r.artista)}${r.ano ? ` · ${r.ano}` : ""}</div></div>
+      <div class="song-head">${r.capa ? `<img class="song-cover" src="${esc(r.capa)}" alt="Capa de ${esc(r.musica)}">` : ""}<div><h2>${esc(r.musica)}</h2><div class="artist">${esc(r.artista)}${r.ano ? ` · ${r.ano}` : ""}${r.origem ? `<span class="src-tag">${esc(r.origem)}</span>` : ""}</div></div></div>
       <div class="song-actions">
-        ${state.isExample ? "" : `<button class="btn" type="button" data-act="regen">Gerar outra versão</button>`}
+        ${state.isExample ? "" : `<button class="btn" type="button" data-act="regen">${r.origem === "Banco de timbres" ? "Gerar com IA" : "Gerar outra versão"}</button>`}
         <button class="btn" type="button" data-act="copy">Copiar timbre</button>
         <button class="btn primary" type="button" data-act="keep" ${state.savedId ? "disabled" : ""}>${state.savedId ? "Salvo" : "Salvar em Meus timbres"}</button>
       </div>
@@ -721,39 +774,195 @@ function aiError(e){
   if(e && e.name === "AbortError") return "Cancelado.";
   return `Falha ao falar com o Gemini${e && e.status ? ` (${e.status})` : ""}. Confira a internet e tente de novo.${m ? ` Detalhe: ${str(e.message).slice(0,160)}` : ""}`;
 }
-async function generate(regen){
+async function generate(regen, meta){
   const q = $("#q").value.trim();
-  if(!q){ $("#q").focus(); showStatus("Digite ou fale o nome de uma música.", "err"); return; }
-  if(!state.cfg.key){ showStatus(`Para gerar timbres, cole sua chave grátis do Gemini em Ajustes. <button class="btn" type="button" data-act="cfg">Abrir Ajustes</button>`, "err"); return; }
+  if(!q){ $("#q").focus(); return; }
+  meta = meta || {};
+  const ck = cacheKey(meta.titulo || q, meta.artista || "", state.parte);
+  if(!regen){
+    const hit = lsGet(LS_CACHE, {})[ck];
+    if(hit){ showTone(normResult({...hit, capa: meta.capa || hit.capa}), q); return; }
+  }
+  if(!state.cfg.key){ switchTab("timbre"); showStatus(`Para gerar timbres de músicas fora do banco, cole sua chave grátis do Gemini em Ajustes. <button class="btn" type="button" data-act="cfg">Abrir Ajustes</button>`, "err"); return; }
   if(ctl) ctl.abort();
   ctl = new AbortController();
   const go = $("#go"); go.disabled = true;
-  showStatus(`<span class="spinner"></span><span id="tip">Pesquisando o timbre na internet…</span><button class="btn" type="button" id="stop" style="margin-left:auto">Parar</button>`);
+  switchTab("timbre");
+  $("#result").innerHTML = `<div class="skel">${meta.capa ? `<img class="song-cover" src="${esc(meta.capa)}" alt="">` : `<span class="spinner"></span>`}<div><b>${esc(meta.titulo || q)}</b><br><span class="muted">${esc(meta.artista || "")}</span></div></div>`;
+  showStatus(`<span class="spinner"></span><span id="tip">Pesquisando o timbre na internet e montando para a Tank-G…</span><button class="btn" type="button" id="stop" style="margin-left:auto">Parar</button>`);
   $("#stop").onclick = () => ctl && ctl.abort();
-  const tip = t => { const el = $("#tip"); if(el) el.textContent = t; };
+  const temp = regen ? 0.9 : 0.4;
+  const promptSearch = buildPrompt(q, state.parte, state.mode, state.cfg.guitar, "", true);
+  const promptPlain = buildPrompt(q, state.parte, state.mode, state.cfg.guitar, "", false);
+  // Tentativas, da mais rápida e completa para a mais simples
+  const tries = [
+    {search:true,  body:{contents:[{role:"user", parts:[{text:promptSearch}]}], tools:[{google_search:{}}], generationConfig:{temperature:temp, thinkingConfig:{thinkingBudget:0}}}},
+    {search:true,  body:{contents:[{role:"user", parts:[{text:promptSearch}]}], tools:[{google_search:{}}], generationConfig:{temperature:temp}}},
+    {search:false, body:{contents:[{role:"user", parts:[{text:promptPlain}]}], generationConfig:{temperature:temp, responseMimeType:"application/json", thinkingConfig:{thinkingBudget:0}}}},
+    {search:false, body:{contents:[{role:"user", parts:[{text:promptPlain}]}], generationConfig:{temperature:temp, responseMimeType:"application/json"}}}
+  ];
+  let lastErr = null;
   try{
-    let research = "", fontes = [];
-    try{
-      const r1 = await gemini({contents:[{role:"user", parts:[{text: researchPrompt(q, state.parte)}]}], tools:[{google_search:{}}], generationConfig:{temperature:0.3}}, ctl.signal);
-      research = str(r1.text).slice(0, 12000); fontes = fontesDe(r1.grounding);
-    }catch(e){
-      const m = str(e && e.message).toLowerCase(); if(e && (e.name === "AbortError" || e.status === 401 || m.includes("api key") || m.includes("api_key"))) throw e;
+    for(const t of tries){
+      try{
+        const r = await gemini(t.body, ctl.signal);
+        const raw = parseJSON(r.text);
+        const res = normResult(raw);
+        res.fontes = t.search ? fontesDe(r.grounding) : [];
+        res.pesquisou = t.search;
+        res.origem = t.search ? "IA + pesquisa na internet" : "IA";
+        res.capa = meta.capa || "";
+        if(res.reconhecida){ const c = lsGet(LS_CACHE, {}); c[ck] = res; const keys = Object.keys(c); if(keys.length > 300) delete c[keys[0]]; lsSet(LS_CACHE, c); }
+        hideStatus(); showTone(res, q); return;
+      }catch(e){
+        lastErr = e;
+        const m = str(e && e.message).toLowerCase();
+        if(e && (e.name === "AbortError" || e.status === 401 || m.includes("api key") || m.includes("api_key") || e.status === 429 || e.status === "net")) throw e;
+      }
     }
-    tip(fontes.length ? `Achei ${fontes.length} fonte(s). Traduzindo para a Tank-G…` : "Montando o timbre para a Tank-G…");
-    const r2 = await gemini({contents:[{role:"user", parts:[{text: buildPrompt(q, state.parte, state.mode, state.cfg.guitar, research)}]}], generationConfig:{responseMimeType:"application/json", temperature: regen ? 0.9 : 0.4}}, ctl.signal);
-    const r = normResult(parseJSON(r2.text));
-    r.fontes = fontes; r.pesquisou = !!research;
-    Object.assign(state, {result:r, isExample:false, part:0, query:q, savedId:null, pendingSave:null});
-    hideStatus(); render();
-    $("#result").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
+    throw lastErr || {status:"json"};
   }catch(e){
     showStatus(esc(aiError(e)), (e && e.name === "AbortError") ? "" : "err");
+    $("#result").innerHTML = ""; render();
   }finally{ go.disabled = false; }
 }
+function showTone(r, q){
+  Object.assign(state, {result:r, isExample:false, part:0, query:q || r.musica, savedId:null, pendingSave:null});
+  hideStatus(); switchTab("timbre"); render();
+  window.scrollTo({top:0, behavior:"auto"});
+}
 
-function buildPrompt(q, parte, mode, guitar, research){
+/* ========= Abas ========= */
+function switchTab(name){
+  state.tab = name;
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.toggle("active", p.id === "tab-" + name));
+  document.querySelectorAll(".tabbar button").forEach(b => b.toggleAttribute("aria-current", b.dataset.tab === name) || (b.dataset.tab === name && b.setAttribute("aria-current","page")));
+  document.querySelectorAll(".tabbar button").forEach(b => { if(b.dataset.tab === name) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
+}
+
+/* ========= Banco de timbres ========= */
+const LS_DB = "timbre-certo:db", LS_COVERS = "timbre-certo:capas", LS_CACHE = "timbre-certo:cache";
+const DB_REMOTE = "https://raw.githubusercontent.com/adeilton-polovodoff/timbre-certo/main/www/timbres.json";
+let DB = {versao:0, musicas:[]};
+const norm = x => str(x).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\(.*?\)|\[.*?\]/g, " ").replace(/ - .*(remaster|live|ao vivo|version|versao).*$/,"").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+const cacheKey = (t, a, parte) => `${norm(t)}|${norm(a).split(" ")[0] || ""}|${parte}`;
+function useDB(d){ if(d && Array.isArray(d.musicas) && (d.versao || 0) >= (DB.versao || 0)){ DB = d; renderGenres(); renderSuggestions(); } }
+async function loadDB(){
+  const cached = lsGet(LS_DB, null);
+  try{ const r = await fetch("timbres.json", {cache:"no-store"}); if(r.ok) useDB(await r.json()); }catch(e){}
+  if(cached) useDB(cached);
+  try{
+    const r = await fetch(DB_REMOTE + "?t=" + Date.now(), {cache:"no-store"});
+    if(r.ok){ const d = await r.json(); if((d.versao || 0) >= (DB.versao || 0)){ lsSet(LS_DB, d); useDB(d); } }
+  }catch(e){}
+}
+function findInDB(title, artist){
+  const t = norm(title), a = norm(artist);
+  const sameTitle = DB.musicas.filter(m => norm(m.musica) === t);
+  if(!sameTitle.length) return null;
+  if(!a) return sameTitle[0];
+  return sameTitle.find(m => { const ma = norm(m.artista); return ma === a || a.includes(ma) || ma.includes(a.split(" ")[0]); }) || null;
+}
+function openFromDB(m, capa){
+  const r = normResult({...m, origem:"Banco de timbres", capa: capa || coverOf(m.musica, m.artista) || ""});
+  $("#q").value = `${m.musica} — ${m.artista}`;
+  showTone(r, r.musica);
+}
+
+/* ========= Capas (iTunes) ========= */
+if(!window.CSS || !CSS.escape){ window.CSS = window.CSS || {}; CSS.escape = v => String(v).replace(/[^a-zA-Z0-9_-]/g, "\\$&"); }
+let covers = lsGet(LS_COVERS, {});
+const coverOf = (t, a) => covers[norm(t) + "|" + norm(a)] || "";
+const art = (u, size) => str(u).replace(/\/\d+x\d+bb\./, `/${size}x${size}bb.`);
+async function itunes(term, limit){
+  const r = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=song&limit=${limit}&country=BR`);
+  if(!r.ok) throw {status:r.status};
+  const j = await r.json();
+  return (j.results || []).map(x => ({titulo:str(x.trackName), artista:str(x.artistName), album:str(x.collectionName), ano:str(x.releaseDate).slice(0,4), capa:art(x.artworkUrl100, 300), genero:str(x.primaryGenreName)}));
+}
+let coverQueue = [], coverBusy = false, coverBlocked = 0;
+function wantCover(m){ if(!coverOf(m.musica, m.artista) && !coverQueue.includes(m)) coverQueue.push(m); pumpCovers(); }
+async function pumpCovers(){
+  if(coverBusy || Date.now() < coverBlocked) return;
+  coverBusy = true;
+  while(coverQueue.length){
+    const m = coverQueue.shift();
+    try{
+      const res = await itunes(`${m.musica} ${m.artista}`, 3);
+      const hit = res.find(x => norm(x.titulo) === norm(m.musica)) || res[0];
+      if(hit && hit.capa){ covers[norm(m.musica) + "|" + norm(m.artista)] = hit.capa; lsSet(LS_COVERS, covers); paintCover(m); }
+    }catch(e){ if(e && (e.status === 403 || e.status === 429)){ coverBlocked = Date.now() + 60000; coverQueue.unshift(m); break; } }
+    await sleep(700);
+  }
+  coverBusy = false;
+}
+function paintCover(m){
+  const el = document.querySelector(`.scard[data-id="${CSS.escape(m.id)}"] .art`);
+  const u = coverOf(m.musica, m.artista);
+  if(el && u && !el.querySelector("img")){ const img = new Image(); img.alt = ""; img.loading = "lazy"; img.src = u; img.onload = () => { const ph = el.querySelector(".ph"); if(ph) ph.remove(); }; el.prepend(img); }
+}
+const initials = t => str(t).split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0]).join("").toUpperCase();
+
+/* ========= Sugestões ========= */
+let genre = "Todas";
+function renderGenres(){
+  const gs = ["Todas", ...new Set(DB.musicas.map(m => m.genero).filter(Boolean))];
+  $("#genres").innerHTML = gs.map(g => `<button type="button" data-genre="${esc(g)}" aria-pressed="${g === genre}">${esc(g)}</button>`).join("");
+}
+function renderSuggestions(){
+  const list = DB.musicas.filter(m => genre === "Todas" || m.genero === genre);
+  $("#dbNote").textContent = `${DB.musicas.length} timbres prontos, abrem na hora`;
+  $("#sgrid").innerHTML = list.map(m => {
+    const u = coverOf(m.musica, m.artista);
+    return `<button class="scard" type="button" data-id="${esc(m.id)}"><div class="art">${u ? `<img src="${esc(u)}" alt="" loading="lazy">` : `<span class="ph">${esc(initials(m.musica))}</span>`}<span class="tag">${(m.partes || []).length} timbre${(m.partes || []).length > 1 ? "s" : ""}</span></div><b>${esc(m.musica)}</b><small>${esc(m.artista)}</small></button>`;
+  }).join("");
+  list.forEach(m => { if(!coverOf(m.musica, m.artista)) wantCover(m); });
+}
+
+/* ========= Busca dinâmica ========= */
+let searchTimer = null, searchSeq = 0, lastResults = [];
+function localMatches(q){
+  const n = norm(q); if(n.length < 2) return [];
+  return DB.musicas.filter(m => norm(m.musica + " " + m.artista).includes(n)).slice(0, 6);
+}
+function renderResults(q, remote, note){
+  (remote || []).forEach(x => { const db = findInDB(x.titulo, x.artista); if(db && x.capa && !coverOf(db.musica, db.artista)){ covers[norm(db.musica) + "|" + norm(db.artista)] = x.capa; lsSet(LS_COVERS, covers); } });
+  const loc = localMatches(q);
+  const seen = new Set(loc.map(m => norm(m.musica) + "|" + norm(m.artista)));
+  const rows = loc.map(m => ({titulo:m.musica, artista:m.artista, capa:coverOf(m.musica, m.artista), ano:String(m.ano || ""), db:m}));
+  (remote || []).forEach(x => {
+    const k = norm(x.titulo) + "|" + norm(x.artista);
+    if(seen.has(k)) return; seen.add(k);
+    const db = findInDB(x.titulo, x.artista);
+    if(db && !covers[norm(db.musica) + "|" + norm(db.artista)] && x.capa){ covers[norm(db.musica) + "|" + norm(db.artista)] = x.capa; lsSet(LS_COVERS, covers); }
+    rows.push({...x, db});
+  });
+  lastResults = rows;
+  $("#resHead").classList.toggle("hidden", !q);
+  $("#suggestArea").classList.toggle("hidden", !!q);
+  $("#resNote").textContent = note || (rows.length ? "" : (q ? "Nada ainda. Toque em Gerar timbre para a IA montar mesmo assim." : ""));
+  $("#results").innerHTML = rows.map((x, i) => `<button class="res" type="button" data-res="${i}">${x.capa ? `<img class="cover" src="${esc(x.capa)}" alt="" loading="lazy">` : `<span class="cover">${esc(initials(x.titulo))}</span>`}<span><b>${esc(x.titulo)}</b><small>${esc(x.artista)}${x.ano ? ` · ${esc(x.ano)}` : ""}</small></span>${x.db ? `<span class="pill ready">Timbre pronto</span>` : `<span class="pill ai">Gerar com IA</span>`}</button>`).join("");
+}
+function onSearchInput(){
+  const q = $("#q").value.trim();
+  clearTimeout(searchTimer);
+  renderResults(q, [], q ? "Buscando…" : "");
+  if(q.length < 2){ if(!q) renderResults("", []); return; }
+  const seq = ++searchSeq;
+  searchTimer = setTimeout(async () => {
+    try{ const res = await itunes(q, 15); if(seq === searchSeq) renderResults(q, res); }
+    catch(e){ if(seq === searchSeq) renderResults(q, [], "Sem conexão com a busca de capas. Toque em Gerar timbre para seguir."); }
+  }, 350);
+}
+function openResult(x){
+  if(x.db) return openFromDB(x.db, x.capa);
+  $("#q").value = `${x.titulo} — ${x.artista}`;
+  generate(false, {titulo:x.titulo, artista:x.artista, capa:x.capa});
+}
+
+function buildPrompt(q, parte, mode, guitar, research, search){
   const parteTxt = {toda:"a música toda: crie de 1 a 3 partes com timbres realmente diferentes (ex.: parte limpa, base, solo), na ordem em que aparecem", base:"só a base/riff principal: 1 parte", solo:"só o solo: 1 parte", limpa:"só a parte limpa: 1 parte"}[parte];
-  return `Você é um técnico de timbres de guitarra. O usuário quer tocar uma música e precisa do timbre pronto para a pedaleira M-VAVE Tank-G e para a guitarra dele. Responda APENAS com um objeto JSON válido no formato do final, sem texto fora dele.
+  return `Você é um técnico de timbres de guitarra. O usuário quer tocar uma música e precisa do timbre pronto para a pedaleira M-VAVE Tank-G e para a guitarra dele. ${search ? "Primeiro pesquise rapidamente no Google o equipamento e as configurações de amp e pedais usados na gravação dessa música (tutoriais, entrevistas, Guitar World, Premier Guitar, Equipboard, Ground Guitar) e baseie os valores no que encontrar. " : ""}Responda APENAS com um objeto JSON válido no formato do final, sem texto antes ou depois e sem markdown.
 
 MÚSICA PEDIDA: "${q}"
 O QUE ELE QUER: ${parteTxt}
@@ -832,19 +1041,21 @@ function renderSaved(){
 }
 
 /* ========= Eventos ========= */
-const CHIPS = ["Come As You Are — Nirvana","Enter Sandman — Metallica","Sweet Child O' Mine — Guns N' Roses","Zóio de Lula — Charlie Brown Jr.","Smoke on the Water — Deep Purple","Pais e Filhos — Legião Urbana"];
-$("#chips").innerHTML = CHIPS.map(c => `<button class="chip" type="button" data-q="${esc(c)}">${esc(c)}</button>`).join("");
 document.addEventListener("click", async ev => {
+  const tb = ev.target.closest("[data-tab]"); if(tb){ switchTab(tb.dataset.tab); window.scrollTo({top:0}); return; }
+  const gb = ev.target.closest("[data-genre]"); if(gb){ genre = gb.dataset.genre; renderGenres(); renderSuggestions(); return; }
+  const sc = ev.target.closest(".scard[data-id]"); if(sc){ const m = DB.musicas.find(x => x.id === sc.dataset.id); if(m) openFromDB(m); return; }
+  const rr = ev.target.closest("[data-res]"); if(rr){ const x = lastResults[+rr.dataset.res]; if(x) openResult(x); return; }
   const t = ev.target.closest("[data-q],[data-part],[data-act],[data-open],[data-del]");
   if(!t) return;
   if(t.dataset.q){ $("#q").value = t.dataset.q; generate(false); return; }
   if(t.dataset.part){ state.part = +t.dataset.part; state.pendingSave = null; render(); return; }
-  if(t.dataset.open){ const s = state.saved.find(x => x.id === t.dataset.open); if(s){ Object.assign(state, {result:normResult(s.result), isExample:false, part:0, savedId:s.id, query:s.query || ""}); render(); $("#result").scrollIntoView({block:"start"}); } return; }
+  if(t.dataset.open){ const s = state.saved.find(x => x.id === t.dataset.open); if(s){ Object.assign(state, {result:normResult(s.result), isExample:false, part:0, savedId:s.id, query:s.query || ""}); switchTab("timbre"); render(); window.scrollTo({top:0}); } return; }
   if(t.dataset.del){ const id = t.dataset.del; if(armed === id){ armed = null; dropTone(id); } else { armed = id; renderSaved(); setTimeout(() => { if(armed === id){ armed = null; renderSaved(); } }, 3500); } return; }
   const act = t.dataset.act;
   const msg = (text, kind) => { const m = $("#sendMsg"); if(m){ m.className = "send-msg" + (kind ? " " + kind : ""); m.textContent = text; } };
   try{
-    if(act === "regen") generate(true);
+    if(act === "regen"){ const r = state.result; $("#q").value = `${r.musica} — ${r.artista}`; generate(true, {titulo:r.musica, artista:r.artista, capa:r.capa}); }
     else if(act === "copy"){ try{ await navigator.clipboard.writeText(toneText()); t.textContent = "Copiado"; setTimeout(() => t.textContent = "Copiar timbre", 1800); }catch(e){ t.textContent = "Não deu para copiar"; } }
     else if(act === "keep") keepTone();
     else if(act === "usb"){ msg("Procurando a Tank-G no cabo…"); await connectUSB(); render(); }
@@ -875,10 +1086,20 @@ document.addEventListener("click", async ev => {
     }
   }catch(e){ msg((e && e.pt) || "Não deu certo. Confira a conexão com a Tank-G e tente de novo.", "err"); }
 });
-$("#searchForm").addEventListener("submit", ev => { ev.preventDefault(); generate(false); });
+$("#searchForm").addEventListener("submit", ev => {
+  ev.preventDefault();
+  const q = $("#q").value.trim(); if(!q) return;
+  const exact = lastResults.find(x => x.db && norm(q).includes(norm(x.titulo)));
+  if(exact) return openFromDB(exact.db, exact.capa);
+  const first = lastResults[0];
+  if(first && norm(q).includes(norm(first.titulo))) return openResult(first);
+  generate(false);
+});
+$("#q").addEventListener("input", onSearchInput);
 $("#parte").addEventListener("change", e => { state.parte = e.target.value; });
 document.querySelectorAll('input[name="mode"]').forEach(r => r.addEventListener("change", e => { state.mode = e.target.value; saveCfg(); render(); }));
-$("#connPill").addEventListener("click", () => { const b = $("#sendBox"); if(b) b.scrollIntoView({block:"center"}); });
+$("#connPill").addEventListener("click", () => { switchTab("timbre"); setTimeout(() => { const b = $("#sendBox"); if(b) b.scrollIntoView({block:"center"}); }, 50); });
+$("#savedLink").addEventListener("click", () => { switchTab("salvos"); window.scrollTo({top:0}); });
 
 /* Ajustes */
 const dlg = $("#cfg");
@@ -911,7 +1132,7 @@ $("#mic").addEventListener("click", async () => {
     $("#mic").classList.add("on");
     const r = await Speech.start({language:"pt-BR", maxResults:1, prompt:"Fale o nome da música", partialResults:false, popup:true});
     const said = r && r.matches && r.matches[0];
-    if(said){ $("#q").value = said; generate(false); }
+    if(said){ $("#q").value = said; switchTab("buscar"); onSearchInput(); }
   }catch(e){ showStatus("Não entendi. Toque no microfone e fale de novo, ou digite.", "err"); }
   finally{ $("#mic").classList.remove("on"); }
 });
@@ -957,8 +1178,8 @@ async function doUpdate(){
 applyCfg(lsGet(LS_CFG, {}));
 state.saved = lsGet(LS_KEY, []);
 if(state.mode === "amp") $("#modeAmp").checked = true;
-render(); renderSaved(); setConn();
-if(!state.cfg.key) showStatus(`Primeiro passo: cole sua chave grátis do Gemini em Ajustes. <button class="btn" type="button" data-act="cfg">Abrir Ajustes</button>`);
+render(); renderSaved(); setConn(); loadDB();
+if(!state.cfg.key) showStatus(`As músicas do banco abrem na hora. Para gerar qualquer outra música, cole sua chave grátis do Gemini em Ajustes. <button class="btn" type="button" data-act="cfg">Abrir Ajustes</button>`);
 if(!IS_APP) showStatus("Esta tela foi feita para rodar dentro do app Android Timbre Certo.", "err");
 else setTimeout(() => checkUpdate(false), 1500);
 </script>

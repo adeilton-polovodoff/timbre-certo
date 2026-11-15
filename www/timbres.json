@@ -1,0 +1,3066 @@
+{
+ "versao": 1,
+ "atualizado": "2026-11-15",
+ "musicas": [
+  {
+   "id": "come-as-you-are",
+   "musica": "Come As You Are",
+   "artista": "Nirvana",
+   "ano": 1991,
+   "genero": "Grunge",
+   "afinacao": "Um tom abaixo (D G C F A D)",
+   "afinacao_padrao": false,
+   "bpm": 120,
+   "confianca": "alta",
+   "equipamento_original": "Guitarra com humbucker na ponte, chorus Electro-Harmonix Small Clone e distorção Boss DS-1 num amp valvulado limpo.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff com chorus",
+     "quando": "Intro e versos",
+     "descricao": "Limpo e encorpado, com chorus fundo que deixa o riff com som de debaixo d'água.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 7,
+     "gate": 8,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 28,
+      "treble": 48,
+      "middle": 60,
+      "bass": 52,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 32,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 14
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetada firme e perto da ponte, para o chorus marcar cada nota."
+     ]
+    },
+    {
+     "nome": "Refrão distorcido",
+     "quando": "Refrão e pontes",
+     "descricao": "Distorção crua e cheia, sem chorus, com médio presente.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 35,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 76,
+      "treble": 56,
+      "middle": 58,
+      "bass": 58,
+      "volume": 48
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "O VOLUME do amp fica mais baixo que na parte limpa para as duas soarem no mesmo nível."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo, que segue a melodia do riff",
+     "descricao": "A distorção do refrão com o chorus de volta, mais discreto.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 30,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 70,
+      "treble": 58,
+      "middle": 62,
+      "bass": 55,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 22,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 10,
+      "mix": 16
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Toque o solo como o riff, só que com mais ataque."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "A distorção do original vinha de um pedal (DS-1). Aqui ela sai do GAIN do amp JCM800, que chega bem perto."
+   ],
+   "dicas_gerais": [
+    "Afine um tom abaixo antes de tudo. No afinador da Tank-G (segure B+C por 2 s) as cordas soltas devem marcar D G C F A D."
+   ],
+   "fontes": [
+    {
+     "t": "Woodbrass: estudo do riff de Come As You Are",
+     "u": "https://woodbrass.com/en/blogs/legend/study-of-a-riff-come-as-you-are-by-nirvana"
+    },
+    {
+     "t": "Killer Rig: configurações do Nirvana",
+     "u": "https://killerrig.com/sound-like-nirvana-amp-settings/"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "smells-like-teen-spirit",
+   "musica": "Smells Like Teen Spirit",
+   "artista": "Nirvana",
+   "ano": 1991,
+   "genero": "Grunge",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 117,
+   "confianca": "alta",
+   "equipamento_original": "Boss DS-1 empurrando um pré Mesa/Boogie Studio .22; chorus Small Clone nas partes limpas e no solo.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff e refrão",
+     "quando": "Intro, refrão",
+     "descricao": "Parede de distorção áspera com médio forte e grave controlado.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 40,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 82,
+      "treble": 62,
+      "middle": 62,
+      "bass": 45,
+      "volume": 46
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 4,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetada para baixo, solta e agressiva; abafe as cordas entre os acordes."
+     ]
+    },
+    {
+     "nome": "Versos limpos",
+     "quando": "Versos",
+     "descricao": "Limpo com chorus, só as duas notas do riff, bem dinâmico.",
+     "captador": 3,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 10,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 18,
+      "treble": 55,
+      "middle": 58,
+      "bass": 48,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 24,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Abaixe o volume da guitarra para 8 se a parte limpa estiver estourando."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo (a melodia da voz)",
+     "descricao": "Distorção do refrão com chorus por cima.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 35,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 76,
+      "treble": 60,
+      "middle": 64,
+      "bass": 48,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 4,
+      "motivo": ""
+     },
+     "dicas": [
+      "O solo é a melodia da voz tocada na guitarra; capriche no vibrato."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "A distorção do original vem do pedal DS-1; aqui ela sai do GAIN do JCM800."
+   ],
+   "dicas_gerais": [
+    "Pise na troca de parte: verso limpo (B) e refrão distorcido (A) gravados em pedais diferentes."
+   ],
+   "fontes": [
+    {
+     "t": "Guitar World: os segredos do timbre de Smells Like Teen Spirit",
+     "u": "https://www.guitarworld.com/amp/features/the-secrets-behind-kurt-cobains-guitar-tone-on-nirvanas-smells-like-teen-spirit"
+    },
+    {
+     "t": "Music Strive: timbre do Nirvana",
+     "u": "https://musicstrive.com/nirvana-guitar-tone"
+    },
+    {
+     "t": "Andertons: o rig de Kurt Cobain",
+     "u": "https://www.Andertons.co.uk/kurt-cobain-rig"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "like-a-stone",
+   "musica": "Like a Stone",
+   "artista": "Audioslave",
+   "ano": 2002,
+   "genero": "Alternativo",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 108,
+   "confianca": "media",
+   "equipamento_original": "Tom Morello: Marshall JCM800 2205 de 50 W numa caixa Peavey 4x12, captador do braço, Boss TR-2 (tremolo) no riff principal, delay curto e DigiTech Whammy no solo.",
+   "observacao": "Algumas transcrições pedem Drop D; o riff principal funciona na afinação padrão.",
+   "partes": [
+    {
+     "nome": "Riff com tremolo",
+     "quando": "Intro e versos",
+     "descricao": "Crunch leve e quente com tremolo pulsando.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 10,
+     "amp": {
+      "ligado": true,
+      "slot": 4,
+      "gain": 40,
+      "treble": 55,
+      "middle": 60,
+      "bass": 50,
+      "volume": 60
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "tremolo",
+      "nivel": 24,
+      "speed": 55
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 6,
+      "time": 17,
+      "tempo_ms": 120
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Captador do braço: Morello prefere o som mais suave dele nas músicas do Audioslave."
+     ]
+    },
+    {
+     "nome": "Refrão",
+     "quando": "Refrão",
+     "descricao": "Overdrive Marshall mais aberto, sem tremolo, com eco curto engordando.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 25,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 55,
+      "treble": 58,
+      "middle": 62,
+      "bass": 52,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 8,
+      "time": 17,
+      "tempo_ms": 120
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Toque os acordes abertos deixando soar; o delay curto (slapback) dá corpo."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Overdrive com delay mais presente; no original, o Whammy faz as notas subirem e descerem.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 30,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 65,
+      "treble": 60,
+      "middle": 62,
+      "bass": 50,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 14,
+      "time": 25,
+      "tempo_ms": 180
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Sem Whammy, faça os saltos de altura com bends largos e slides."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "O solo original usa um pedal DigiTech Whammy (pitch shifter). A Tank-G não tem esse efeito; use bends e slides."
+   ],
+   "dicas_gerais": [
+    "Tom Morello usa só o canal saturado do JCM800 e controla o resto no volume da guitarra."
+   ],
+   "fontes": [
+    {
+     "t": "Guitar Gear Finder: rig de Tom Morello no Audioslave",
+     "u": "https://guitargearfinder.com/?p=669"
+    },
+    {
+     "t": "Ground Guitar: Boss TR-2 em Like a Stone",
+     "u": "https://www.groundguitar.com/tom-morellos-guitars-and-gear/tom-morellos-boss-tr-2-tremolo/"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "enter-sandman",
+   "musica": "Enter Sandman",
+   "artista": "Metallica",
+   "ano": 1991,
+   "genero": "Metal",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 123,
+   "confianca": "alta",
+   "equipamento_original": "Black Album: amps Mesa/Boogie (Mark IIC+ e Rectifier) para a base; Roland JC-120 com chorus nas partes limpas.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Intro limpa",
+     "quando": "Intro",
+     "descricao": "Limpo e escuro com chorus leve, no estilo JC-120.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 15,
+      "treble": 52,
+      "middle": 45,
+      "bass": 55,
+      "volume": 60
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 18,
+      "speed": 35
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 10,
+      "mix": 18
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Deixe as notas do arpejo soarem juntas, sem abafar."
+     ]
+    },
+    {
+     "nome": "Riff pesado",
+     "quando": "Riff, versos e refrão",
+     "descricao": "Distorção apertada, médio um pouco cavado, grave firme.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 40,
+     "amp": {
+      "ligado": true,
+      "slot": 9,
+      "gain": 62,
+      "treble": 62,
+      "middle": 38,
+      "bass": 65,
+      "volume": 46
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 4,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetada só para baixo no riff, como o Hetfield faz; não exagere no gain."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Lead com mais médio e um eco discreto.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 35,
+     "amp": {
+      "ligado": true,
+      "slot": 9,
+      "gain": 70,
+      "treble": 64,
+      "middle": 52,
+      "bass": 58,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 50,
+      "tempo_ms": 350
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 14
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 4,
+      "motivo": ""
+     },
+     "dicas": [
+      "O Kirk usa wah no solo; a Tank-G não tem, então caprichar no vibrato compensa."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "O solo original usa wah; a Tank-G não tem esse pedal."
+   ],
+   "dicas_gerais": [
+    "Gain moderado: no Black Album o timbre é mais limpo e definido do que parece."
+   ],
+   "fontes": [
+    {
+     "t": "Killer Rig: configurações do Metallica",
+     "u": "https://killerrig.com/metallica-amp-settings/"
+    },
+    {
+     "t": "Guitar Chalk: Enter Sandman",
+     "u": "https://www.guitarchalk.com/amp-settings-enter-sandman-metallica/"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "sweet-child-o-mine",
+   "musica": "Sweet Child O' Mine",
+   "artista": "Guns N' Roses",
+   "ano": 1987,
+   "genero": "Rock clássico",
+   "afinacao": "Meio tom abaixo (Eb Ab Db Gb Bb Eb)",
+   "afinacao_padrao": false,
+   "bpm": 125,
+   "confianca": "alta",
+   "equipamento_original": "Slash: Les Paul com humbuckers num Marshall modificado; captador do braço com tone baixo no riff de introdução, reverb Roland SRV-2000 na intro, wah no solo.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff de introdução",
+     "quando": "Intro",
+     "descricao": "Marshall no limite da saturação, captador do braço e tone fechado: som doce e vocal.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 3,
+     "gate": 12,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 45,
+      "treble": 55,
+      "middle": 60,
+      "bass": 55,
+      "volume": 58
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 14,
+      "mix": 22
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "O segredo é o volume e o captador do braço com tone baixo, não muito gain."
+     ]
+    },
+    {
+     "nome": "Base",
+     "quando": "Versos e refrão",
+     "descricao": "Crunch Marshall clássico com o captador da ponte.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 22,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 66,
+      "treble": 62,
+      "middle": 58,
+      "bass": 55,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Use o volume da guitarra para limpar e sujar o som."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solos",
+     "descricao": "Lead grosso com captador do braço e eco discreto.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 7,
+     "gate": 25,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 72,
+      "treble": 58,
+      "middle": 64,
+      "bass": 55,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 8,
+      "time": 45,
+      "tempo_ms": 320
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 14
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "No original há wah no solo; aqui o vibrato largo faz o papel dele."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "O solo original usa wah; a Tank-G não tem esse pedal."
+   ],
+   "dicas_gerais": [
+    "Afine meio tom abaixo (Eb), como todo o disco Appetite for Destruction."
+   ],
+   "fontes": [
+    {
+     "t": "Guitar Chalk: Sweet Child O' Mine",
+     "u": "https://www.guitarchalk.com/amp-settings-sweet-child-o-mine-guns-n-roses/"
+    },
+    {
+     "t": "MusicRadar: 25 dos maiores timbres de guitarra",
+     "u": "https://www.musicradar.com/news/25-of-the-greatest-guitar-tones"
+    },
+    {
+     "t": "Guitar World: o reverb de Appetite for Destruction",
+     "u": "https://www.guitarworld.com/guns-n-roses"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "back-in-black",
+   "musica": "Back in Black",
+   "artista": "AC/DC",
+   "ano": 1980,
+   "genero": "Rock clássico",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 94,
+   "confianca": "alta",
+   "equipamento_original": "Angus e Malcolm Young: Gibson SG e Gretsch em Marshall Super Lead de 100 W, regulados bem mais limpos do que parece, sem pedais.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Base",
+     "quando": "Riff e versos",
+     "descricao": "Crunch seco e aberto, quase limpo; quem suja é a palhetada.",
+     "captador": 1,
+     "volume_guitarra": 7,
+     "tone_guitarra": 9,
+     "gate": 12,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 48,
+      "treble": 55,
+      "middle": 68,
+      "bass": 50,
+      "volume": 60
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Volume da guitarra em 7 na base e 10 no solo, como o Angus faz."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "O mesmo amp mais saturado, com a guitarra no volume máximo.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 20,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 60,
+      "treble": 58,
+      "middle": 70,
+      "bass": 50,
+      "volume": 56
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Vibrato rápido e bends curtos, bem no estilo Angus."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Nada de efeitos: AC/DC é guitarra direto no Marshall."
+   ],
+   "fontes": [
+    {
+     "t": "Total Guitar: Back in Black",
+     "u": "https://www.pressreader.com/australia/total-guitar/20210604/282346862722132"
+    },
+    {
+     "t": "Guitar Chalk: Back in Black",
+     "u": "https://www.guitarchalk.com/amp-settings-back-in-black-ac-dc/"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "smoke-on-the-water",
+   "musica": "Smoke on the Water",
+   "artista": "Deep Purple",
+   "ano": 1972,
+   "genero": "Rock clássico",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 112,
+   "confianca": "alta",
+   "equipamento_original": "Ritchie Blackmore: Stratocaster preta de 1968, booster de agudos Hornby Skewes e um Marshall Major modificado.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff",
+     "quando": "Riff e versos",
+     "descricao": "Crunch Marshall com muito médio e agudo, sem grave sobrando.",
+     "captador": 2,
+     "volume_guitarra": 8,
+     "tone_guitarra": 9,
+     "gate": 10,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 55,
+      "treble": 65,
+      "middle": 75,
+      "bass": 45,
+      "volume": 58
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Toque o riff com os dedos (polegar e indicador), sem palheta, como o Blackmore."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Mais saturado com o captador do braço, como um booster ligado.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 66,
+      "treble": 62,
+      "middle": 72,
+      "bass": 48,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "tape",
+      "nivel": 6,
+      "time": 40,
+      "tempo_ms": 280
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Suba o volume da guitarra para 10 no solo."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Na sua HSS, a posição ponte + meio chega mais perto do som de Strat do original."
+   ],
+   "fontes": [
+    {
+     "t": "Gearnews: o timbre do Deep Purple",
+     "u": "https://www.gearnews.com/the-deep-purple-guitar-tone-guitar/"
+    },
+    {
+     "t": "Guitar Chalk: Smoke on the Water",
+     "u": "https://www.guitarchalk.com/smoke-on-the-water-amp-settings/"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "seven-nation-army",
+   "musica": "Seven Nation Army",
+   "artista": "The White Stripes",
+   "ano": 2003,
+   "genero": "Alternativo",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 124,
+   "confianca": "media",
+   "equipamento_original": "Jack White: guitarra Kay de um captador, DigiTech Whammy uma oitava abaixo no riff (faz o papel do baixo), Big Muff no slide e caixa Silvertone 6x10.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff",
+     "quando": "Intro e versos",
+     "descricao": "Timbre médio e cru, com o amp levemente sujo.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 1,
+      "gain": 42,
+      "treble": 68,
+      "middle": 48,
+      "bass": 65,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Toque o riff nas cordas graves (5ª e 6ª) para chegar perto do som de baixo do original."
+     ]
+    },
+    {
+     "nome": "Refrão e slide",
+     "quando": "Refrão e solo de slide",
+     "descricao": "Fuzz grosso e saturado.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 30,
+     "amp": {
+      "ligado": true,
+      "slot": 7,
+      "gain": 82,
+      "treble": 60,
+      "middle": 55,
+      "bass": 70,
+      "volume": 48
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Se tiver um slide, use no solo; senão, faça slides com o dedo."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "O riff original usa Whammy uma oitava abaixo; a Tank-G não tem oitavador.",
+    "O fuzz do Big Muff foi aproximado com o amp EVH 5150 bem saturado."
+   ],
+   "dicas_gerais": [
+    "O original foi gravado em afinação aberta em Lá com slide; para tocar o riff, a afinação padrão serve."
+   ],
+   "fontes": [
+    {
+     "t": "Guitar World: os segredos de Seven Nation Army",
+     "u": "https://www.guitarworld.com/features/the-secrets-behind-jack-whites-guitar-tone-on-the-white-stripes-seven-nation-army"
+    },
+    {
+     "t": "Guitar.com: o equipamento de Elephant",
+     "u": "https://guitar.com/features/artist-rigs/the-gear-used-by-jack-white-on-the-white-stripes-elephant"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "californication",
+   "musica": "Californication",
+   "artista": "Red Hot Chili Peppers",
+   "ano": 1999,
+   "genero": "Alternativo",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 96,
+   "confianca": "alta",
+   "equipamento_original": "John Frusciante: Fender (Jaguar/Strat) em amp Fender Showman limpo, chorus Boss CE-1; captador da ponte na intro e versos, do braço no refrão.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Intro e versos",
+     "quando": "Intro e versos",
+     "descricao": "Limpo, brilhante e um pouco comprimido, com chorus sutil.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 8,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 18,
+      "treble": 58,
+      "middle": 60,
+      "bass": 40,
+      "volume": 64
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 14,
+      "speed": 25
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Ponte + meio na sua HSS chega perto do captador single da ponte do original."
+     ]
+    },
+    {
+     "nome": "Refrão",
+     "quando": "Refrão",
+     "descricao": "O mesmo limpo com o captador do braço, mais cheio.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 8,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 24,
+      "treble": 55,
+      "middle": 62,
+      "bass": 42,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 14,
+      "speed": 25
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Toque mais forte no refrão para o amp sujar levemente."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Marshall levemente saturado com eco perto de 380 ms.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 4,
+      "gain": 45,
+      "treble": 60,
+      "middle": 58,
+      "bass": 40,
+      "volume": 58
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 55,
+      "tempo_ms": 380
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Frusciante toca pouco e com muito espaço; menos notas, mais intenção."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Ground Guitar: o equipamento de Californication",
+     "u": "https://www.groundguitar.com/tone-breakdown/john-frusciante-californication-rig/"
+    },
+    {
+     "t": "ProSoundHQ: configurações do RHCP",
+     "u": "https://prosoundhq.com/how-to-sound-like-red-hot-chili-peppers-amp-settings-guide/"
+    },
+    {
+     "t": "Guitar Chalk: Californication",
+     "u": "https://www.guitarchalk.com/californication-amp-settings/"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "under-the-bridge",
+   "musica": "Under the Bridge",
+   "artista": "Red Hot Chili Peppers",
+   "ano": 1991,
+   "genero": "Alternativo",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 84,
+   "confianca": "media",
+   "equipamento_original": "John Frusciante: Stratocaster limpa e comprimida em Marshall, sem reverb, presença alta.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Intro",
+     "quando": "Intro e versos",
+     "descricao": "Limpo, brilhante e definido, sem reverb, com médio presente.",
+     "captador": 4,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 1,
+      "gain": 22,
+      "treble": 64,
+      "middle": 66,
+      "bass": 45,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Meio + braço na sua HSS imita bem a posição intermediária da Strat."
+     ]
+    },
+    {
+     "nome": "Refrão e final",
+     "quando": "Refrão e final",
+     "descricao": "Mais encorpado, sujando um pouco quando você toca forte.",
+     "captador": 4,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 10,
+     "amp": {
+      "ligado": true,
+      "slot": 1,
+      "gain": 36,
+      "treble": 62,
+      "middle": 66,
+      "bass": 48,
+      "volume": 58
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "A dinâmica vem da mão: toque leve na intro e forte no final."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Toque com os dedos na intro para chegar perto do original."
+   ],
+   "fontes": [
+    {
+     "t": "Guitar Chalk: Under the Bridge",
+     "u": "https://www.guitarchalk.com/under-the-bridge-amp-settings/"
+    },
+    {
+     "t": "Music Strive: timbre de John Frusciante",
+     "u": "https://musicstrive.com/john-frusciante-amp-settings"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "boulevard-of-broken-dreams",
+   "musica": "Boulevard of Broken Dreams",
+   "artista": "Green Day",
+   "ano": 2004,
+   "genero": "Alternativo",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 83,
+   "confianca": "alta",
+   "equipamento_original": "Billie Joe Armstrong: humbucker na ponte em Marshall Plexi modificado, Boss TR-2 (tremolo) na intro; delay em tercinas no solo.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Intro com tremolo",
+     "quando": "Intro",
+     "descricao": "Crunch com tremolo forte e rápido, como abrir e fechar o volume.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 48,
+      "treble": 62,
+      "middle": 58,
+      "bass": 50,
+      "volume": 56
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "tremolo",
+      "nivel": 32,
+      "speed": 60
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "O tremolo tem que ser intenso; suba o MOD FX se achar fraco."
+     ]
+    },
+    {
+     "nome": "Refrão",
+     "quando": "Versos e refrão",
+     "descricao": "Overdrive Marshall com médio para frente.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 28,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 65,
+      "treble": 62,
+      "middle": 62,
+      "bass": 50,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetadas para baixo nos acordes, bem firmes."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Lead com delay em tercinas de colcheia.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 25,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 70,
+      "treble": 62,
+      "middle": 64,
+      "bass": 48,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 12,
+      "time": 34,
+      "tempo_ms": 240
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Deixe as repetições do delay preencherem os espaços entre as frases."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "O solo ao vivo usa wah; a Tank-G não tem esse pedal."
+   ],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Guitarzone: Green Day",
+     "u": "https://guitarzone.pages.dev/artists/green-day/"
+    },
+    {
+     "t": "Premier Guitar: Rig Rundown do Green Day",
+     "u": "https://www.premierguitar.com/articles/Rig_Rundown_Green_Day"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "sultans-of-swing",
+   "musica": "Sultans of Swing",
+   "artista": "Dire Straits",
+   "ano": 1978,
+   "genero": "Rock clássico",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 148,
+   "confianca": "alta",
+   "equipamento_original": "Mark Knopfler: Stratocaster de 1961 na posição ponte + meio, em amp Fender limpo, tocada com os dedos.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Base e frases",
+     "quando": "Versos e frases",
+     "descricao": "Limpo, brilhante e anasalado, com reverb curto.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 20,
+      "treble": 62,
+      "middle": 55,
+      "bass": 50,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 16
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Ponte + meio é exatamente a posição do Knopfler: o famoso 'som Sultans'."
+     ]
+    },
+    {
+     "nome": "Solos",
+     "quando": "Solos",
+     "descricao": "O mesmo limpo com um pouco mais de ataque.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 28,
+      "treble": 62,
+      "middle": 58,
+      "bass": 50,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 16
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Sem palheta: polegar e dedos dão o estalo característico."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Guitar Player: Mark Knopfler e o som Sultans",
+     "u": "https://guitarplayer.com/players/mark-knopfler-down-the-road-wherever"
+    },
+    {
+     "t": "Guitar Chalk: Sultans of Swing",
+     "u": "https://www.guitarchalk.com/amp-settings-sultans-of-swing-dire-straits/"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "hotel-california",
+   "musica": "Hotel California",
+   "artista": "Eagles",
+   "ano": 1976,
+   "genero": "Rock clássico",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 74,
+   "confianca": "media",
+   "equipamento_original": "Solo final: Don Felder com Les Paul '59 num Fender Tweed Deluxe; Joe Walsh com Telecaster e phaser; eco e reverb curtos.",
+   "observacao": "A intro original é em violão de 12 cordas; estes timbres são do solo de guitarra.",
+   "partes": [
+    {
+     "nome": "Solo Felder",
+     "quando": "Solo final (Don Felder)",
+     "descricao": "Overdrive valvulado quente e cantado.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 4,
+      "gain": 60,
+      "treble": 58,
+      "middle": 62,
+      "bass": 50,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 8,
+      "time": 50,
+      "tempo_ms": 350
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Felder abre o solo; frases melódicas e bends lentos."
+     ]
+    },
+    {
+     "nome": "Solo Walsh",
+     "quando": "Solo final (Joe Walsh)",
+     "descricao": "Mais brilhante, com phaser leve.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 4,
+      "gain": 58,
+      "treble": 64,
+      "middle": 58,
+      "bass": 45,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "phaser",
+      "nivel": 14,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 8,
+      "time": 50,
+      "tempo_ms": 350
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Ponte + meio deixa a sua guitarra mais brilhante, perto da Telecaster do Walsh."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "As duas partes alternam no solo final; grave cada uma num pedal (A e B) e troque no tempo certo."
+   ],
+   "fontes": [
+    {
+     "t": "Line 6: Felder e Walsh em Hotel California",
+     "u": "https://line6.com/support/topic/11487-how-2-approximate-hotel-california-harmony-with-ur-jtvhd500/"
+    },
+    {
+     "t": "Music Strive: timbre de Joe Walsh",
+     "u": "https://musicstrive.com/joe-walsh-guitar-tone"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "comfortably-numb",
+   "musica": "Comfortably Numb",
+   "artista": "Pink Floyd",
+   "ano": 1979,
+   "genero": "Rock clássico",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 63,
+   "confianca": "alta",
+   "equipamento_original": "David Gilmour: Stratocaster preta (captador da ponte), Big Muff, amp Hiwatt, caixa rotativa Yamaha discreta e delay de cerca de 480 ms.",
+   "observacao": "As partes de base do original são em violão.",
+   "partes": [
+    {
+     "nome": "Solos",
+     "quando": "Solo do meio e solo final",
+     "descricao": "Fuzz cantado e longo, com delay de 480 ms e um leve movimento de caixa rotativa.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 20,
+     "amp": {
+      "ligado": true,
+      "slot": 7,
+      "gain": 74,
+      "treble": 62,
+      "middle": 45,
+      "bass": 60,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 10,
+      "speed": 25
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 14,
+      "time": 69,
+      "tempo_ms": 480
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 14,
+      "mix": 22
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Bends lentos e vibrato largo; deixe cada nota sustentar."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "O fuzz do Big Muff foi aproximado com o amp EVH 5150; a caixa rotativa, com um chorus bem leve."
+   ],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Total Guitar: Comfortably Numb",
+     "u": "https://www.pressreader.com/australia/total-guitar/20170609/282492888659512"
+    },
+    {
+     "t": "Guitar World: os segredos de Comfortably Numb",
+     "u": "https://www.guitarworld.com/features/the-secrets-behind-david-gilmours-tone-on-pink-floyds-comfortably-numb"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "zombie",
+   "musica": "Zombie",
+   "artista": "The Cranberries",
+   "ano": 1994,
+   "genero": "Alternativo",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 84,
+   "confianca": "alta",
+   "equipamento_original": "Noel Hogan: Marshall saturado no refrão, chorus sutil nas partes limpas.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Versos limpos",
+     "quando": "Intro limpa e versos",
+     "descricao": "Limpo com chorus discreto, só para alargar o som.",
+     "captador": 3,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 8,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 20,
+      "treble": 62,
+      "middle": 52,
+      "bass": 48,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 14,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 16
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Acordes soltos e leves, guardando energia para o refrão."
+     ]
+    },
+    {
+     "nome": "Refrão pesado",
+     "quando": "Refrão",
+     "descricao": "Distorção crua e cheia com o humbucker da ponte.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 35,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 75,
+      "treble": 70,
+      "middle": 60,
+      "bass": 55,
+      "volume": 48
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 4,
+      "mix": 8
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "A virada do limpo para o pesado é o coração da música."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Guitar Chalk: Zombie",
+     "u": "https://www.guitarchalk.com/amp-settings-zombie-the-cranberries/"
+    },
+    {
+     "t": "Ultimate Guitar: Zombie (tab)",
+     "u": "https://tabs.ultimate-guitar.com/tab/the-cranberries/zombie-tabs-1494284"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "paranoid",
+   "musica": "Paranoid",
+   "artista": "Black Sabbath",
+   "ano": 1970,
+   "genero": "Metal",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 163,
+   "confianca": "alta",
+   "equipamento_original": "Tony Iommi: Gibson SG com booster de agudos Dallas Rangemaster num Laney Supergroup; grave todo cortado, médio, agudo e presença no máximo.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff",
+     "quando": "Riff e versos",
+     "descricao": "Distorção rasgada de médios, quase sem grave.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 25,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 75,
+      "treble": 85,
+      "middle": 90,
+      "bass": 20,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetada rápida e alternada; segure firme o tempo."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "O mesmo timbre um pouco mais saturado.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 25,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 80,
+      "treble": 85,
+      "middle": 90,
+      "bass": 22,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 4,
+      "mix": 8
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Iommi corta o grave para o riff não embolar; resista a aumentar o BASS."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Paranoid é em afinação padrão; o Sabbath só baixou a afinação a partir de Master of Reality."
+   ],
+   "fontes": [
+    {
+     "t": "MusicRadar: dicas de timbre de Tony Iommi",
+     "u": "https://musicradar.com/totalguitar/tony-iommi-tone-tips-336115"
+    },
+    {
+     "t": "Guitar Chalk: Paranoid",
+     "u": "https://www.guitarchalk.com/amp-settings-paranoid-black-sabbath/"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "purple-haze",
+   "musica": "Purple Haze",
+   "artista": "Jimi Hendrix",
+   "ano": 1967,
+   "genero": "Rock clássico",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 108,
+   "confianca": "media",
+   "equipamento_original": "Jimi Hendrix: Stratocaster, Fuzz Face, Octavia (no solo) e Marshall de 100 W no talo.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff e versos",
+     "quando": "Intro e versos",
+     "descricao": "Fuzz grosso e dinâmico, que limpa quando você baixa o volume da guitarra.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 20,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 82,
+      "treble": 60,
+      "middle": 55,
+      "bass": 50,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "O volume da guitarra controla o fuzz: em 7 fica mais limpo, em 10 satura."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Mais saturado e agudo, com o captador da ponte.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 22,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 88,
+      "treble": 66,
+      "middle": 58,
+      "bass": 48,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 4,
+      "mix": 8
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "No original, a Octavia dobra as notas uma oitava acima no solo."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "A Octavia (oitava acima) e o Fuzz Face não existem na Tank-G; o fuzz foi aproximado com o Plexi bem saturado."
+   ],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Guitar Chalk: Purple Haze",
+     "u": "https://www.guitarchalk.com/amp-settings-purple-haze-jimi-hendrix/"
+    },
+    {
+     "t": "IEEE Spectrum: o sistema de Purple Haze",
+     "u": "https://spectrum.ieee.org/jimi-hendrix-systems-engineer?mode=reply"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "crazy-train",
+   "musica": "Crazy Train",
+   "artista": "Ozzy Osbourne",
+   "ano": 1980,
+   "genero": "Metal",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 138,
+   "confianca": "alta",
+   "equipamento_original": "Randy Rhoads: Les Paul em Marshall Super Lead quase limpo; distorção do MXR Distortion+ e muito médio com o EQ de 10 bandas.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff",
+     "quando": "Riff e versos",
+     "descricao": "Distorção com médios bem fortes, timbre 'anasalado' dos anos 80.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 35,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 72,
+      "treble": 55,
+      "middle": 85,
+      "bass": 45,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetada alternada precisa no riff de semicolcheias."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Lead com médio forte; no original o solo foi gravado três vezes, o que soa como chorus.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 35,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 76,
+      "treble": 58,
+      "middle": 85,
+      "bass": 45,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 12,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 8,
+      "time": 40,
+      "tempo_ms": 280
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "O chorus leve imita a dobra do solo gravado várias vezes."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Guitar World: os segredos de Crazy Train",
+     "u": "https://www.guitarworld.com/features/randy-rhoads-crazy-train-tone-secrets"
+    },
+    {
+     "t": "Music Strive: timbre de Randy Rhoads",
+     "u": "https://musicstrive.com/randy-rhoads-amp-settings"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "everlong",
+   "musica": "Everlong",
+   "artista": "Foo Fighters",
+   "ano": 1997,
+   "genero": "Alternativo",
+   "afinacao": "Drop D (D A D G B E)",
+   "afinacao_padrao": false,
+   "bpm": 158,
+   "confianca": "alta",
+   "equipamento_original": "Dave Grohl: guitarra com humbuckers em Drop D, Mesa/Boogie Rectifier e Vox AC30.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff e versos",
+     "quando": "Intro e versos",
+     "descricao": "Distorção média com médio forte, abafada nos versos.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 30,
+     "amp": {
+      "ligado": true,
+      "slot": 9,
+      "gain": 62,
+      "treble": 60,
+      "middle": 68,
+      "bass": 50,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 4,
+      "motivo": ""
+     },
+     "dicas": [
+      "Abafe com a palma da mão nos versos para o riff ficar percussivo."
+     ]
+    },
+    {
+     "nome": "Refrão",
+     "quando": "Refrão",
+     "descricao": "Mais aberto e saturado.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 32,
+     "amp": {
+      "ligado": true,
+      "slot": 9,
+      "gain": 70,
+      "treble": 62,
+      "middle": 66,
+      "bass": 55,
+      "volume": 48
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 4,
+      "motivo": ""
+     },
+     "dicas": [
+      "Solte a palma da mão e deixe os acordes soarem."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Afine a 6ª corda (Mi grave) um tom abaixo, em Ré: Drop D."
+   ],
+   "fontes": [
+    {
+     "t": "Guitar Chalk: Everlong",
+     "u": "https://www.guitarchalk.com/amp-settings-everlong-foo-fighters/"
+    },
+    {
+     "t": "GuitarSpace: Everlong",
+     "u": "https://guitarspace.org/?p=28117"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "zoio-de-lula",
+   "musica": "Zóio de Lula",
+   "artista": "Charlie Brown Jr.",
+   "ano": 1999,
+   "genero": "Rock nacional",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": null,
+   "confianca": "media",
+   "equipamento_original": "Marcão Britto na guitarra, com efeitos nas partes de base; refrão pesado de skate rock.",
+   "observacao": "Há pouca informação publicada sobre o equipamento; estes timbres seguem o estilo da gravação.",
+   "partes": [
+    {
+     "nome": "Base com efeitos",
+     "quando": "Versos",
+     "descricao": "Limpo levemente sujo, com phaser e eco, no clima reggae/funk da base.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 10,
+     "amp": {
+      "ligado": true,
+      "slot": 1,
+      "gain": 28,
+      "treble": 60,
+      "middle": 55,
+      "bass": 45,
+      "volume": 60
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "phaser",
+      "nivel": 14,
+      "speed": 35
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 8,
+      "time": 40,
+      "tempo_ms": 280
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetadas curtas no contratempo, como guitarra de reggae."
+     ]
+    },
+    {
+     "nome": "Refrão pesado",
+     "quando": "Refrão",
+     "descricao": "Distorção moderna e cheia.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 35,
+     "amp": {
+      "ligado": true,
+      "slot": 9,
+      "gain": 70,
+      "treble": 60,
+      "middle": 45,
+      "bass": 60,
+      "volume": 48
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 4,
+      "motivo": ""
+     },
+     "dicas": [
+      "Downpicking firme nos acordes do refrão."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Rolling Stone Brasil: Champignon e Marcão em Zóio de Lula",
+     "u": "https://rollingstone.com.br/noticia/10-grandes-musicas-do-champignon-no-charlie-brown-jr"
+    },
+    {
+     "t": "Songsterr: Zóio de Lula",
+     "u": "https://www.songsterr.com/a/wsa/charlie-brown-jr-tabs-a27375?inst=guitar"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "tempo-perdido",
+   "musica": "Tempo Perdido",
+   "artista": "Legião Urbana",
+   "ano": 1986,
+   "genero": "Rock nacional",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": null,
+   "confianca": "media",
+   "equipamento_original": "Dado Villa-Lobos dedilhando o riff com timbre limpo dos anos 80; Renato Russo no violão.",
+   "observacao": "Há pouca informação publicada sobre o equipamento; estes timbres seguem o estilo da gravação.",
+   "partes": [
+    {
+     "nome": "Riff dedilhado",
+     "quando": "Intro e versos",
+     "descricao": "Limpo cristalino com chorus e eco curto, bem anos 80.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 15,
+      "treble": 62,
+      "middle": 50,
+      "bass": 45,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 22,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 8,
+      "time": 45,
+      "tempo_ms": 320
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 10,
+      "mix": 18
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Dedilhe o riff com a palheta, deixando as notas soarem juntas."
+     ]
+    },
+    {
+     "nome": "Refrão",
+     "quando": "Refrão",
+     "descricao": "Um pouco mais sujo e encorpado.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 1,
+      "gain": 45,
+      "treble": 60,
+      "middle": 58,
+      "bass": 48,
+      "volume": 56
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 14,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 14
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Acordes abertos e fortes no refrão."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Billboard Brasil: Tempo Perdido",
+     "u": "https://billboard.com.br/hit-dos-caminhoneiros-tempo-perdido-e-unico-rock-entre-as-mais-ouvidas-do-br/"
+    },
+    {
+     "t": "Wikipédia: Tempo Perdido",
+     "u": "https://wikipedia.com/wiki/Tempo_Perdido_(Legi%C3%A3o_Urbana_song)"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "anna-julia",
+   "musica": "Anna Júlia",
+   "artista": "Los Hermanos",
+   "ano": 1999,
+   "genero": "Rock nacional",
+   "afinacao": "Meio tom abaixo (Eb Ab Db Gb Bb Eb)",
+   "afinacao_padrao": false,
+   "bpm": 148,
+   "confianca": "media",
+   "equipamento_original": "Power pop com guitarras saturadas; Marcelo Camelo compôs e faz o solo.",
+   "observacao": "Há pouca informação publicada sobre o equipamento; estes timbres seguem o estilo da gravação.",
+   "partes": [
+    {
+     "nome": "Base",
+     "quando": "Versos e refrão",
+     "descricao": "Crunch Marshall aberto e animado.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 20,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 55,
+      "treble": 60,
+      "middle": 65,
+      "bass": 50,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetada alternada solta, no balanço da música."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Um pouco mais saturado, com eco curto.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 20,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 62,
+      "treble": 58,
+      "middle": 66,
+      "bass": 50,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 8,
+      "time": 18,
+      "tempo_ms": 130
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Melodia simples e cantada, como a do Camelo."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "A gravação é meio tom abaixo (Eb); afine assim para tocar junto com o disco."
+   ],
+   "fontes": [
+    {
+     "t": "E-Chords: Anna Júlia (afinação)",
+     "u": "https://www.e-chords.com/es/bass/los-hermanos/anna-julia"
+    },
+    {
+     "t": "Wikipédia: Anna Júlia",
+     "u": "https://en.wikipedia.org/wiki/Anna_J%C3%BAlia"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "pro-dia-nascer-feliz",
+   "musica": "Pro Dia Nascer Feliz",
+   "artista": "Barão Vermelho",
+   "ano": 1983,
+   "genero": "Rock nacional",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": null,
+   "confianca": "media",
+   "equipamento_original": "Roberto Frejat: rock e blues no estilo Rolling Stones, guitarra crua e direta.",
+   "observacao": "Há pouca informação publicada sobre o equipamento; estes timbres seguem o estilo da gravação.",
+   "partes": [
+    {
+     "nome": "Base",
+     "quando": "Riff, versos e refrão",
+     "descricao": "Crunch rock'n'roll seco, com bastante médio.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 50,
+      "treble": 62,
+      "middle": 65,
+      "bass": 50,
+      "volume": 58
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Ponte + meio dá o brilho seco de rock'n'roll dos anos 80."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Mais saturado com o captador da ponte.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 20,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 62,
+      "treble": 60,
+      "middle": 68,
+      "bass": 50,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Frases de blues com bends: é o estilo do Frejat."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Vermelho: 30 anos sem Cazuza, a rascante Pro Dia Nascer Feliz",
+     "u": "https://vermelho.org.br/prosa-poesia-arte/30-anos-sem-cazuza-a-rascante-e-suja-pro-dia-nascer-feliz/"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  }
+ ]
+}

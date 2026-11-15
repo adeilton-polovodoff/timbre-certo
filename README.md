@@ -23,3 +23,7 @@ App Android que pesquisa na internet o timbre de guitarra de uma música e devol
 - O APK é compilado pelo GitHub Actions (`.github/workflows/build-apk.yml`) a cada push na branch `main`.
 
 O protocolo SysEx da Tank-G vem do projeto aberto [tank-g-controller](https://github.com/AlexandreTonin/tank-g-controller) (MIT).
+
+## Banco de timbres
+
+`www/timbres.json` guarda os timbres prontos, pesquisados na internet e traduzidos para a Tank-G (com as fontes de cada música). O app lê esse arquivo direto do GitHub ao abrir, então músicas novas aparecem no celular sem precisar de APK novo: basta adicionar ao arquivo e aumentar o campo `versao`.
