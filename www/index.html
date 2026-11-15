@@ -172,6 +172,10 @@ select{background:var(--surface);border:1px solid var(--line);border-radius:10px
 .send-msg{font-size:14px;color:var(--muted);margin:0}
 .send-msg.err{color:var(--warn)}
 .send-msg.okay{color:var(--ok)}
+.steps{margin:0;padding-left:22px;display:grid;gap:6px;font-size:14px;color:var(--muted)}
+.steps b{color:var(--ink)}
+.steps li.done{opacity:.55}
+.steps li.done b::after{content:" ✓";color:var(--ok)}
 .confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:rgba(255,178,62,.08);border:1px solid rgba(255,178,62,.4);border-radius:10px;padding:10px 12px;font-size:14px}
 
 /* cartões */
@@ -607,23 +611,38 @@ function pedalHTML(p){
 
 function sendHTML(){
   const r = state.result, p = r.partes[state.part];
-  const n = r.partes.length;
-  const slots = r.partes.map((_,i) => `${state.cfg.bank}${LETTERS[i]}`).join(", ");
+  const n = r.partes.length, bank = state.cfg.bank;
+  const slots = r.partes.map((_,i) => `${bank}${LETTERS[i]}`).join(", ");
   const conn = Tank.kind;
-  const ps = state.pendingSave;
+  const ps = state.pendingSave, ct = state.connTest;
   return `<div class="send" id="sendBox">
     <h3><i class="dot${conn ? " on" : ""}"></i>Mandar para a Tank-G</h3>
+    <ol class="steps">
+      <li class="${conn ? "done" : ""}"><b>Conecte.</b> Cabo USB-C ligando a Tank-G ao celular (o jeito garantido) ou Bluetooth. Feche o app M-EFCS antes. A pedaleira pode ficar no modo normal (PRESET); não precisa do modo LIVE.</li>
+      <li class="${ct === "ok" ? "done" : ""}"><b>Teste a conexão.</b> O app manda a pedaleira pular para o preset ${bank}A. Se a tela dela mudar, está tudo certo.</li>
+      <li><b>Teste o timbre.</b> "Testar" troca o som na hora, sem gravar. Toque uma nota para ouvir.</li>
+      <li><b>Grave.</b> "Gravar" salva ${n > 1 ? `as partes em ${esc(slots)}` : `no preset ${esc(slots)}`}. Depois, no modo PRESET, é só pisar ${r.partes.map((_,i) => LETTERS[i]).join(", ")} para trocar de parte.</li>
+    </ol>
     <div class="send-row" ${conn ? 'style="display:none"' : ""}>
       <button class="btn primary" type="button" data-act="usb">Conectar pelo cabo USB</button>
-      <button class="btn" type="button" data-act="ble">Conectar pelo Bluetooth (experimental)</button>
+      <button class="btn" type="button" data-act="ble">Conectar pelo Bluetooth</button>
     </div>
     <div class="send-row" ${conn ? "" : 'style="display:none"'}>
-      <button class="btn primary" type="button" data-act="try">Testar "${esc(p.nome)}" agora</button>
-      <button class="btn" type="button" data-act="save">${n > 1 ? `Gravar as ${n} partes em ${esc(slots)}` : `Gravar no preset ${esc(slots)}`}</button>
+      <button class="btn ${ct === "ok" ? "" : "primary"}" type="button" data-act="ctest">Testar conexão</button>
+      <button class="btn ${ct === "ok" ? "primary" : ""}" type="button" data-act="try">Testar "${esc(p.nome)}"</button>
+      <button class="btn" type="button" data-act="save">${n > 1 ? `Gravar as ${n} partes` : `Gravar no preset`}</button>
       <button class="btn" type="button" data-act="disc">Desconectar</button>
     </div>
+    ${ct === "ask" ? `<div class="confirm"><span>A tela da Tank-G mudou para <b>${bank}A</b>?</span><button class="btn primary" type="button" data-act="ctYes">Mudou</button><button class="btn" type="button" data-act="ctNo">Não mudou</button></div>` : ""}
+    ${ct === "fail" ? `<div class="confirm" style="display:block"><b>A pedaleira não está recebendo.</b><ul style="margin:6px 0 0;padding-left:18px">
+      ${Tank.kind === "ble" ? `<li>Pelo Bluetooth, a Tank-G pode recusar os comandos deste app. Use o cabo USB-C.</li>` : ""}
+      <li>Use um cabo USB-C que passe dados (alguns só carregam).</li>
+      <li>Em alguns celulares (Xiaomi, Realme, Oppo, Motorola) é preciso ligar o "OTG" nas configurações; ele desliga sozinho depois de um tempo.</li>
+      <li>Feche o M-EFCS por completo (inclusive em segundo plano) e toque em Desconectar e Conectar de novo.</li>
+      <li>Ligue a Tank-G antes de plugar o cabo.</li></ul></div>` : ""}
+    ${Tank.kind === "ble" ? `<p class="send-msg err">Conectada pelo Bluetooth: a troca de preset funciona, mas a Tank-G pode não aceitar timbres por aqui. Se "Testar" não mudar o som, use o cabo.</p>` : ""}
     ${ps ? `<div class="confirm"><span>Isso substitui o que está gravado em <b>${esc(slots)}</b>. Confirma?</span><button class="btn primary" type="button" data-act="saveYes">Gravar</button><button class="btn" type="button" data-act="saveNo">Cancelar</button></div>` : ""}
-    <p class="send-msg" id="sendMsg">${conn ? `Conectada: ${esc(Tank.name)}. "Testar" muda o som na hora sem gravar; "Gravar" salva na memória da pedaleira.` : "Cabo: ligue a Tank-G no celular ou tablet com um cabo USB-C (OTG) e feche o app M-EFCS. Bluetooth: segure B+C por 3 s na Tank-G e escolha ela na lista."}</p>
+    <p class="send-msg" id="sendMsg">${conn ? `Conectada: ${esc(Tank.name)}.` : "Ainda não conectada."}</p>
   </div>`;
 }
 
@@ -1067,7 +1086,7 @@ document.addEventListener("click", async ev => {
     else if(act === "keep") keepTone();
     else if(act === "usb"){ msg("Procurando a Tank-G no cabo…"); await connectUSB(); render(); }
     else if(act === "ble"){ msg("Escolha a Tank-G na lista do Bluetooth…"); await connectBLE(); render(); }
-    else if(act === "disc"){ await disconnectTank(); render(); }
+    else if(act === "disc"){ await disconnectTank(); state.connTest = null; render(); }
     else if(act === "cfg"){ openCfg(); }
     else if(act === "checkupd"){ dlg.close ? dlg.close() : dlg.removeAttribute("open"); checkUpdate(true); }
     else if(act === "doupd"){ doUpdate(); }
@@ -1075,10 +1094,18 @@ document.addEventListener("click", async ev => {
     else if(act === "try"){
       t.disabled = true; msg("Mandando…");
       await sendAll(liveMessages(partToState(state.result.partes[state.part], state.mode)));
-      msg(`Pronto: "${state.result.partes[state.part].nome}" está tocando na Tank-G (sem gravar).`, "okay");
+      msg(`Enviado: "${state.result.partes[state.part].nome}". Toque uma nota para ouvir. Se o som não mudou, use "Testar conexão".`, "okay");
       t.disabled = false;
     }
     else if(act === "save"){ state.pendingSave = true; render(); }
+    else if(act === "ctest"){
+      const pid = (state.cfg.bank - 1) * 4;
+      t.disabled = true; msg("Mandando a pedaleira para o preset " + state.cfg.bank + "A…");
+      await sendAll([sxSelect(pid), [0xC0, pid & 0x7F]]);
+      state.connTest = "ask"; render();
+    }
+    else if(act === "ctYes"){ state.connTest = "ok"; render(); msg("Conexão confirmada. Agora toque em Testar para ouvir o timbre.", "okay"); }
+    else if(act === "ctNo"){ state.connTest = "fail"; render(); }
     else if(act === "saveNo"){ state.pendingSave = null; render(); }
     else if(act === "saveYes"){
       state.pendingSave = null; render();
@@ -1086,10 +1113,10 @@ document.addEventListener("click", async ev => {
       msg("Gravando…");
       for(let i=0;i<parts.length;i++){
         const pid = (bank-1)*4 + i;
-        await sendAll(saveMessages(pid, partToState(parts[i], state.mode)));
+        await sendAll([...saveMessages(pid, partToState(parts[i], state.mode)), [0xC0, pid & 0x7F]]);
         await sleep(150);
       }
-      msg(`Gravado em ${parts.map((_,i) => bank + LETTERS[i]).join(", ")}. No modo PRESET, troque de parte com os pedais ${parts.map((_,i) => LETTERS[i]).join(", ")}.`, "okay");
+      msg(`Enviado para ${parts.map((_,i) => bank + LETTERS[i]).join(", ")}. A tela deve mostrar ${bank}${LETTERS[parts.length-1]}. No modo PRESET, troque de parte com os pedais ${parts.map((_,i) => LETTERS[i]).join(", ")}. Se a tela não mudou, use "Testar conexão".`, "okay");
     }
   }catch(e){ msg((e && e.pt) || "Não deu certo. Confira a conexão com a Tank-G e tente de novo.", "err"); }
 });
