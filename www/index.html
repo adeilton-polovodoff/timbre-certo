@@ -442,14 +442,17 @@ function pack7(fields, n){
   return out;
 }
 function rawSector(list, tipo, nivel){ const k = Math.max(0, list.indexOf(tipo)); return [-1,43,87][k] + int(nivel,1,40,20); }
+// Os botões da pedaleira vão de 0 a 127 (os de efeito são 3 faixas dentro desse 0-127);
+// no app eles aparecem de 0 a 100, então os valores contínuos são convertidos aqui.
+const K127 = v => Math.max(0, Math.min(127, Math.round(int(v,0,100,50) * 127 / 100)));
 function partToState(p, mode){
   return {
-    type:p.amp.slot, gain:p.amp.gain, treble:p.amp.treble, middle:p.amp.middle, bass:p.amp.bass, volume:p.amp.volume,
-    mod_fx: rawSector(MODS,p.mod.tipo,p.mod.nivel), mod_speed:p.mod.speed,
-    dly_mix: rawSector(DLYS,p.delay.tipo,p.delay.nivel), dly_time:p.delay.time,
-    rev_decay: rawSector(RVBS,p.reverb.tipo,p.reverb.nivel), rev_mix:p.reverb.mix,
+    type:p.amp.slot, gain:K127(p.amp.gain), treble:K127(p.amp.treble), middle:K127(p.amp.middle), bass:K127(p.amp.bass), volume:K127(p.amp.volume),
+    mod_fx: rawSector(MODS,p.mod.tipo,p.mod.nivel), mod_speed:K127(p.mod.speed),
+    dly_mix: rawSector(DLYS,p.delay.tipo,p.delay.nivel), dly_time:K127(p.delay.time),
+    rev_decay: rawSector(RVBS,p.reverb.tipo,p.reverb.nivel), rev_mix:K127(p.reverb.mix),
     amp_on:p.amp.ligado?1:0, mod_on:p.mod.ligado?1:0, dly_on:p.delay.ligado?1:0, rev_on:p.reverb.ligado?1:0,
-    gate:p.gate, cab: (mode === "amp" || !p.ir.ligado) ? 0 : p.ir.slot
+    gate:K127(p.gate), cab: (mode === "amp" || !p.ir.ligado) ? 0 : p.ir.slot
   };
 }
 function sxParams(s){
@@ -468,7 +471,7 @@ function sxCab(c){
 function sxBypass(id, on){ const st = on?1:0; return [...HDR,0x49,0x00,0x00,0x00,0x02,id,0x00,0x00,0x00,0x11,0x00,0x00,0x00,st,0x54-2*id-2*st,0x03,0xF7]; }
 function sxSelect(pid){ const [a,b] = ck14(50 - 2*pid); return [...HDR,0x49,0x00,0x00,0x00,0x02,pid,0x00,0x00,0x00,0x1E,0x00,0x00,0x00,0x01,a,b,0xF7]; }
 function sxSave(pid, s){
-  const f = [s.amp_on,s.mod_on,s.dly_on,s.rev_on,s.gate,s.type,s.gain,s.treble,s.middle,s.bass,s.volume,s.mod_fx,s.mod_speed,s.dly_mix,s.dly_time,s.rev_decay,s.rev_mix,s.cab,255,0,0];
+  const f = [s.amp_on,s.mod_on,s.dly_on,s.rev_on,s.gate,s.type-1,s.gain,s.treble,s.middle,s.bass,s.volume,s.mod_fx,s.mod_speed,s.dly_mix,s.dly_time,s.rev_decay,s.rev_mix,s.cab,255,0,0];
   const off = pid*21 + 2;
   const sum = f.reduce((x,y) => x+y, 0);
   return [...HDR,0x69,0x01,0x00,0x00,0x02,off & 0x7F,(off>>7) & 0x7F,0x00,0x00,0x50,0x02,0x00,0x00, ...pack7(f,24), ...ck14(230-sum-off), 0xF7];
@@ -493,7 +496,7 @@ function unpack7(bytes, n){
   for(let i=0;i<n;i++) out.push(Number((big >> BigInt(8*i)) & 0xFFn));
   return out;
 }
-const stateFields = s => [s.amp_on,s.mod_on,s.dly_on,s.rev_on,s.gate,s.type,s.gain,s.treble,s.middle,s.bass,s.volume,s.mod_fx,s.mod_speed,s.dly_mix,s.dly_time,s.rev_decay,s.rev_mix,s.cab];
+const stateFields = s => [s.amp_on,s.mod_on,s.dly_on,s.rev_on,s.gate,s.type-1,s.gain,s.treble,s.middle,s.bass,s.volume,s.mod_fx,s.mod_speed,s.dly_mix,s.dly_time,s.rev_decay,s.rev_mix,s.cab];
 const FIELD_NAMES = ["AMP liga","MOD liga","DLY liga","RVB liga","gate","amp","gain","treble","middle","bass","volume","mod","mod speed","dly mix","dly time","rvb decay","rvb mix","cab"];
 const presetName = pid => `${Math.floor(pid/4)+1}${LETTERS[pid%4]}`;
 
@@ -541,7 +544,7 @@ const Diag = {
     }
     else if(b[3] === 0x0D && b[4] === 0x69 && b.length >= 43){
       this.preset = unpack7(b.slice(17, 41), 21); this.presetAt = Date.now();
-      this.add("in", `preset lido: amp ${this.preset[5]}, gain ${this.preset[6]}, volume ${this.preset[10]}`);
+      { const pf = this.preset, pc = v => Math.round(v * 100 / 127), am = AMPS[pf[5] + 1]; this.add("in", `preset lido: amp ${am ? am.s : pf[5]}, gain ${pc(pf[6])}, volume ${pc(pf[10])}`); }
     }
     else this.add("in", hexs(b));
     this.waiters = this.waiters.filter(w => { if(w.test()){ w.ok(true); return false; } return true; });
@@ -639,12 +642,24 @@ async function tryTone(s){
   const after = await readPreset();
   return {acked: Diag.acks - a0, total: msgs.length, after, applied: sameTone(after, s), heard: Diag.heard()};
 }
-// Grava no slot, recarrega e confere lendo o preset de volta.
+// Grava como o app oficial: vai para o preset, deixa o timbre nele, grava, confirma e confere lendo de volta.
+async function goPreset(pid){
+  await sendAll(Diag.heard() ? [sxSelect(pid)] : [sxSelect(pid), [0xC0, pid & 0x7F]]);
+  if(!Diag.heard()) return true;
+  await TankMidi.send({data:SX_POLL});
+  return Diag.waitFor(() => Diag.status && Diag.status.pid === pid, 1500);
+}
 async function saveTone(pid, s){
-  await sendAll([...saveMessages(pid, s), [0xC0, pid & 0x7F]]);
+  const there = await goPreset(pid);
+  await tryTone(s);
+  const a0 = Diag.acks;
+  await sendAll([sxSave(pid, s)]);
+  const saved = Diag.acks > a0;
+  if(Diag.heard() && !saved) Diag.add("in", "a Tank-G não confirmou a gravação");
+  await sendAll([sxFlush(), sxSelect(pid)]);
   await sleep(150);
   const got = await readPreset(1200);
-  return {got, ok: sameTone(got, s), heard: Diag.heard()};
+  return {got, ok: sameTone(got, s), heard: Diag.heard(), there, saved};
 }
 
 /* ========= Exemplo inicial ========= */
@@ -1247,7 +1262,7 @@ document.addEventListener("click", async ev => {
       const pid = (state.cfg.bank - 1) * 4;
       t.disabled = true; msg("Mandando a pedaleira para o preset " + state.cfg.bank + "A…");
       try{
-        await sendAll([sxSelect(pid), [0xC0, pid & 0x7F]]);
+        await sendAll(Diag.heard() ? [sxSelect(pid)] : [sxSelect(pid), [0xC0, pid & 0x7F]]);
         if(Diag.heard()){
           await TankMidi.send({data:SX_POLL});
           const ok = await Diag.waitFor(() => Diag.status && Diag.status.pid === pid, 2500);
@@ -1271,6 +1286,7 @@ document.addEventListener("click", async ev => {
       const okList = [], badList = [], unk = [];
       for(let i=0;i<parts.length;i++){
         const pid = (bank-1)*4 + i, s = partToState(parts[i], state.mode);
+        msg(`Gravando ${presetName(pid)}${parts.length > 1 ? ` (${i+1} de ${parts.length})` : ""}…`);
         const r = await saveTone(pid, s);
         if(r.ok) okList.push(presetName(pid));
         else if(r.got) badList.push(`${presetName(pid)} (${diffTone(r.got, s).slice(0,3).join(", ")})`);
