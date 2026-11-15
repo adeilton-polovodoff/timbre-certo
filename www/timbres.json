@@ -1,5 +1,5 @@
 {
- "versao": 1,
+ "versao": 2,
  "atualizado": "2026-11-15",
  "musicas": [
   {
@@ -3059,6 +3059,1746 @@
      "u": "https://vermelho.org.br/prosa-poesia-arte/30-anos-sem-cazuza-a-rascante-e-suja-pro-dia-nascer-feliz/"
     }
    ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "nothing-else-matters",
+   "musica": "Nothing Else Matters",
+   "artista": "Metallica",
+   "ano": 1991,
+   "genero": "Metal",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 69,
+   "confianca": "alta",
+   "equipamento_original": "Roland JC-120 nas partes limpas e amps Mesa/Boogie no resto; o solo é do James Hetfield, numa Gibson Explorer.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Intro limpa",
+     "quando": "Intro e versos",
+     "descricao": "Limpo, escuro e cheio, com chorus leve e reverb.",
+     "captador": 4,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 12,
+      "treble": 45,
+      "middle": 45,
+      "bass": 60,
+      "volume": 60
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 16,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 14,
+      "mix": 24
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Deixe as cordas soltas soarem até sumirem; dedilhe com calma."
+     ]
+    },
+    {
+     "nome": "Refrão",
+     "quando": "Refrão",
+     "descricao": "Distorção média e encorpada, sem exagero.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 30,
+     "amp": {
+      "ligado": true,
+      "slot": 9,
+      "gain": 55,
+      "treble": 58,
+      "middle": 40,
+      "bass": 60,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 10,
+      "mix": 16
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 4,
+      "motivo": ""
+     },
+     "dicas": [
+      "Segure a mão: o refrão cresce, mas a música continua sendo balada."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Lead saturado, agudo e com médio cavado, com eco.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 30,
+     "amp": {
+      "ligado": true,
+      "slot": 9,
+      "gain": 70,
+      "treble": 70,
+      "middle": 35,
+      "bass": 60,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 50,
+      "tempo_ms": 350
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 12,
+      "mix": 18
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 4,
+      "motivo": ""
+     },
+     "dicas": [
+      "Bends lentos e vibrato largo, no estilo Hetfield."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Capriche na dinâmica: limpo bem limpo e sujo bem sujo."
+   ],
+   "fontes": [
+    {
+     "t": "MusicRadar: dicas de timbre do Metallica",
+     "u": "https://musicradar.com/news/guitars/metallica-week-tone-tips-for-5-classic-tracks-172815"
+    },
+    {
+     "t": "ProSoundHQ: configurações do Metallica",
+     "u": "https://prosoundhq.com/how-to-sound-like-metallica-amp-settings-guide"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "highway-to-hell",
+   "musica": "Highway to Hell",
+   "artista": "AC/DC",
+   "ano": 1979,
+   "genero": "Rock clássico",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 116,
+   "confianca": "alta",
+   "equipamento_original": "Angus Young: Gibson SG num Marshall 2203, com pouca distorção e reverb nas introduções.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Base",
+     "quando": "Riff, versos e refrão",
+     "descricao": "Crunch Marshall seco e aberto.",
+     "captador": 1,
+     "volume_guitarra": 9,
+     "tone_guitarra": 9,
+     "gate": 12,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 52,
+      "treble": 50,
+      "middle": 60,
+      "bass": 45,
+      "volume": 58
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Deixe os acordes abertos soarem entre as pausas do riff."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "O mesmo amp mais saturado, guitarra no máximo.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 18,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 62,
+      "treble": 55,
+      "middle": 64,
+      "bass": 45,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Vibrato rápido e bends curtos, no estilo Angus."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Pouco gain: o peso vem da palhetada, não da distorção."
+   ],
+   "fontes": [
+    {
+     "t": "SoloDallas: Highway to Hell",
+     "u": "https://solodallas.com/blogs/performance-videos/ac-dc-s-shot-down-in-flames-the-schaffer-replica-series-solodallas-cover"
+    },
+    {
+     "t": "Guitar World: o equipamento de Angus Young",
+     "u": "https://guitarworld.com/features/angus-youngs-guitar-gear-everything-you-need-to-nail-the-acdc-stars-high-voltage-tones"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "whole-lotta-love",
+   "musica": "Whole Lotta Love",
+   "artista": "Led Zeppelin",
+   "ano": 1969,
+   "genero": "Rock clássico",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 90,
+   "confianca": "alta",
+   "equipamento_original": "Jimmy Page: Les Paul em amp Marshall (Super Bass); no solo, Telecaster com wah parado.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff",
+     "quando": "Riff e versos",
+     "descricao": "Overdrive valvulado grosso e cortante.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 60,
+      "treble": 65,
+      "middle": 62,
+      "bass": 65,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Na 2ª nota do riff, toque a 5ª casa da corda Lá junto com a corda Ré solta."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Mais agudo e anasalado, como a Tele com wah do original.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 18,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 66,
+      "treble": 75,
+      "middle": 70,
+      "bass": 55,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "tape",
+      "nivel": 6,
+      "time": 30,
+      "tempo_ms": 210
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Bends de um tom e meio e frases curtas de blues."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "O solo original usa wah parado na posição aberta; a Tank-G não tem wah, então o médio e o agudo altos imitam esse som."
+   ],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Guitar Chalk: Whole Lotta Love",
+     "u": "https://www.guitarchalk.com/whole-lotta-love-amp-settings/"
+    },
+    {
+     "t": "Guitar World: os 20 maiores momentos de Jimmy Page",
+     "u": "https://www.guitarworld.com/features/jimmy-pages-20-greatest-guitar-moments"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "sunshine-of-your-love",
+   "musica": "Sunshine of Your Love",
+   "artista": "Cream",
+   "ano": 1967,
+   "genero": "Rock clássico",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 116,
+   "confianca": "alta",
+   "equipamento_original": "Eric Clapton: Gibson SG em Marshall, volume da guitarra no 10 e tone no 1: o famoso 'woman tone'.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff",
+     "quando": "Riff e versos",
+     "descricao": "Overdrive gordo e abafado: tone da guitarra quase fechado.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 1,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 4,
+      "gain": 70,
+      "treble": 60,
+      "middle": 65,
+      "bass": 55,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Tone no 1 é o segredo: o som fica cantado e sem agudo ardido."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Woman tone: captador do braço, volume no 10 e tone no 1.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 1,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 4,
+      "gain": 72,
+      "treble": 62,
+      "middle": 66,
+      "bass": 55,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 14
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Vibrato lento e bends cantados, imitando uma voz."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Guitar World: o timbre de Sunshine of Your Love",
+     "u": "https://www.guitarworld.com/features/eric-clapton-cream-sunshine-of-your-love-tone"
+    },
+    {
+     "t": "Seymour Duncan: o que é o woman tone",
+     "u": "https://www.seymourduncan.com/blog/latest-updates/what-is-the-woman-tone"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "basket-case",
+   "musica": "Basket Case",
+   "artista": "Green Day",
+   "ano": 1994,
+   "genero": "Alternativo",
+   "afinacao": "Meio tom abaixo (Eb Ab Db Gb Bb Eb)",
+   "afinacao_padrao": false,
+   "bpm": 176,
+   "confianca": "alta",
+   "equipamento_original": "Billie Joe Armstrong: Strat copy com humbucker JB na ponte, afinada em Eb, num Marshall Plexi modificado.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Base",
+     "quando": "Música toda",
+     "descricao": "Crunch punk cheio, com médio forte.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 25,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 72,
+      "treble": 62,
+      "middle": 65,
+      "bass": 55,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetadas para baixo na intro; depois, solte a mão nos versos."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Afine meio tom abaixo (Eb), como o disco Dookie."
+   ],
+   "fontes": [
+    {
+     "t": "Premier Guitar: Rig Rundown do Green Day",
+     "u": "https://www.premierguitar.com/articles/Rig_Rundown_Green_Day"
+    },
+    {
+     "t": "Andy Guitar: Basket Case (afinação)",
+     "u": "https://www.andyguitar.co.uk/videos/green-day-basket-case"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "master-of-puppets",
+   "musica": "Master of Puppets",
+   "artista": "Metallica",
+   "ano": 1986,
+   "genero": "Metal",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 212,
+   "confianca": "alta",
+   "equipamento_original": "James Hetfield e Kirk Hammett: pré Mesa/Boogie Mark IIC+ empurrando Marshalls JCM800 em caixas 4x12.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff",
+     "quando": "Riffs e versos",
+     "descricao": "Distorção apertada, médio cavado, grave firme.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 45,
+     "amp": {
+      "ligado": true,
+      "slot": 9,
+      "gain": 70,
+      "treble": 70,
+      "middle": 35,
+      "bass": 60,
+      "volume": 46
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetada para baixo e abafada; o riff é muito rápido, comece devagar."
+     ]
+    },
+    {
+     "nome": "Parte limpa",
+     "quando": "Parte do meio",
+     "descricao": "Limpo e cristalino com reverb.",
+     "captador": 5,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 15,
+      "treble": 55,
+      "middle": 50,
+      "bass": 55,
+      "volume": 60
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 12,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 12,
+      "mix": 20
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Dedilhe deixando as notas soarem."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solos",
+     "descricao": "Lead com mais médio e eco.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 40,
+     "amp": {
+      "ligado": true,
+      "slot": 9,
+      "gain": 75,
+      "treble": 68,
+      "middle": 50,
+      "bass": 58,
+      "volume": 48
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 45,
+      "tempo_ms": 320
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Solo rápido: priorize a precisão antes da velocidade."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Gearnews: o timbre de Master of Puppets",
+     "u": "https://www.gearnews.com/how-to-sound-like-metallica-master-of-puppets/"
+    },
+    {
+     "t": "Killer Rig: configurações do Metallica",
+     "u": "https://killerrig.com/?p=14535"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "creep",
+   "musica": "Creep",
+   "artista": "Radiohead",
+   "ano": 1992,
+   "genero": "Alternativo",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 92,
+   "confianca": "alta",
+   "equipamento_original": "Jonny Greenwood: Telecaster com captadores Lace Sensor; versos limpos num amp Fender e distorção do pedal Marshall Shredmaster no refrão.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Versos limpos",
+     "quando": "Versos",
+     "descricao": "Limpo e brilhante, sem pedal.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 15,
+      "treble": 60,
+      "middle": 50,
+      "bass": 50,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Ponte + meio deixa a sua guitarra perto do som da Telecaster."
+     ]
+    },
+    {
+     "nome": "Refrão e 'chunks'",
+     "quando": "As batidas antes do refrão e o refrão",
+     "descricao": "Distorção alta e rasgada, como o Shredmaster.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 30,
+     "amp": {
+      "ligado": true,
+      "slot": 7,
+      "gain": 80,
+      "treble": 60,
+      "middle": 60,
+      "bass": 55,
+      "volume": 46
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Nas duas batidas antes do refrão, ataque forte as cordas: foi assim na gravação."
+     ]
+    }
+   ],
+   "limitacoes": [
+    "A distorção do original vem de um pedal (Shredmaster); aqui ela sai do amp EVH 5150."
+   ],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "Guitar Chalk: Creep",
+     "u": "https://www.guitarchalk.com/amp-settings-creep-radiohead/"
+    },
+    {
+     "t": "Music Strive: timbre do Radiohead",
+     "u": "https://musicstrive.com/radiohead-guitar-tone"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "mr-brightside",
+   "musica": "Mr. Brightside",
+   "artista": "The Killers",
+   "ano": 2003,
+   "genero": "Alternativo",
+   "afinacao": "Meio tom abaixo (Eb Ab Db Gb Bb Eb)",
+   "afinacao_padrao": false,
+   "bpm": 148,
+   "confianca": "alta",
+   "equipamento_original": "Dave Keuning: riff em arpejo com reverb e chorus lento, que imita uma segunda guitarra dobrando a frase.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff",
+     "quando": "Intro e versos",
+     "descricao": "Crunch leve e brilhante, médio forte, com chorus lento e reverb.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 15,
+     "amp": {
+      "ligado": true,
+      "slot": 1,
+      "gain": 45,
+      "treble": 68,
+      "middle": 75,
+      "bass": 35,
+      "volume": 55
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 14,
+      "speed": 20
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 14,
+      "mix": 22
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetada alternada contínua no arpejo, sem parar."
+     ]
+    },
+    {
+     "nome": "Refrão",
+     "quando": "Refrão",
+     "descricao": "Mais saturado e aberto.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 20,
+     "amp": {
+      "ligado": true,
+      "slot": 1,
+      "gain": 55,
+      "treble": 68,
+      "middle": 72,
+      "bass": 40,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 10,
+      "speed": 20
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 12,
+      "mix": 18
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Acordes cheios no refrão, deixando soar."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Afine meio tom abaixo (Eb)."
+   ],
+   "fontes": [
+    {
+     "t": "MusicRadar: o riff de Mr Brightside",
+     "u": "https://musicradar.com/tuition/guitars/weekend-riff-the-killers-mr-brightside-603380"
+    },
+    {
+     "t": "ProSoundHQ: configurações do The Killers",
+     "u": "https://prosoundhq.com/how-to-sound-like-the-killers-amp-settings-guide/"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "otherside",
+   "musica": "Otherside",
+   "artista": "Red Hot Chili Peppers",
+   "ano": 1999,
+   "genero": "Alternativo",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 124,
+   "confianca": "media",
+   "equipamento_original": "John Frusciante: Gretsch White Falcon no estúdio, timbre limpo e quente; solo levemente saturado.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Limpo",
+     "quando": "Intro, versos e refrão",
+     "descricao": "Limpo quente, com grave e médio presentes e agudo contido.",
+     "captador": 4,
+     "volume_guitarra": 10,
+     "tone_guitarra": 7,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 20,
+      "treble": 42,
+      "middle": 60,
+      "bass": 60,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 14
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Meio + braço deixa o limpo mais redondo, perto da White Falcon."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solo",
+     "descricao": "Marshall levemente saturado.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 12,
+     "amp": {
+      "ligado": true,
+      "slot": 4,
+      "gain": 42,
+      "treble": 60,
+      "middle": 60,
+      "bass": 60,
+      "volume": 58
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 14
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Melodia simples, com bends e notas longas."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [
+    {
+     "t": "ProSoundHQ: configurações do RHCP",
+     "u": "https://prosoundhq.com/how-to-sound-like-red-hot-chili-peppers-amp-settings-guide/"
+    },
+    {
+     "t": "PMT: o equipamento de John Frusciante",
+     "u": "https://pmtonline.co.uk/blog/john-frusciante-gear-guide-guitars-amps-pedals"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "johnny-b-goode",
+   "musica": "Johnny B. Goode",
+   "artista": "Chuck Berry",
+   "ano": 1958,
+   "genero": "Rock clássico",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 168,
+   "confianca": "alta",
+   "equipamento_original": "Chuck Berry: Gibson ES-350T com captadores P-90 num amp Fender Tweed levemente saturado; captador da ponte.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff e base",
+     "quando": "Intro, base e solos",
+     "descricao": "Limpo no limite de sujar, brilhante e com médio.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 8,
+     "amp": {
+      "ligado": true,
+      "slot": 4,
+      "gain": 40,
+      "treble": 68,
+      "middle": 65,
+      "bass": 40,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 14
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 6,
+      "motivo": ""
+     },
+     "dicas": [
+      "Os bends duplos da intro são a assinatura da música: duas cordas juntas."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Pouco grave: as gravações dos anos 50 eram cheias de médio."
+   ],
+   "fontes": [
+    {
+     "t": "Guitar Pro: o timbre de Johnny B. Goode",
+     "u": "https://www.guitar-pro.com/blog/p/52655-the-guitars-and-riffs-in-back-to-the-future-guitar-pedal-of-the-day"
+    },
+    {
+     "t": "Music Strive: timbre de Chuck Berry",
+     "u": "https://musicstrive.com/chuck-berry-guitar-tone"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "iron-man",
+   "musica": "Iron Man",
+   "artista": "Black Sabbath",
+   "ano": 1970,
+   "genero": "Metal",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": 76,
+   "confianca": "alta",
+   "equipamento_original": "Tony Iommi: Gibson SG Special de 1965, booster de agudos Rangemaster e Laney Supergroup de 100 W.",
+   "observacao": "",
+   "partes": [
+    {
+     "nome": "Riff",
+     "quando": "Riff principal e versos",
+     "descricao": "Distorção escura e pesada, com médio forte e pouco grave.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 25,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 75,
+      "treble": 80,
+      "middle": 85,
+      "bass": 30,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Riff lento e pesado: deixe cada acorde soar inteiro."
+     ]
+    },
+    {
+     "nome": "Solo",
+     "quando": "Solos",
+     "descricao": "O mesmo timbre mais saturado.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 25,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 80,
+      "treble": 82,
+      "middle": 85,
+      "bass": 30,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 6,
+      "time": 40,
+      "tempo_ms": 280
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Frases de blues pesadas e vibrato largo."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [
+    "Iron Man é em afinação padrão."
+   ],
+   "fontes": [
+    {
+     "t": "Guitar World: Tonal Recall (Iron Man)",
+     "u": "https://www.guitarworld.com/artists/tonal-recall-part-1"
+    },
+    {
+     "t": "Bonedo: o riff de Iron Man",
+     "u": "https://www.bonedo.de/?p=353168"
+    }
+   ],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "mulher-de-fases",
+   "musica": "Mulher de Fases",
+   "artista": "Raimundos",
+   "ano": 1999,
+   "genero": "Rock nacional",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": null,
+   "confianca": "media",
+   "equipamento_original": "Digão e Rodolfo: guitarras saturadas de hardcore com balanço de forró.",
+   "observacao": "Há pouca informação publicada sobre o equipamento; estes timbres seguem o estilo da gravação.",
+   "partes": [
+    {
+     "nome": "Base",
+     "quando": "Música toda",
+     "descricao": "Distorção cheia e moderna, com médio presente.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 30,
+     "amp": {
+      "ligado": true,
+      "slot": 6,
+      "gain": 72,
+      "treble": 62,
+      "middle": 60,
+      "bass": 58,
+      "volume": 50
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetada firme e abafada nos versos; abra no refrão."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "pais-e-filhos",
+   "musica": "Pais e Filhos",
+   "artista": "Legião Urbana",
+   "ano": 1989,
+   "genero": "Rock nacional",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": null,
+   "confianca": "media",
+   "equipamento_original": "Dado Villa-Lobos com guitarras limpas e dedilhadas, típicas do fim dos anos 80.",
+   "observacao": "Há pouca informação publicada sobre o equipamento; estes timbres seguem o estilo da gravação.",
+   "partes": [
+    {
+     "nome": "Dedilhado",
+     "quando": "Intro e versos",
+     "descricao": "Limpo brilhante com chorus e reverb.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 15,
+      "treble": 62,
+      "middle": 52,
+      "bass": 45,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 28
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 12,
+      "mix": 20
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Dedilhe deixando as cordas soarem juntas."
+     ]
+    },
+    {
+     "nome": "Refrão",
+     "quando": "Refrão",
+     "descricao": "Levemente sujo e mais cheio.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 12,
+     "amp": {
+      "ligado": true,
+      "slot": 1,
+      "gain": 40,
+      "treble": 60,
+      "middle": 58,
+      "bass": 48,
+      "volume": 56
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 12,
+      "speed": 28
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 10,
+      "mix": 16
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Acordes abertos e firmes no refrão."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "que-pais-e-este",
+   "musica": "Que País É Este",
+   "artista": "Legião Urbana",
+   "ano": 1987,
+   "genero": "Rock nacional",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": null,
+   "confianca": "media",
+   "equipamento_original": "Rock punk direto, com guitarras distorcidas e cruas.",
+   "observacao": "Há pouca informação publicada sobre o equipamento; estes timbres seguem o estilo da gravação.",
+   "partes": [
+    {
+     "nome": "Base",
+     "quando": "Música toda",
+     "descricao": "Distorção punk crua e aberta.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 25,
+     "amp": {
+      "ligado": true,
+      "slot": 5,
+      "gain": 70,
+      "treble": 62,
+      "middle": 62,
+      "bass": 52,
+      "volume": 52
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": false,
+      "tipo": "room",
+      "nivel": 8,
+      "mix": 12
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 7,
+      "motivo": ""
+     },
+     "dicas": [
+      "Palhetadas para baixo, rápidas e firmes, como no punk."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "lanterna-dos-afogados",
+   "musica": "Lanterna dos Afogados",
+   "artista": "Os Paralamas do Sucesso",
+   "ano": 1989,
+   "genero": "Rock nacional",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": null,
+   "confianca": "media",
+   "equipamento_original": "Herbert Vianna com guitarra limpa e ambiente, na linha das baladas do Paralamas.",
+   "observacao": "Há pouca informação publicada sobre o equipamento; estes timbres seguem o estilo da gravação.",
+   "partes": [
+    {
+     "nome": "Limpo",
+     "quando": "Música toda",
+     "descricao": "Limpo quente com chorus suave, eco e reverb.",
+     "captador": 4,
+     "volume_guitarra": 10,
+     "tone_guitarra": 8,
+     "gate": 5,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 15,
+      "treble": 55,
+      "middle": 55,
+      "bass": 50,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 14,
+      "speed": 25
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 8,
+      "time": 45,
+      "tempo_ms": 320
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 14,
+      "mix": 22
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Toque leve e deixe o eco preencher os espaços."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [],
+   "reconhecida": true,
+   "pesquisou": true
+  },
+  {
+   "id": "so-os-loucos-sabem",
+   "musica": "Só os Loucos Sabem",
+   "artista": "Charlie Brown Jr.",
+   "ano": 2010,
+   "genero": "Rock nacional",
+   "afinacao": "Padrão (E A D G B E)",
+   "afinacao_padrao": true,
+   "bpm": null,
+   "confianca": "media",
+   "equipamento_original": "Guitarra limpa e dedilhada nos versos e distorcida no refrão.",
+   "observacao": "Há pouca informação publicada sobre o equipamento; estes timbres seguem o estilo da gravação.",
+   "partes": [
+    {
+     "nome": "Dedilhado",
+     "quando": "Intro e versos",
+     "descricao": "Limpo com chorus leve e eco curto.",
+     "captador": 2,
+     "volume_guitarra": 10,
+     "tone_guitarra": 9,
+     "gate": 8,
+     "amp": {
+      "ligado": true,
+      "slot": 2,
+      "gain": 18,
+      "treble": 60,
+      "middle": 55,
+      "bass": 48,
+      "volume": 62
+     },
+     "mod": {
+      "ligado": true,
+      "tipo": "chorus",
+      "nivel": 14,
+      "speed": 30
+     },
+     "delay": {
+      "ligado": true,
+      "tipo": "analog",
+      "nivel": 8,
+      "time": 30,
+      "tempo_ms": 210
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 10,
+      "mix": 16
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 3,
+      "motivo": ""
+     },
+     "dicas": [
+      "Dedilhe sem pressa, deixando as notas soarem."
+     ]
+    },
+    {
+     "nome": "Refrão",
+     "quando": "Refrão",
+     "descricao": "Distorção cheia e aberta.",
+     "captador": 1,
+     "volume_guitarra": 10,
+     "tone_guitarra": 10,
+     "gate": 30,
+     "amp": {
+      "ligado": true,
+      "slot": 9,
+      "gain": 65,
+      "treble": 60,
+      "middle": 50,
+      "bass": 58,
+      "volume": 48
+     },
+     "mod": {
+      "ligado": false,
+      "tipo": "chorus",
+      "nivel": 20,
+      "speed": 40
+     },
+     "delay": {
+      "ligado": false,
+      "tipo": "analog",
+      "nivel": 10,
+      "time": 40,
+      "tempo_ms": null
+     },
+     "reverb": {
+      "ligado": true,
+      "tipo": "room",
+      "nivel": 6,
+      "mix": 10
+     },
+     "ir": {
+      "ligado": true,
+      "slot": 4,
+      "motivo": ""
+     },
+     "dicas": [
+      "Acordes abertos e fortes no refrão."
+     ]
+    }
+   ],
+   "limitacoes": [],
+   "dicas_gerais": [],
+   "fontes": [],
    "reconhecida": true,
    "pesquisou": true
   }
