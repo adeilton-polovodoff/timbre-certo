@@ -7,8 +7,8 @@ android {
         applicationId "com.apolozl.timbrecerto"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode((System.getenv("BUILD_NUMBER") ?: "1").toInteger())
+        versionName "1.0." + (System.getenv("BUILD_NUMBER") ?: "1")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -16,7 +16,20 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        shared {
+            // Mesma chave em todas as versões, para o Android aceitar as atualizações.
+            // Se existirem os segredos KEYSTORE_PASSWORD/KEYSTORE_FILE no GitHub, eles têm prioridade.
+            storeFile file(System.getenv("KEYSTORE_FILE") ?: "timbrecerto.jks")
+            storePassword(System.getenv("KEYSTORE_PASSWORD") ?: "SU2dy_gD_iBcR7IwoHQeuCcp")
+            keyAlias "timbrecerto"
+            keyPassword(System.getenv("KEYSTORE_PASSWORD") ?: "SU2dy_gD_iBcR7IwoHQeuCcp")
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.shared
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

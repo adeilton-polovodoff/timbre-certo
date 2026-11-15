@@ -32,6 +32,8 @@ jobs:
 
       - name: Compilar APK
         working-directory: android
+        env:
+          BUILD_NUMBER: ${{ github.run_number }}
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
@@ -49,5 +51,5 @@ jobs:
         with:
           tag_name: v1.0.${{ github.run_number }}
           name: Timbre Certo v1.0.${{ github.run_number }}
-          body: Baixe o TimbreCerto.apk abaixo e instale no celular ou tablet Android.
+          body: Baixe o TimbreCerto.apk abaixo e instale no celular ou tablet Android. Quem já tem o app recebe o aviso de atualização ao abrir.
           files: TimbreCerto.apk

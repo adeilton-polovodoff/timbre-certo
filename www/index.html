@@ -207,6 +207,8 @@ dialog label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
 dialog textarea,dialog input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 11px}
 .dlg-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
 
+.upd{position:sticky;top:env(safe-area-inset-top);z-index:20;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--led);color:#1b1206;border-radius:12px;padding:10px 14px;margin-top:10px;font-weight:700}
+.upd .btn{background:#1b1206;color:var(--led);border-color:#1b1206}
 footer{margin-top:48px;color:#6c7a75;font-size:13px;max-width:75ch}
 
 @media (max-width:520px){
@@ -241,6 +243,7 @@ footer{margin-top:48px;color:#6c7a75;font-size:13px;max-width:75ch}
     </div>
   </header>
 
+  <div class="upd hidden" id="upd" role="status"></div>
   <section class="hero">
     <h1>Qual música<br>você vai <em>tocar?</em></h1>
     <p>Fale ou digite o nome da música. O app pesquisa o timbre na internet, monta para a sua Tank-G e a sua guitarra, mostra onde cada botão fica e manda direto para a pedaleira.</p>
@@ -299,6 +302,7 @@ footer{margin-top:48px;color:#6c7a75;font-size:13px;max-width:75ch}
     <label for="cfgBank">Banco onde gravar os timbres (1 a 9)</label>
     <input id="cfgBank" type="number" min="1" max="9" step="1">
     <p class="muted" style="font-size:13px;margin:10px 0 0">A 1ª parte vai no A, a 2ª no B e a 3ª no C desse banco. O que estiver gravado lá é substituído.</p>
+    <p class="muted" style="font-size:13px;margin:14px 0 0">Versão instalada: <span id="appVer">—</span> <button class="btn" type="button" data-act="checkupd" style="margin-left:6px">Procurar atualização</button></p>
     <div class="dlg-actions">
       <button class="btn" type="button" id="cfgCancel">Cancelar</button>
       <button class="btn primary" type="submit">Salvar ajustes</button>
@@ -417,9 +421,10 @@ function saveMessages(pid, s){ return [sxSave(pid,s), sxFlush(), sxSelect(pid)];
 
 /* ========= Conexão com a pedaleira (nativo Android) ========= */
 const Cap = window.Capacitor;
-const plug = name => (Cap && Cap.registerPlugin) ? Cap.registerPlugin(name) : null;
-const IS_APP = !!(Cap && Cap.isNativePlatform && Cap.isNativePlatform());
-const TankMidi = IS_APP ? plug("TankMidi") : null, BLE = IS_APP ? plug("BluetoothLe") : null, Speech = IS_APP ? plug("SpeechRecognition") : null;
+const IS_APP = !!(Cap && Cap.isNativePlatform && Cap.isNativePlatform() && Cap.nativePromise);
+// Chama o plugin nativo direto pela ponte do Capacitor (sem depender do pacote JS @capacitor/core)
+const plug = name => IS_APP ? new Proxy({}, {get: (_, method) => (opts = {}) => Cap.nativePromise(name, String(method), opts)}) : null;
+const TankMidi = plug("TankMidi"), BLE = plug("BluetoothLe"), Speech = plug("SpeechRecognition"), AppUpdater = plug("AppUpdater");
 const Tank = {kind:null, name:""};
 const errText = (e, d) => (e && (e.pt || e.message)) || d;
 function setConn(){
@@ -429,7 +434,11 @@ function setConn(){
 async function connectUSB(){
   if(!TankMidi) throw {pt:"A conexão com a pedaleira funciona no app Timbre Certo instalado no Android."};
   try{ const r = await TankMidi.connectUsb(); Object.assign(Tank, {kind:"usb", name:r.name || "Tank-G"}); setConn(); }
-  catch(e){ throw {pt: errText(e, "Não achei a Tank-G no cabo. Confira o cabo USB-C (OTG).")}; }
+  catch(e){
+    let extra = "";
+    try{ const l = await TankMidi.listDevices(); const n = (l.devices || []).map(d => `${d.name} (${d.type})`); extra = n.length ? ` Aparelhos MIDI vistos: ${n.join(", ")}.` : " O Android não viu nenhum aparelho MIDI."; }catch(_){}
+    throw {pt: errText(e, "Não achei a Tank-G no cabo. Confira o cabo USB-C (OTG).") + extra};
+  }
 }
 async function connectBLE(){
   if(!TankMidi || !BLE) throw {pt:"A conexão com a pedaleira funciona no app Timbre Certo instalado no Android."};
@@ -652,17 +661,33 @@ const GEMINI = "https://generativelanguage.googleapis.com/v1beta/models/";
 async function gemini(body, signal){
   const key = state.cfg.key;
   const models = [...new Set([state.cfg.model || "gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-flash"])];
-  let res, j;
+  let res;
   for(const model of models){
-    res = await fetch(`${GEMINI}${encodeURIComponent(model)}:generateContent`, {method:"POST", headers:{"Content-Type":"application/json","x-goog-api-key":key}, body:JSON.stringify(body), signal});
-    j = await res.json().catch(() => ({}));
+    res = await postJSON(`${GEMINI}${encodeURIComponent(model)}:generateContent`, {"Content-Type":"application/json","x-goog-api-key":key}, body, signal);
     if(res.status !== 404) break;
   }
-  if(!res.ok) throw {status:res.status, message:(j.error && j.error.message) || ""};
+  const j = res.data || {};
+  if(res.status < 200 || res.status >= 300) throw {status:res.status, message:(j.error && j.error.message) || ""};
   const c = (j.candidates || [])[0] || {};
   if(c.finishReason === "SAFETY") throw {status:"refused"};
   const text = ((c.content && c.content.parts) || []).map(x => x.text || "").join("");
   return {text, grounding: c.groundingMetadata || null};
+}
+async function postJSON(url, headers, body, signal){
+  try{
+    const r = await fetch(url, {method:"POST", headers, body:JSON.stringify(body), signal});
+    let data = {}; try{ data = await r.json(); }catch(_){}
+    return {status:r.status, data};
+  }catch(e){
+    if(e && e.name === "AbortError") throw e;
+    if(!IS_APP) throw {status:"net", message: String(e && e.message || e)};
+    // reserva: requisição pela camada nativa do Android
+    try{
+      const r = await Cap.nativePromise("CapacitorHttp", "request", {url, method:"POST", headers, data: body, dataType:"json", responseType:"json", connectTimeout:60000, readTimeout:120000});
+      let data = r.data; if(typeof data === "string"){ try{ data = JSON.parse(data); }catch(_){ data = {}; } }
+      return {status:r.status, data: data || {}};
+    }catch(e2){ throw {status:"net", message: String((e2 && e2.message) || (e && e.message) || "sem conexão")}; }
+  }
 }
 function researchPrompt(q, parte){
   return `Pesquise na internet como reproduzir o timbre de guitarra da música "${q}"${parte === "solo" ? " (principalmente o solo)" : ""}.
@@ -690,10 +715,11 @@ function aiError(e){
   if(e && e.status === "refused") return "A IA não respondeu esse pedido. Escreva só o nome da música e do artista.";
   if(e && e.status === "json") return "A resposta veio fora do formato. Toque em Gerar timbre de novo.";
   if(m.includes("api key") || m.includes("api_key") || e.status === 401 || e.status === 403) return "A chave do Gemini não foi aceita. Confira em Ajustes.";
-  if(e.status === 429) return "Limite grátis do Gemini atingido por agora. Espere um minuto e tente de novo.";
+  if(e.status === 429) return "Limite grátis do Gemini atingido por agora. Espere um minuto e tente de novo." + (m ? ` Detalhe: ${str(e.message).slice(0,160)}` : "");
+  if(e.status === 400) return "O Gemini recusou o pedido (400). Detalhe: " + str(e && e.message).slice(0,200);
   if(e.status === 404) return "Esse modelo do Gemini não existe mais. Troque o modelo em Ajustes (ex.: gemini-2.5-flash).";
   if(e && e.name === "AbortError") return "Cancelado.";
-  return "Falha de conexão com o Gemini. Confira a internet e tente de novo.";
+  return `Falha ao falar com o Gemini${e && e.status ? ` (${e.status})` : ""}. Confira a internet e tente de novo.${m ? ` Detalhe: ${str(e.message).slice(0,160)}` : ""}`;
 }
 async function generate(regen){
   const q = $("#q").value.trim();
@@ -825,6 +851,9 @@ document.addEventListener("click", async ev => {
     else if(act === "ble"){ msg("Escolha a Tank-G na lista do Bluetooth…"); await connectBLE(); render(); }
     else if(act === "disc"){ await disconnectTank(); render(); }
     else if(act === "cfg"){ openCfg(); }
+    else if(act === "checkupd"){ dlg.close ? dlg.close() : dlg.removeAttribute("open"); checkUpdate(true); }
+    else if(act === "doupd"){ doUpdate(); }
+    else if(act === "hideupd"){ $("#upd").classList.add("hidden"); }
     else if(act === "try"){
       t.disabled = true; msg("Mandando…");
       await sendAll(liveMessages(partToState(state.result.partes[state.part], state.mode)));
@@ -887,6 +916,43 @@ $("#mic").addEventListener("click", async () => {
   finally{ $("#mic").classList.remove("on"); }
 });
 
+/* Atualização automática (Releases do GitHub) */
+const REPO = "adeilton-polovodoff/timbre-certo";
+let pendingUpd = null;
+function showUpd(html){ const u = $("#upd"); u.innerHTML = html; u.classList.remove("hidden"); }
+async function checkUpdate(manual){
+  if(!AppUpdater) return;
+  try{
+    const info = await AppUpdater.info();
+    const v = $("#appVer"); if(v) v.textContent = info.versionName || String(info.versionCode);
+    const r = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`, {headers:{Accept:"application/vnd.github+json"}, cache:"no-store"});
+    if(!r.ok){ if(manual) showStatus(r.status === 404 ? "Não consegui ver as versões novas: o repositório do app no GitHub está privado." : `Não deu para procurar atualização agora (${r.status}).`, "err"); return; }
+    const rel = await r.json();
+    const m = /(\d+)\s*$/.exec(rel.tag_name || ""), latest = m ? +m[1] : 0;
+    const apk = (rel.assets || []).find(a => /\.apk$/i.test(a.name));
+    if(apk && latest > Number(info.versionCode)){
+      pendingUpd = {url: apk.browser_download_url, name: rel.name || rel.tag_name};
+      showUpd(`<span>Nova versão disponível: ${esc(pendingUpd.name)}</span><button class="btn" type="button" data-act="doupd">Atualizar agora</button><button class="btn" type="button" data-act="hideupd">Depois</button>`);
+    }else if(manual){ showStatus(`Você já está na versão mais nova (${esc(info.versionName)}).`, "okay"); }
+  }catch(e){ if(manual) showStatus("Não deu para procurar atualização agora. Confira a internet.", "err"); }
+}
+async function doUpdate(){
+  if(!pendingUpd) return;
+  try{
+    const c = await AppUpdater.canInstall();
+    if(!c.allowed){
+      showUpd(`<span>Libere "Instalar apps desconhecidos" para o Timbre Certo e volte aqui.</span><button class="btn" type="button" data-act="doupd">Já liberei, atualizar</button>`);
+      await AppUpdater.openInstallSettings();
+      return;
+    }
+    showUpd(`<span class="spinner"></span><span>Baixando a atualização… a tela de instalação abre sozinha.</span>`);
+    await AppUpdater.downloadAndInstall({url: pendingUpd.url});
+    showUpd(`<span>Toque em "Atualizar" na tela do Android. Se ela não abriu, tente de novo.</span><button class="btn" type="button" data-act="doupd">Tentar de novo</button>`);
+  }catch(e){
+    showUpd(`<span>${esc(errText(e, "Falha ao baixar a atualização."))}</span><button class="btn" type="button" data-act="doupd">Tentar de novo</button>`);
+  }
+}
+
 /* Início */
 applyCfg(lsGet(LS_CFG, {}));
 state.saved = lsGet(LS_KEY, []);
@@ -894,6 +960,7 @@ if(state.mode === "amp") $("#modeAmp").checked = true;
 render(); renderSaved(); setConn();
 if(!state.cfg.key) showStatus(`Primeiro passo: cole sua chave grátis do Gemini em Ajustes. <button class="btn" type="button" data-act="cfg">Abrir Ajustes</button>`);
 if(!IS_APP) showStatus("Esta tela foi feita para rodar dentro do app Android Timbre Certo.", "err");
+else setTimeout(() => checkUpdate(false), 1500);
 </script>
 </body>
 </html>
